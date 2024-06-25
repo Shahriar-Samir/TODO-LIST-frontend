@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaGoogle } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { Link } from 'react-router-dom';
@@ -7,7 +7,10 @@ import { Link } from 'react-router-dom';
 const Login = () => {
     return (
         <div className='flex flex-col justify-center items-center h-[110vh] md:flex-row md:gap-16 lg:gap-32'>
-                      <img src='/logos/checkit.png' className='w-[300px]'/>
+                <div className='w-full md:w-1/3 flex justify-center items-center flex-col'>
+                <img src='/logos/cover.png' className='w-[300px]'/>
+                <h1 className='mt-4'>Your Ultimate Task Management Solution</h1>
+                </div>
           <div className='w-11/12 md:w-1/2 max-w-[350px]'>
           <form className="">
             <h1 className='text-sm font-bold text-end'>Log in with</h1>
@@ -43,8 +46,11 @@ const Login = () => {
           <label className="label">
             <span className="label-text">Password</span>
           </label>
-          <input type="password" placeholder="password" className="input input-bordered" required />
-
+          <div className='relative'>
+          <input type="password" placeholder="password" className="input input-bordered w-full" required />
+            <FaEye className='absolute top-4 right-4 text-xl'/>
+            <FaEyeSlash className='absolute top-4 right-4 text-xl'/>
+          </div>
         </div>
         <div className="form-control mt-6">
           <button className="btn text-white bg-gradient-to-r from-emerald-400 to-cyan-400 bg-cyan-500  hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 hover:bg-cyan-500 ">Login</button>
