@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { IoIosAdd, IoIosAddCircle } from "react-icons/io";
 import "react-datepicker/dist/react-datepicker.css";
+import { Reorder } from "framer-motion"
+import { CiEdit } from "react-icons/ci";
+import { MdDelete } from "react-icons/md";
+import { CiCalendar } from "react-icons/ci";
+import { IoMdAlarm } from "react-icons/io";
+
 
 const Today = () => {
 
@@ -35,8 +41,10 @@ const Today = () => {
         },1000)
     },[])
 
+    const [items, setItems] = useState([0, 1, 2, 3])
+
     return (
-        <div className='w-10/12 mx-auto'>
+        <div className='w-10/12 mx-auto '>
             
             <div className="flex mt-5 border-b pb-3 border-black justify-between">
             <div>
@@ -99,7 +107,49 @@ const Today = () => {
     <button className="btn bg-red-500 text-white">Cancel</button>
 </div>
 </div>
+<Reorder.Group axis="y" role="button" values={items} onReorder={setItems} className="mt-5 flex flex-col gap-5 w-full">
+      {items.map((item) => (
+        <Reorder.Item key={item} value={item} className="flex gap-2 w-full border-b pb-2">
+          <div className="form-control">
+  <label className="cursor-pointer label">
 
+    <input type="checkbox" defaultChecked={false} className="checkbox rounded-full" />
+  </label>
+</div>
+<div className="w-full">
+    <div className="flex justify-between items-center">
+    <h1 className="font-bold">Title</h1>
+    <div className="flex gap-4 items-center text-2xl">
+    <div className="tooltip" data-tip="Edit Task">
+    <CiEdit className="text-yellow-600"/>
+</div>
+    <div className="tooltip" data-tip="Delete Task">
+    <MdDelete className="text-red-500"/>
+</div>
+
+    </div>
+    </div>
+    <p className="">Description of the title</p>
+    
+    <div className="flex gap-4">
+    <div className="tooltip" data-tip="Due date">
+    <div className="flex items-center gap-1">
+    <CiCalendar />
+    <p className="text-sm mt-1"> 28 jul</p> 
+    </div>
+</div>
+    <div className="tooltip" data-tip="Due Time">
+    <div className="flex items-center gap-1">
+    <IoMdAlarm/>
+    <p className="text-sm mt-1"> 11:20 AM</p> 
+    </div>
+</div>
+
+    </div>
+</div>
+        </Reorder.Item>
+      ))}
+    </Reorder.Group>
                 </div>
             </div>
 

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { IoIosAdd, IoIosAddCircle } from 'react-icons/io';
 import { Link, Outlet } from 'react-router-dom';
+import { CiEdit } from "react-icons/ci";
 
 const Dashboard = () => {
 
@@ -42,7 +43,7 @@ const Dashboard = () => {
       <li><Link to='/app/events'>Events</Link></li>
     </ul>
   </div>
-  <div className='w-3/4 overflow-auto'>
+  <div className='w-3/4 overflow-auto h-[100vh]'>
   <nav className='flex justify-end px-5 py-3'>
                 <img src='/logos/checkit.png' className='w-[40px] h-[40px]'/>
             </nav>
