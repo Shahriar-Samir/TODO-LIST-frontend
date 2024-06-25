@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
     return (
-        <div className='flex justify-center items-center h-[100vh] gap-32'>
+        <div className='flex flex-col justify-center items-center h-[110vh] md:flex-row md:gap-16 lg:gap-32'>
                       <img src='/logos/checkit.png' className='w-[300px]'/>
-          <div className='w-11/12 max-w-[350px]'>
+          <div className='w-11/12 md:w-1/2 max-w-[350px]'>
           <form className="">
             <h1 className='text-sm font-bold text-end'>Log in with</h1>
 
