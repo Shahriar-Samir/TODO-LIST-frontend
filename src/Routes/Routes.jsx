@@ -19,17 +19,17 @@ const router = createBrowserRouter([
             path:'/signup',
             element: <Signup/>
         },
-        {
-            path:'/dashboard',
-            element: <Dashboard/>,
-            children: [
-                {
-                    path:'today',
-                    element: <Today/>
-                }
-            ]
-        },
     ]
+    },
+    {
+        path:'/app',
+        element: <Dashboard/>,
+        children: [
+            {
+                path:'today',
+                element: <Today/>
+            }
+        ]
     },
     
 ])
