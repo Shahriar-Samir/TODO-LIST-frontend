@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom"
 
 
 function App() {
@@ -5,7 +6,7 @@ function App() {
 
   return (
     <>
-     <h1 className="text-4xl ">TODO LIST</h1>
+     <Outlet/>
     </>
   )
 }
