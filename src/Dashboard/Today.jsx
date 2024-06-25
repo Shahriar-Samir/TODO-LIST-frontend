@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { IoIosAdd, IoIosAddCircle } from "react-icons/io";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Today = () => {
@@ -10,7 +9,16 @@ const Today = () => {
     const [icon,setIcon] = useState(false)
 
 
+    const [descripiton,setDescription] = useState()
+    const [taskName,setTaskName] = useState()
 
+
+    const changeDescription = (e)=>{
+        setDescription(e.target.textContent)
+    }
+    const changeTaskName = (e)=>{
+        setTaskName(e.target.textContent)
+    }
 
     const mouseIn = ()=>{
         setIcon(true)
@@ -41,11 +49,16 @@ const Today = () => {
                 <button className="flex items-center gap-2  text-md" onMouseEnter={mouseIn} onMouseLeave={mouseOut}>{icon ?<IoIosAddCircle  className="text-green-500 text-2xl"/> : <IoIosAdd  className="text-green-500 text-2xl"/>} Add Task</button> 
                 <div className="flex flex-col gap-2 border rounded-md p-3">
                 <label className="px-0 input outline-0 border-0 flex items-center gap-2 border-none outline-none focus-within:outline-none h-fit">    
-  <input type="text" className=" grow placeholder:font-bold font-bold border-0 outline-none focus-within:outline-none" placeholder="Task Name" />
+  <p  contentEditable={true} 
+  className={`outline-none w-full cursor-text text-black font-bold  focus-within:before:content-none ${taskName?  "" : "before:content-['Task_name'] text-gray-500"}`}    
+  onInput={changeTaskName} 
+></p>
 </label>
                 <label className="px-0 input  flex items-center gap-2  border-none outline-none focus-within:outline-none h-fit">    
-  <input type="text" className=" border-0 outline-none " placeholder="Description"/>
-</label>
+  <p  contentEditable={true} 
+  className={`outline-none w-full cursor-text  focus-within:before:content-none ${descripiton?  "" : "before:content-['Description'] text-gray-300"}`}    
+  onInput={changeDescription} 
+></p></label>
 <div className="flex">
 <div className="dropdown">
   <div tabIndex={0} role="button" className="btn m-1">Due Date</div>
@@ -81,7 +94,12 @@ const Today = () => {
   </ul>
 </div>
 </div>
+<div className='flex w-full justify-end gap-3'>
+    <button className='btn bg-green-400 text-white'>Add Task</button>
+    <button className="btn bg-red-500 text-white">Cancel</button>
 </div>
+</div>
+
                 </div>
             </div>
 
