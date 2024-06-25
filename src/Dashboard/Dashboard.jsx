@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { IoIosAdd } from 'react-icons/io';
 import { Link, Outlet } from 'react-router-dom';
 
 const Dashboard = () => {
@@ -22,11 +23,13 @@ const Dashboard = () => {
         <input className='p-2 outline-0 rounded-lg w-full' placeholder='search '/>
         <FaSearch className='absolute top-3 right-2'/>
         </div>
+     <li>   <button className="flex items-center gap-2 text-md" > Add Task <IoIosAdd  className="text-green-500 text-2xl"/></button></li> 
+      <li><Link to='/app/today'>All Tasks</Link></li>
       <li><Link to='/app/today'>Today</Link></li>
-      <li><a>Sidebar Item 2</a></li>
+      <li><Link to='/app/events'>Events</Link></li>
     </ul>
   </div>
-  <div className='w-3/4'>
+  <div className='w-3/4 overflow-auto'>
   <nav className='flex justify-end px-5 py-3'>
                 <img src='/logos/checkit.png' className='w-[40px] h-[40px]'/>
             </nav>
