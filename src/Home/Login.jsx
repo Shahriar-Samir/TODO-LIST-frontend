@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
     return (
-        <div className='flex flex-col justify-center items-center h-[110vh] md:flex-row md:gap-16 lg:gap-32'>
-                <div className='w-full md:w-1/3 flex justify-center items-center flex-col'>
+        <div className='flex flex-col justify-center items-center gap-10 h-[110vh] md:flex-row md:gap-20 lg:gap-32'>
+                <div className='w-full md:max-w-[350px]  flex justify-center items-center flex-col'>
                 <img src='/logos/cover.png' className='w-[300px]'/>
-                <h1 className='mt-4'>Your Ultimate Task Management Solution</h1>
+                <h1 className='w-full mt-6 text-center'>Your Ultimate Task Management Solution</h1>
                 </div>
           <div className='w-11/12 md:w-1/2 max-w-[350px]'>
           <form className="">
