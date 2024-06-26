@@ -58,10 +58,10 @@ const Dashboard = () => {
   </div>
   <div className='w-3/4 overflow-auto h-[100vh]'>
   <nav className='flex justify-end px-5 py-3 gap-5 top-0 sticky z-10'>
-  <button className="flex items-center relative w-[50px]">
+  <Link to='/app/notifications' className="flex items-center relative w-[50px]">
 <IoMdNotifications className='text-2xl text-blue-400'/>
   <div className="badge bg-red-500 text-white font-bold absolute right-1 top-0 p-1">+19</div>
-</button>
+</Link>
                 <img src='/logos/checkit.png' className='w-[40px] h-[40px]'/>
             </nav>
   <Outlet/>
