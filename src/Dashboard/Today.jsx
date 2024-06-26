@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { IoIosAdd, IoIosAddCircle } from "react-icons/io";
-import "react-datepicker/dist/react-datepicker.css";
 import { Reorder } from "framer-motion"
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
@@ -108,20 +107,22 @@ const Today = () => {
     <button className="btn bg-red-500 text-white">Cancel</button>
 </div>
 </div>
-<Reorder.Group axis="y" role="button" values={items} onReorder={setItems} className="mt-5 flex flex-col gap-5 w-full">
+<Reorder.Group axis="y"  values={items} onReorder={setItems} className="mt-5 flex flex-col gap-5 w-full">
       {items.map((item,index) => (
-        <Reorder.Item key={item} onClick={()=>{
-          document.getElementById(index)?.showModal()
-       
-       }} value={item} className="flex gap-2 w-full border-b pb-2">
+        <Reorder.Item key={item}  value={item} className="flex gap-2 w-full border-b pb-2">
         <Task id={index}/>
           <div className="form-control">
   <label className="cursor-pointer label">
 
-    <input type="checkbox" defaultChecked={false} className="checkbox rounded-full" />
+    <input type="checkbox" defaultChecked={false} onClick={(event)=>{
+      event.stopPropagation();
+    }} className="checkbox rounded-full" />
   </label>
 </div>
-<div className="w-full">
+<div className="w-full" role="button" onClick={()=>{
+          document.getElementById(index)?.showModal()
+       
+       }}>
     <div className="flex justify-between items-center">
     <h1 className="font-bold">Title</h1>
     <div className="flex gap-4 items-center text-2xl">

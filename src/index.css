@@ -10,5 +10,13 @@ body{
     font-family: "Raleway", sans-serif;
     font-style: normal;
 
-}
+};
 
+.appointment {
+  @apply bg-red-500 text-white; /* Apply Tailwind classes for background and text color */
+
+};
+
+.appointment-content {
+  @apply p-2; /* Apply Tailwind padding classes */
+};

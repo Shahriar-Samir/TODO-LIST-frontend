@@ -5,6 +5,7 @@ import Dashboard from '../Dashboard/Dashboard';
 import Today from '../Dashboard/Today';
 import Signup from '../Home/Signup';
 import Task from '../Dashboard/Task';
+import Events from '../Dashboard/Events';
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
             {
                 path:'today',
                 element: <Today/>
+            },
+            {
+                path:'events',
+                element: <Events/>
             },
         ]
     },
