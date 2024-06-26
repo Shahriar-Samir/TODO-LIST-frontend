@@ -39,8 +39,20 @@ const Dashboard = () => {
         <FaSearch className='absolute top-3 right-2'/>
         </div>
      <li onClick={()=>document.getElementById('my_modal_5').showModal()}><button className="flex items-center gap-2 text-md btn bg-green-400 border-none text-white hover:bg-green-500" > Add Task <IoIosAddCircle  className="text-2xl"/></button></li> 
-      <li><Link to='/app/today'>All Tasks</Link></li>
-      <li><Link to='/app/today'>Today</Link></li>
+      <li><Link to='/app/allTasks' className='flex justify-normal w-full'>
+      <div className='flex justify-between w-full'>
+      <p>All Task</p>
+      <div className="badge text-xs">+10</div>
+      </div>
+      </Link>
+      </li>
+      <li><Link to='/app/today' className='flex justify-normal w-full'>
+      <div className='flex justify-between w-full'>
+      <p>Today</p>
+      <div className="badge text-xs">+4</div>
+      </div>
+      </Link>
+      </li>
       <li><Link to='/app/events'>Events</Link></li>
     </ul>
   </div>

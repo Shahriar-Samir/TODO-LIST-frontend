@@ -37,43 +37,23 @@ const appointments = [
     endDate: new Date(2024, 5, 10, 15, 0),
     status: 'upComing'
   },
+  
   {
-    id: 4,
-    title: 'Team meeting',
-    startDate: new Date(2024, 5, 15, 9, 0), // June 15th, 2024, 9:00 AM
-    endDate: new Date(2024, 5, 15, 10, 0),
+    id: 521343,
+    title: 'Project presentation',
+    startDate: new Date(2024, 5, 20, 13, 0), // June 20th, 2024, 1:00 PM
+    endDate: new Date(2024, 5, 20, 14, 30),
     status: 'unfinished'
   },
   {
-    id: 4,
-    title: 'Team meeting',
-    startDate: new Date(2024, 5, 15, 9, 0), // June 15th, 2024, 9:00 AM
-    endDate: new Date(2024, 5, 15, 10, 0),
+    id: 522313,
+    title: 'Project presentation',
+    startDate: new Date(2024, 5, 20, 13, 0), // June 20th, 2024, 1:00 PM
+    endDate: new Date(2024, 5, 20, 14, 30),
     status: 'unfinished'
   },
   {
-    id: 10,
-    title: '1 Team meeting',
-    startDate: new Date(2024, 5, 15, 9, 0), // June 15th, 2024, 9:00 AM
-    endDate: new Date(2024, 5, 15, 10, 0),
-    status: 'unfinished'
-  },
-  {
-    id: 11,
-    title: '2 Team meeting',
-    startDate: new Date(2024, 5, 15, 9, 0), // June 15th, 2024, 9:00 AM
-    endDate: new Date(2024, 5, 15, 10, 0),
-    status: 'unfinished'
-  },
-  {
-    id: 12,
-    title: '3 Team meeting',
-    startDate: new Date(2024, 5, 15, 9, 0), // June 15th, 2024, 9:00 AM
-    endDate: new Date(2024, 5, 15, 10, 0),
-    status: 'unfinished'
-  },
-  {
-    id: 5,
+    id: 5213,
     title: 'Project presentation',
     startDate: new Date(2024, 5, 20, 13, 0), // June 20th, 2024, 1:00 PM
     endDate: new Date(2024, 5, 20, 14, 30),
@@ -152,7 +132,12 @@ const Events = () => {
             </div>
             <h1 className='text-3xl font-bold '>Events</h1>
             </div>
-          <Paper className='w-11/12 mx-auto mt-6'>
+          <div className='flex justify-between py-2 w-11/12 mx-auto'>
+          <h1 className='font-bold text-blue-500'>Upcoming Tasks: 10</h1>
+            <h1 className='font-bold text-green-500'>Completed Tasks: 5</h1>
+            <h1 className='font-bold text-red-500'>Late Finished Tasks: 6</h1>
+          </div>
+          <Paper className='w-11/12 mx-auto mt-3'>
         <Scheduler
           data={newAppointments}
         >
@@ -170,7 +155,6 @@ const Events = () => {
       />
         </Scheduler>
       </Paper>
-        <AllTasks/>
         </div>
       )
 };

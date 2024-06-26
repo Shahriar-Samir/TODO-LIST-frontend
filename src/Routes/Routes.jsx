@@ -4,8 +4,9 @@ import App from '../App';
 import Dashboard from '../Dashboard/Dashboard';
 import Today from '../Dashboard/Today';
 import Signup from '../Home/Signup';
-import Task from '../Dashboard/Task';
 import Events from '../Dashboard/Events';
+import { AllDayPanel } from '@devexpress/dx-react-scheduler';
+import AllTasksPage from '../Dashboard/AllTasksPage';
 
 const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
             {
                 path:'events',
                 element: <Events/>
+            },
+            {
+                path:'allTasks',
+                element: <AllTasksPage/>
             },
         ]
     },
