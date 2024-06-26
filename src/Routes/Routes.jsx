@@ -4,6 +4,7 @@ import App from '../App';
 import Dashboard from '../Dashboard/Dashboard';
 import Today from '../Dashboard/Today';
 import Signup from '../Home/Signup';
+import Task from '../Dashboard/Task';
 
 const router = createBrowserRouter([
     {
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
             {
                 path:'today',
                 element: <Today/>
-            }
+            },
         ]
     },
     

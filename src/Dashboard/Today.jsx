@@ -6,6 +6,7 @@ import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { CiCalendar } from "react-icons/ci";
 import { IoMdAlarm } from "react-icons/io";
+import Task from "./Task";
 
 
 const Today = () => {
@@ -108,8 +109,12 @@ const Today = () => {
 </div>
 </div>
 <Reorder.Group axis="y" role="button" values={items} onReorder={setItems} className="mt-5 flex flex-col gap-5 w-full">
-      {items.map((item) => (
-        <Reorder.Item key={item} value={item} className="flex gap-2 w-full border-b pb-2">
+      {items.map((item,index) => (
+        <Reorder.Item key={item} onClick={()=>{
+          document.getElementById(index)?.showModal()
+       
+       }} value={item} className="flex gap-2 w-full border-b pb-2">
+        <Task id={index}/>
           <div className="form-control">
   <label className="cursor-pointer label">
 
