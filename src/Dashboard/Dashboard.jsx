@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FaBars, FaHamburger, FaSearch } from 'react-icons/fa';
 import { IoIosAdd, IoIosAddCircle } from 'react-icons/io';
 import { Link, NavLink, Outlet } from 'react-router-dom';
@@ -7,10 +7,11 @@ import { IoMdNotifications } from "react-icons/io";
 import { Tooltip, useMediaQuery } from '@mui/material';
 import {motion} from 'framer-motion'
 import { IoClose } from 'react-icons/io5';
+import { AuthContext } from '../Providers/AuthProvider';
 
 const Dashboard = () => {
   const md = useMediaQuery('(min-width:768px)');
-
+  const {user} = useContext(AuthContext)
 
     const [descripiton,setDescription] = useState()
     const [taskName,setTaskName] = useState()
@@ -95,7 +96,7 @@ const Dashboard = () => {
 <div className="dropdown">
   <Tooltip title='Shahriar Samir'>
   <div tabIndex={0} role="button" className="m-1">
-    <img src='' className='w-[50px] h-[50px] rounded-full'/>
+    <img src={user?.photoURL ? user.photoURL : '/logos/user.png'} className='w-[50px] h-[50px] rounded-full border-2 border-blue-500 outline-none'/>
   </div>
   </Tooltip>
   <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow right-0 mt-2">

@@ -1,15 +1,39 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../Providers/AuthProvider';
+import {toast,ToastContainer} from 'react-toastify'
 
 const Signup = () => {
+  const {createAccount,updateAccount} = useContext(AuthContext)
+  const navigate = useNavigate()
+  
+  const submit = (e)=>{
+    e.preventDefault()
+      const form = e.target
+      const userName = form.userName.value
+      const email = form.email.value
+      const password = form.password.value
+      createAccount(email,password)
+      .then(()=>{
+          updateAccount({displayName: userName})
+          .then(()=>{
+            navigate('/app/today')
+          })
+          .catch(()=>{
+            toast.error('Something went wrong')
+          })
+      })
+  }
+
     return (
         <div className='flex flex-col justify-center items-center h-[150vh] gap-12 lg:h-[140vh] '>
+          <ToastContainer/>
                       <img src='/logos/cover.png' className='w-[250px]'/>
           <div className='w-11/12 md:w-1/2 max-w-[350px]'>
-          <form className="">
+          <form className="" onSubmit={submit}>
             <h1 className='text-sm font-bold text-end'>Create an account with</h1>
 
             <div className='grid grid-cols-3 gap-1 mt-6'>
@@ -37,20 +61,20 @@ const Signup = () => {
           <label className="label">
             <span className="label-text">User name</span>
           </label>
-          <input type="email" placeholder="user name" className="input input-bordered" required />
+          <input type="text" name='userName' placeholder="user name" className="input input-bordered" required />
         </div>
         <div className="form-control mt-1">
           <label className="label">
             <span className="label-text">Email</span>
           </label>
-          <input type="email" placeholder="email" className="input input-bordered" required />
+          <input type="email" placeholder="email" name='email' className="input input-bordered" required />
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Password</span>
           </label>
           <div className='relative'>
-          <input type="password" placeholder="password" className="input input-bordered w-full" required />
+          <input type="password" placeholder="password" name='password' className="input input-bordered w-full" required />
             <FaEye className='absolute top-4 right-4 text-xl'/>
             <FaEyeSlash className='absolute top-4 right-4 text-xl'/>
           </div>
