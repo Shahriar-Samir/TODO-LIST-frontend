@@ -58,12 +58,14 @@ const AllTasksPage = () => {
                 <div className="flex flex-col gap-2 border rounded-md p-3">
                 <label className="px-0 input outline-0 border-0 flex items-center gap-2 border-none outline-none focus-within:outline-none h-fit">    
   <p  contentEditable={true} 
+   suppressContentEditableWarning={true}
   className={`outline-none w-full cursor-text text-black font-bold  focus-within:before:content-none ${taskName?  "" : "before:content-['Task_name'] text-gray-500"}`}    
   onInput={changeTaskName} 
 ></p>
 </label>
                 <label className="px-0 input  flex items-center gap-2  border-none outline-none focus-within:outline-none h-fit">    
   <p  contentEditable={true} 
+   suppressContentEditableWarning={true}
   className={`outline-none w-full cursor-text  focus-within:before:content-none ${descripiton?  "" : "before:content-['Description'] text-gray-300"}`}    
   onInput={changeDescription} 
 ></p></label>

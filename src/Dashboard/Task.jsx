@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CiCalendar } from 'react-icons/ci';
 import { IoMdAlarm } from 'react-icons/io';
-import { IoNotificationsOutline } from "react-icons/io5";
+import { IoClose, IoNotificationsOutline } from "react-icons/io5";
 import Select from 'react-select';
 import { BsThreeDots } from "react-icons/bs";
 
@@ -24,10 +24,14 @@ const Task = ({id}) => {
     return (
         <div className='cursor-auto'>
     <dialog id={id} className="modal">
+      
   <div className="modal-box h-full flex justify-center items-center shadow-none bg-transparent p-0">
+    
 <div className='bg-white p-4 w-full rounded-lg'>
 <div className='flex justify-between items-center gap-10'>
-<h3 className="font-bold text-lg outline-none border-none" contentEditable onFocus={showButtons} onBlur={hideButtons}>Hello!</h3>
+<h3 className="font-bold text-lg outline-none border-none"  suppressContentEditableWarning={true} contentEditable={true} onFocus={showButtons} onBlur={hideButtons}>Hello!</h3>
+
+<div className='flex items-center'>
 <div className="dropdown">
   <div tabIndex={0} role="button" className="m-1"><BsThreeDots  className='w-[50px] text-xl'/></div>
   <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-[120px] p-2 shadow right-0">
@@ -35,8 +39,13 @@ const Task = ({id}) => {
     <li><a>Delete</a></li>
   </ul>
 </div>
+<form method="dialog">
+        {/* if there is a button in form, it will close the modal */}
+        <button className="text-2xl"><IoClose/></button>
+      </form>
 </div>
-    <p className="mt-4 mb-4 outline-none border-none" onFocus={showButtons} onBlur={hideButtons} contentEditable>Press ESC key or click outside to close</p>
+</div>
+    <p className="mt-4 mb-4 outline-none border-none" onFocus={showButtons} onBlur={hideButtons} contentEditable={true}  suppressContentEditableWarning={true}>Press ESC key or click outside to close</p>
    {
     editSave?  <div className='flex w-full justify-end gap-3'>
     <button className='btn bg-green-500 text-white'>Save</button>
@@ -80,7 +89,6 @@ const Task = ({id}) => {
      <button className="p-1 bg-slate-200 font-semibold rounded-md mt-3 w-full">Save</button>
        </ul>
      </div>
-     
      <div className="dropdown">
      <div className="tooltip" data-tip="Reminder">
        <div tabIndex={0} role="button" className="m-1 flex items-center text-sm gap-1"><IoNotificationsOutline />11: 00Am</div>
@@ -102,13 +110,10 @@ const Task = ({id}) => {
  </div>
 </div>
   </div>
-  <form method="dialog" className="modal-backdrop">
-    
-    <button>close</button>
-  </form>
+
 </dialog>
         </div>
     );
 };
-
+  
 export default Task;

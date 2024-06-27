@@ -7,6 +7,7 @@ import Signup from '../Home/Signup';
 import Events from '../Dashboard/Events';
 import AllTasksPage from '../Dashboard/AllTasksPage';
 import Notifications from '../Dashboard/Notifications';
+import Profile from '../Dashboard/Profile';
 
 const router = createBrowserRouter([
     {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
             {
                 path:'notifications',
                 element: <Notifications/>
+            },
+            {
+                path:'profile',
+                element: <Profile/>
             },
         ]
     },

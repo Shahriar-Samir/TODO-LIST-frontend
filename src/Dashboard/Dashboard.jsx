@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
+import { FaBars, FaHamburger, FaSearch } from 'react-icons/fa';
 import { IoIosAdd, IoIosAddCircle } from 'react-icons/io';
 import { Link, Outlet } from 'react-router-dom';
 import { CiEdit } from "react-icons/ci";
 import { IoMdNotifications } from "react-icons/io";
+import { Tooltip, useMediaQuery } from '@mui/material';
+import {motion} from 'framer-motion'
+import { IoClose } from 'react-icons/io5';
 
 const Dashboard = () => {
+  const md = useMediaQuery('(min-width:768px)');
 
 
     const [descripiton,setDescription] = useState()
@@ -18,21 +22,43 @@ const Dashboard = () => {
     const changeTaskName = (e)=>{
         setTaskName(e.target.textContent)
     }
+
+    const [navbar,setNavbar] = useState(md)
+
+    const openNavbar = (e)=>{
+      e.stopPropagation()
+        if(md===false){
+          setNavbar(true)
+        }
+        if(navbar===false){
+          setNavbar(true)
+        }
+    }
+    const closeNavbar = (e)=>{
+
+      if(navbar===true && md===true){
+        setNavbar(true)
+      }
+      if(md===false && navbar === true){
+        setNavbar(false)
+      }
+ 
+}
   
     return (
         <div className=''>
          
         <div className="drawer lg:drawer-open flex ">
-  <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-  {/* <div className="drawer-content flex flex-col items-center justify-center">
-
-    <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
-      Open drawer
-    </label>
-  </div> */}
-  <div className="w-1/4 h-[100vh] ">
+ 
+  <motion.div initial={{x:-600}} animate={{x: navbar===true? 0 : -600}} transition={{ease:'anticipate'}} className="w-2/4 md:w-2/4 lg:w-1/4 h-[100vh] absolute md:static z-30 md:block">
     <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-    <ul className="menu gap-4  p-4 w-full h-full text-white bg-gradient-to-r from-emerald-400 to-cyan-400 bg-cyan-500">
+    <ul className="menu gap-4  p-4 w-full h-full text-white bg-green-100">
+    <div className='flex w-full justify-center items-center flex-col'>
+      <div className='w-full flex justify-end'>
+        <IoClose className='text-green-500 text-3xl md:hidden' onClick={closeNavbar}/>
+      </div>
+    <img src='/logos/cover.png' className='w-[100px] h-[100px] object-contain'/>
+    </div>
       {/* Sidebar content here */}
         <div className='bg-white flex justify-between rounded-lg relative w-full'>
         <input className='p-2 outline-0 rounded-lg w-full' placeholder='search '/>
@@ -55,29 +81,53 @@ const Dashboard = () => {
       </li>
       <li><Link to='/app/events'>Events</Link></li>
     </ul>
-  </div>
-  <div className='w-3/4 overflow-auto h-[100vh]'>
-  <nav className='flex justify-end px-5 py-3 gap-5 top-0 sticky z-10'>
-  <Link to='/app/notifications' className="flex items-center relative w-[50px]">
+  </motion.div>
+  <div className='w-full md:w-3/4 overflow-auto h-[100vh]' onClick={closeNavbar}>
+  <nav className='flex justify-end items-center  px-5 py-3 gap-5 top-0 sticky z-10'>
+<div className='flex justify-end items-center rounded-2xl bg-blue-100 px-5 py-3 gap-5'>
+  <FaBars onClick={openNavbar} className='md:hidden'/>
+<Tooltip title='Notifications'>
+<Link  to='/app/notifications' className="flex items-center relative w-[50px]">
 <IoMdNotifications className='text-2xl text-blue-400'/>
   <div className="badge bg-red-500 text-white font-bold absolute right-1 top-0 p-1">+19</div>
 </Link>
-                <img src='/logos/checkit.png' className='w-[40px] h-[40px]'/>
+</Tooltip>
+<div className="dropdown">
+  <Tooltip title='Shahriar Samir'>
+  <div tabIndex={0} role="button" className="m-1">
+    <img src='' className='w-[50px] h-[50px] rounded-full'/>
+  </div>
+  </Tooltip>
+  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow right-0 mt-2">
+    <li><Link to='/app/profile'>Profile</Link></li>
+    <li><a className='font-bold'>Logout</a></li>
+  </ul>
+</div>
+
+</div>
             </nav>
   <Outlet/>
   </div>
 </div>
-<dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+<dialog id="my_modal_5" className="modal w-11/12 mx-auto modal-bottom sm:modal-middle">
   <div className="modal-box p-0 bg-transparent h-full shadow-none flex justify-center items-start flex-col w-full">
   <div className="flex flex-col gap-2 border rounded-xl p-3 bg-white w-full">
+                <div className='flex w-full justify-between items-center'>
                 <label className="px-0 input outline-0 border-0 flex items-center gap-2 border-none outline-none focus-within:outline-none h-fit">    
   <p  contentEditable={true} 
-  className={`outline-none w-full cursor-text text-black font-bold  focus-within:before:content-none ${taskName?  "" : "before:content-['Task_name'] text-gray-500"}`}    
+   suppressContentEditableWarning={true}
+  className={`outline-none w-full max-w-[250px] cursor-text text-black font-bold  focus-within:before:content-none ${taskName?  "" : "before:content-['Task_name'] text-gray-500"}`}    
   onInput={changeTaskName} 
 ></p>
 </label>
+<form method="dialog">
+        {/* if there is a button in form, it will close the modal */}
+        <button className="text-2xl"><IoClose/></button>
+      </form>
+                </div>
                 <label className="px-0 input  flex items-center gap-2  border-none outline-none focus-within:outline-none h-fit">    
   <p  contentEditable={true} 
+   suppressContentEditableWarning={true}
   className={`outline-none w-full cursor-text  focus-within:before:content-none ${descripiton?  "" : "before:content-['Description'] text-gray-300"}`}    
   onInput={changeDescription} 
 ></p></label>
@@ -107,7 +157,7 @@ const Dashboard = () => {
 </div>
 <div className="dropdown ">
   <div tabIndex={0} role="button" className="btn m-1">Reminder</div>
-  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[30] w-52 p-2 shadow">
+  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[30] w-52 p-2 shadow right-0">
   <div className="mt-2">
     <label>Time</label> <br />
  <input type="time" className="w-full border p-2 outline-none focus-within:outline-none"/>
@@ -126,6 +176,7 @@ const Dashboard = () => {
 </div>
 
   </div>
+  
 </dialog>
 
         </div>

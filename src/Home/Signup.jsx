@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const Signup = () => {
     return (
-        <div className='flex flex-col justify-center items-center h-[120vh] gap-12 lg:h-[140vh] '>
+        <div className='flex flex-col justify-center items-center h-[150vh] gap-12 lg:h-[140vh] '>
                       <img src='/logos/cover.png' className='w-[250px]'/>
           <div className='w-11/12 md:w-1/2 max-w-[350px]'>
           <form className="">

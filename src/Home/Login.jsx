@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
     return (
-        <div className='flex flex-col justify-center items-center gap-10 h-[110vh] md:flex-row md:gap-20 lg:gap-32'>
+        <div className='flex flex-col justify-center items-center gap-10 h-[130vh] md:flex-row md:gap-20 lg:gap-32'>
                 <div className='w-full md:max-w-[350px]  flex justify-center items-center flex-col'>
                 <img src='/logos/cover.png' className='w-[300px]'/>
                 <h1 className='w-full mt-6 text-center'>Your Ultimate Task Management Solution</h1>

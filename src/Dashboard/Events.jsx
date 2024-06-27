@@ -132,12 +132,12 @@ const Events = () => {
             </div>
             <h1 className='text-3xl font-bold '>Events</h1>
             </div>
-          <div className='flex justify-between py-2 w-11/12 mx-auto'>
+          <div className='flex flex-col justify-between py-2 w-11/12 mx-auto'>
           <h1 className='font-bold text-blue-500'>Upcoming Tasks: 10</h1>
             <h1 className='font-bold text-green-500'>Completed Tasks: 5</h1>
             <h1 className='font-bold text-red-500'>Late Finished Tasks: 6</h1>
           </div>
-          <Paper className='w-11/12 mx-auto mt-3'>
+          <Paper className='w-full md:w-11/12 mx-auto mt-3'>
         <Scheduler
           data={newAppointments}
         >
@@ -206,12 +206,14 @@ const DayCellComponent = ({startDate,...resProps}) => {
   <div className="flex flex-col gap-2 border rounded-xl p-3 bg-white w-full">
                 <label className="px-0 input outline-0 border-0 flex items-center gap-2 border-none outline-none focus-within:outline-none h-fit">    
   <p  contentEditable={true} 
+   suppressContentEditableWarning={true}
   className={`outline-none w-full cursor-text text-black font-bold  focus-within:before:content-none ${taskName?  "" : "before:content-['Task_name'] text-gray-500"}`}    
   onInput={changeTaskName} 
 ></p>
 </label>
                 <label className="px-0 input  flex items-center gap-2  border-none outline-none focus-within:outline-none h-fit">    
   <p  contentEditable={true} 
+   suppressContentEditableWarning={true}
   className={`outline-none w-full cursor-text  focus-within:before:content-none ${descripiton?  "" : "before:content-['Description'] text-gray-300"}`}    
   onInput={changeDescription} 
 ></p></label>
