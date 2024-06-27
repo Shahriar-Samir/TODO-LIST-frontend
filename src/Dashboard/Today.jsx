@@ -6,6 +6,7 @@ import { MdDelete } from "react-icons/md";
 import { CiCalendar } from "react-icons/ci";
 import { IoMdAlarm } from "react-icons/io";
 import Task from "./Task";
+import { Helmet } from "react-helmet-async";
 
 
 const Today = () => {
@@ -45,7 +46,9 @@ const Today = () => {
 
     return (
         <div className='w-10/12 mx-auto '>
-            
+            <Helmet>
+              <title>Check It | Today</title>
+            </Helmet>
             <div className="flex mt-5 border-b pb-3 border-black justify-between">
             <div>
             <h1 className=''>{today}</h1>
@@ -55,23 +58,23 @@ const Today = () => {
             </div>
             <div className='mt-5'>
                 <button className="flex items-center gap-2  text-md" onMouseEnter={mouseIn} onMouseLeave={mouseOut}>{icon ?<IoIosAddCircle  className="text-green-500 text-2xl"/> : <IoIosAdd  className="text-green-500 text-2xl"/>} Add Task</button> 
-                <div className="flex flex-col gap-2 border rounded-md p-3">
-                <label className="px-0 input outline-0 border-0 flex items-center gap-2 border-none outline-none focus-within:outline-none h-fit">    
+                <div className="flex flex-col gap-2 shadow-md rounded-md p-3">
+                <label className="px-0 input outline-0 border-0 flex items-center gap-2 border-none outline-none focus-within:outline-none h-fit bg-transparent">    
   <p  contentEditable={true} 
    suppressContentEditableWarning={true}
-  className={`outline-none w-full cursor-text text-black font-bold  focus-within:before:content-none ${taskName?  "" : "before:content-['Task_name'] text-gray-500"}`}    
+  className={`outline-none  bg-transparent  w-full cursor-text text-black font-bold  focus-within:before:content-none ${taskName?  "" : "before:content-['Task_name'] text-gray-500"}`}    
   onInput={changeTaskName} 
 ></p>
 </label>
-                <label className="px-0 input  flex items-center gap-2  border-none outline-none focus-within:outline-none h-fit">    
+                <label className="px-0 input  flex items-center gap-2  border-none outline-none focus-within:outline-none h-fit bg-transparent">    
   <p  contentEditable={true} 
    suppressContentEditableWarning={true}
-  className={`outline-none w-full cursor-text  focus-within:before:content-none ${descripiton?  "" : "before:content-['Description'] text-gray-300"}`}    
+  className={`outline-none w-full cursor-text  bg-transparent  focus-within:before:content-none ${descripiton?  "" : "before:content-['Description'] text-gray-400"}`}    
   onInput={changeDescription} 
 ></p></label>
 <div className="flex">
 <div className="dropdown">
-  <div tabIndex={0} role="button" className="btn m-1">Due Date</div>
+  <div tabIndex={0} role="button" className="btn bg-white m-1">Due Date</div>
   <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow">
   <div>
     <label>Date</label> <br />
@@ -85,7 +88,7 @@ const Today = () => {
   </ul>
 </div>
 <div className="dropdown">
-  <div tabIndex={0} role="button" className="btn m-1">Priority</div>
+  <div tabIndex={0} role="button" className="btn bg-white m-1">Priority</div>
   <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
     <li><p>Compulsory</p></li>
     <li><p>Most Important</p></li>
@@ -94,7 +97,7 @@ const Today = () => {
   </ul>
 </div>
 <div className="dropdown">
-  <div tabIndex={0} role="button" className="btn m-1">Reminder</div>
+  <div tabIndex={0} role="button" className="btn bg-white m-1">Reminder</div>
   <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
   <div className="mt-2">
     <label>Time</label> <br />
@@ -111,7 +114,7 @@ const Today = () => {
 </div>
 <Reorder.Group axis="y"  values={items} onReorder={setItems} className="mt-5 flex flex-col gap-5 w-full">
       {items.map((item,index) => (
-        <Reorder.Item key={index}  value={item} className="flex gap-2 w-full border-b pb-2">
+        <Reorder.Item key={index}  value={item} className="flex gap-2 w-full shadow-md pb-2">
         <Task id={index}/>
           <div className="form-control">
   <label className="cursor-pointer label">

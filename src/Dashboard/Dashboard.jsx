@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FaBars, FaHamburger, FaSearch } from 'react-icons/fa';
 import { IoIosAdd, IoIosAddCircle } from 'react-icons/io';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import { CiEdit } from "react-icons/ci";
 import { IoMdNotifications } from "react-icons/io";
 import { Tooltip, useMediaQuery } from '@mui/material';
@@ -46,13 +46,13 @@ const Dashboard = () => {
 }
   
     return (
-        <div className=''>
+        <div className='bg-gradient-to-r from-emerald-100 to-cyan-100 bg-cyan-100  hover:bg-gradient-to-r hover:from-emerald-100 hover:to-cyan-100 hover:bg-cyan-100'>
          
         <div className="drawer lg:drawer-open flex ">
  
   <motion.div initial={{x:-600}} animate={{x: navbar===true? 0 : -600}} transition={{ease:'anticipate'}} className="w-2/4 md:w-2/4 lg:w-1/4 h-[100vh] absolute md:static z-30 md:block">
     <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-    <ul className="menu gap-4  p-4 w-full h-full text-white bg-green-100">
+  <ul className="flex  flex-col gap-4  p-4 w-full h-full text-black border-[#e2e2e2] shadow-xl">
     <div className='flex w-full justify-center items-center flex-col'>
       <div className='w-full flex justify-end'>
         <IoClose className='text-green-500 text-3xl md:hidden' onClick={closeNavbar}/>
@@ -64,27 +64,27 @@ const Dashboard = () => {
         <input className='p-2 outline-0 rounded-lg w-full' placeholder='search '/>
         <FaSearch className='absolute top-3 right-2'/>
         </div>
-     <li onClick={()=>document.getElementById('my_modal_5').showModal()}><button className="flex items-center gap-2 text-md btn bg-green-400 border-none text-white hover:bg-green-500" > Add Task <IoIosAddCircle  className="text-2xl"/></button></li> 
-      <li><Link to='/app/allTasks' className='flex justify-normal w-full'>
+     <li onClick={()=>document.getElementById('my_modal_5').showModal()}><button className="flex items-center gap-2 text-md btn bg-green-400 border-none text-white hover:bg-green-500 w-full" > Add Task <IoIosAddCircle  className="text-2xl"/></button></li> 
+      <li className=''><NavLink to='/app/allTasks' className={({isActive})=> isActive? `p-2 rounded-lg text-sm flex justify-normal w-full border border-black ` : `p-2 rounded-lg text-sm flex justify-normal w-full border border-transparent`}>
       <div className='flex justify-between w-full'>
       <p>All Task</p>
       <div className="badge text-xs">+10</div>
       </div>
-      </Link>
+      </NavLink>
       </li>
-      <li><Link to='/app/today' className='flex justify-normal w-full'>
+      <li className=''><NavLink to='/app/today' className={({isActive})=> isActive? `p-2 rounded-lg text-sm flex justify-normal w-full border border-black` : `p-2 rounded-lg text-sm flex justify-normal w-full border border-transparent`}>
       <div className='flex justify-between w-full'>
       <p>Today</p>
       <div className="badge text-xs">+4</div>
       </div>
-      </Link>
+      </NavLink>
       </li>
-      <li><Link to='/app/events'>Events</Link></li>
+      <li className='w-full'><NavLink className={({isActive})=> isActive? `p-2 rounded-lg text-sm flex justify-normal w-full border border-black ` : `p-2 rounded-lg text-sm flex justify-normal w-full border border-transparent`} to='/app/events'>Events</NavLink></li>
     </ul>
   </motion.div>
   <div className='w-full md:w-3/4 overflow-auto h-[100vh]' onClick={closeNavbar}>
   <nav className='flex justify-end items-center  px-5 py-3 gap-5 top-0 sticky z-10'>
-<div className='flex justify-end items-center rounded-2xl bg-blue-100 px-5 py-3 gap-5'>
+<div className='flex justify-end items-center rounded-2xl border border-[#e2e2e2] shadow-md px-5 py-3 gap-5'>
   <FaBars onClick={openNavbar} className='md:hidden'/>
 <Tooltip title='Notifications'>
 <Link  to='/app/notifications' className="flex items-center relative w-[50px]">

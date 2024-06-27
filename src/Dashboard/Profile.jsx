@@ -71,14 +71,14 @@ const data = [
             <>
             <p contentEditable={true}  suppressContentEditableWarning={true} className='border w-full py-3 ps-2'>User name</p>
             <div className='flex gap-4'>
-            <button className='btn bg-green-500 text-white'>Save</button>
-            <button className='btn bg-red-500 text-white' onClick={closeChangeName}>Cancel</button>
+            <button className='btn bg-white bg-green-500 text-white'>Save</button>
+            <button className='btn bg-white bg-red-500 text-white' onClick={closeChangeName}>Cancel</button>
             </div>
             </>
             :
             <>
             <p>User name</p>
-            <button className='btn' onClick={openChangeName}>Change User Name</button>
+            <button className='btn bg-white' onClick={openChangeName}>Change User Name</button>
             </>
             }
            </div>
@@ -88,14 +88,14 @@ const data = [
             <>
             <p contentEditable={true}  suppressContentEditableWarning={true} className='border w-full py-3 ps-2'>User Mobile</p>
             <div className='flex gap-4'>
-            <button className='btn bg-green-500 text-white'>Save</button>
-            <button className='btn bg-red-500 text-white' onClick={closeChangeMobile}>Cancel</button>
+            <button className='btn bg-white bg-green-500 text-white'>Save</button>
+            <button className='btn bg-white bg-red-500 text-white' onClick={closeChangeMobile}>Cancel</button>
             </div>
             </>
             :
             <>
             <p>User Mobile</p>
-            <button className='btn' onClick={openChangeMobile}>Change Phone Number</button>
+            <button className='btn bg-white' onClick={openChangeMobile}>Change Phone Number</button>
             </>
             }
            </div>
@@ -105,20 +105,20 @@ const data = [
             <>
             <p contentEditable={true}  suppressContentEditableWarning={true} className='border w-full py-3 ps-2'>Photo URL</p>
             <div className='flex gap-4'>
-            <button className='btn bg-green-500 text-white'>Save</button>
-            <button className='btn bg-red-500 text-white' onClick={closeChangeImage}>Cancel</button>
+            <button className='btn bg-white bg-green-500 text-white'>Save</button>
+            <button className='btn bg-white bg-red-500 text-white' onClick={closeChangeImage}>Cancel</button>
             </div>
             </>
             :
             <>
             <p>Photo URL</p>
-            <button className='btn' onClick={openChangeImage}>Change Profile Image</button>
+            <button className='btn bg-white' onClick={openChangeImage}>Change Profile Image</button>
             </>
             }
            </div>
            <div className='flex gap-5 items-center w-full justify-between'>
             <p contentEditable={true}  suppressContentEditableWarning={true}>Password</p>
-            <button className='btn'>Change Password</button>
+            <button className='btn bg-white'>Change Password</button>
            </div>
         </div>
         <ResponsiveContainer width="50%" height="50%" className='flex mx-auto mt-10'>
