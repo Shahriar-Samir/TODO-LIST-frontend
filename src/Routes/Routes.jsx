@@ -8,6 +8,7 @@ import Events from '../Dashboard/Events';
 import AllTasksPage from '../Dashboard/AllTasksPage';
 import Notifications from '../Dashboard/Notifications';
 import Profile from '../Dashboard/Profile';
+import PrivateRoute from '../Providers/PrivateRoute';
 
 const router = createBrowserRouter([
     {
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
     },
     {
         path:'/app',
-        element: <Dashboard/>,
+        element: <PrivateRoute><Dashboard/></PrivateRoute>,
         children: [
             {
                 path:'today',

@@ -8,10 +8,11 @@ import { Tooltip, useMediaQuery } from '@mui/material';
 import {motion} from 'framer-motion'
 import { IoClose } from 'react-icons/io5';
 import { AuthContext } from '../Providers/AuthProvider';
+import { toast } from 'react-toastify';
 
 const Dashboard = () => {
   const md = useMediaQuery('(min-width:768px)');
-  const {user} = useContext(AuthContext)
+  const {user,logout,setLoading,loading} = useContext(AuthContext)
 
     const [descripiton,setDescription] = useState()
     const [taskName,setTaskName] = useState()
@@ -45,6 +46,17 @@ const Dashboard = () => {
       }
  
 }
+  const signOut = ()=>{
+      logout()
+      .then(()=>{
+          setLoading(false)
+      })
+      .catch(()=>{
+        setLoading(false)
+        toast.error('Something went wrong')
+      })
+  }
+
   
     return (
         <div className='bg-gradient-to-r from-emerald-100 to-cyan-100 bg-cyan-100  hover:bg-gradient-to-r hover:from-emerald-100 hover:to-cyan-100 hover:bg-cyan-100'>
@@ -94,14 +106,14 @@ const Dashboard = () => {
 </Link>
 </Tooltip>
 <div className="dropdown">
-  <Tooltip title='Shahriar Samir'>
+  <Tooltip title={user?.displayName}>
   <div tabIndex={0} role="button" className="m-1">
-    <img src={user?.photoURL ? user.photoURL : '/logos/user.png'} className='w-[50px] h-[50px] rounded-full border-2 border-blue-500 outline-none'/>
+    <img src={user?.photoURL ? user.photoURL : '/logos/user.png'} className='w-[50px] h-[50px] object-cover rounded-full border-2 border-blue-500 outline-none'/>
   </div>
   </Tooltip>
   <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow right-0 mt-2">
-    <li><Link to='/app/profile'>Profile</Link></li>
-    <li><a className='font-bold'>Logout</a></li>
+    <li><Link to={`/app/profile`}>Profile</Link></li>
+    {loading? <li><a className='font-bold'><span className="loading loading-spinner loading-md"></span></a></li> : <li onClick={signOut}><a className='font-bold'>Logout</a></li>}
   </ul>
 </div>
 

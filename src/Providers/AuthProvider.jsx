@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, FacebookAuthProvider, getAuth, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth'
+import { createUserWithEmailAndPassword, FacebookAuthProvider, getAuth, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updatePhoneNumber, updateProfile } from 'firebase/auth'
 import app from '../firebase/firebase';
+import useAxios from '../hooks/useAxios';
 
 export const AuthContext = createContext(null)
 
@@ -11,11 +12,37 @@ const AuthProvider = ({children}) => {
     const googleProvider = new GoogleAuthProvider()
     const githubProvider = new GithubAuthProvider()
     const facebookProvider = new FacebookAuthProvider()
-
+    const axiosSecure = useAxios()
+    
     useEffect(()=>{
             onAuthStateChanged(auth,(currentUser)=>{
-                    setUser(currentUser)
-                    setLoading(false)
+                if(currentUser){
+                      axiosSecure.get(`/user/${currentUser.uid}`)
+                      .then(res=>{
+                        if(res.data){
+                            const {displayName,photoURL} =res.data
+                            updateAccount({displayName,photoURL})
+                            .then(()=>{
+
+                                setLoading(false) 
+                                setUser(currentUser) 
+
+                            })
+                        }
+                        if(!res.data){
+                            setUser(currentUser) 
+                            setLoading(false)
+                        }
+                      })
+                      .catch(()=>{
+                        setLoading(false)
+                    })
+                   
+                    }
+                    else{
+                        setLoading(false)
+                        setUser(null)
+                    }
             })
     },[])
 
@@ -47,8 +74,12 @@ const AuthProvider = ({children}) => {
         setLoading(true)
         return signInWithPopup(auth,facebookProvider)
     }
+    const logout= ()=>{
+        setLoading(true)
+        return signOut(auth)
+    }
 
-    const userAuth = {signIn,createAccount,updateAccount,loading,setLoading,user,setUser,singInWithGoogle,singInWithGithub,singInWithFacebook}
+    const userAuth = {signIn,createAccount,updateAccount,loading,setLoading,user,setUser,singInWithGoogle,singInWithGithub,singInWithFacebook,logout}
 
     return (
         <AuthContext.Provider value={userAuth}>

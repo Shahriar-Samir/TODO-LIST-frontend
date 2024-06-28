@@ -5,26 +5,45 @@ import { FaGithub } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Providers/AuthProvider';
 import {toast,ToastContainer} from 'react-toastify'
+import useAxios from '../hooks/useAxios';
+
 
 const Signup = () => {
-  const {createAccount,updateAccount} = useContext(AuthContext)
+  const {createAccount,updateAccount,loading,setLoading} = useContext(AuthContext)
   const navigate = useNavigate()
   
   const submit = (e)=>{
     e.preventDefault()
       const form = e.target
+      const axiosSecure = useAxios()
       const userName = form.userName.value
       const email = form.email.value
       const password = form.password.value
       createAccount(email,password)
-      .then(()=>{
-          updateAccount({displayName: userName})
-          .then(()=>{
-            navigate('/app/today')
-          })
-          .catch(()=>{
-            toast.error('Something went wrong')
-          })
+      .then((res)=>{
+            updateAccount({displayName:userName})
+            .then(()=>{
+              axiosSecure.post('/addUser', {uid:res.user.uid,displayName:userName,email:email})
+              .then(()=>{
+                  setLoading(false)
+                  navigate('/app/today')
+  
+            })
+            })
+      })
+      .catch((err)=>{
+        setLoading(false)
+        if(err.message==='Firebase: Password should be at least 6 characters (auth/weak-password).'){
+          toast.error('Password should be at least six characters')
+        }
+        if(err.message==='Firebase: Error (auth/email-already-in-use).'){
+          
+          toast.error('Email already in use')
+        }
+        else{
+          toast.error('Something went wrong')
+          
+        }
       })
   }
 
@@ -80,7 +99,7 @@ const Signup = () => {
           </div>
         </div>
         <div className="form-control mt-6">
-          <button className="btn text-white bg-gradient-to-r from-emerald-400 to-cyan-400 bg-cyan-500  hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 hover:bg-cyan-500 ">Submit</button>
+        { loading? <button disabled={true} className="btn text-white bg-gradient-to-r from-emerald-400 to-cyan-400 bg-cyan-500  hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 hover:bg-cyan-500 "><span className="loading loading-spinner loading-md"></span></button> : <button className="btn text-white bg-gradient-to-r from-emerald-400 to-cyan-400 bg-cyan-500  hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 hover:bg-cyan-500 ">Login</button>}
         </div>
       </form>
       <button className='btn w-full mt-4'>Try as guest</button>
