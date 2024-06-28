@@ -65,7 +65,7 @@ const Dashboard = () => {
  
   <motion.div initial={{x:-600}} animate={{x: navbar===true? 0 : -600}} transition={{ease:'anticipate'}} className="w-2/4 md:w-2/4 lg:w-1/4 h-[100vh] absolute md:static z-30 md:block">
     <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-  <ul className="flex  flex-col gap-4  p-4 w-full h-full text-black border-[#e2e2e2] shadow-xl">
+  <ul className={`flex flex-col ${md? 'bg-transparent' : 'bg-gradient-to-r from-emerald-100 to-cyan-100 bg-cyan-100  hover:bg-gradient-to-r hover:from-emerald-100 hover:to-cyan-100 hover:bg-cyan-100'} gap-4 p-4 w-full h-full text-black border-[#e2e2e2] shadow-xl`}>
     <div className='flex w-full justify-center items-center flex-col'>
       <div className='w-full flex justify-end'>
         <IoClose className='text-green-500 text-3xl md:hidden' onClick={closeNavbar}/>

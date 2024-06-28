@@ -4,15 +4,18 @@ import { IoMdAlarm } from 'react-icons/io';
 import { IoClose, IoNotificationsOutline } from "react-icons/io5";
 import Select from 'react-select';
 import { BsThreeDots } from "react-icons/bs";
+import { useLocation } from 'react-router-dom';
 
 const options = [
     { value: 'Most Important', label: 'Most Important' },
     { value: 'Important', label: 'Important' },
-    { value: 'vanilla', label: 'Vanilla' },
+    { value: 'Normal', label: 'Normal' },
   ];
 
-const Task = ({id}) => {
+const Task = ({id,task}) => {
+  const location = useLocation()
     const [editSave,setEditSave] = useState(false)
+    const {name,description,dueDate,dueTime,reminderTime} = task
 
     const showButtons = ()=>{
             setEditSave(true)
@@ -29,7 +32,7 @@ const Task = ({id}) => {
     
 <div className='bg-white p-4 w-full rounded-lg'>
 <div className='flex justify-between items-center gap-10'>
-<h3 className="font-bold text-lg outline-none border-none"  suppressContentEditableWarning={true} contentEditable={true} onFocus={showButtons} onBlur={hideButtons}>Hello!</h3>
+<h3 className="font-bold text-lg outline-none border-none"  suppressContentEditableWarning={true} contentEditable={true} onFocus={showButtons} onBlur={hideButtons}>{name}</h3>
 
 <div className='flex items-center'>
 <div className="dropdown">
@@ -45,7 +48,7 @@ const Task = ({id}) => {
       </form>
 </div>
 </div>
-    <p className="mt-4 mb-4 outline-none border-none" onFocus={showButtons} onBlur={hideButtons} contentEditable={true}  suppressContentEditableWarning={true}>Press ESC key or click outside to close</p>
+    <p className="mt-4 mb-4 outline-none border-none" onFocus={showButtons} onBlur={hideButtons} contentEditable={true}  suppressContentEditableWarning={true}>{description? description : 'write description'}</p>
    {
     editSave?  <div className='flex w-full justify-end gap-3'>
     <button className='btn bg-green-500 text-white'>Save</button>
@@ -66,21 +69,27 @@ const Task = ({id}) => {
          <div className="tooltip" data-tip="Due date">
          <div className="flex items-center gap-1">
          <CiCalendar />
-         <p className="text-sm mt-1"> 28 jul</p> 
+         <p className="text-sm mt-1">{dueDate? dueDate : 'select due date'}</p> 
          </div>
      </div>
          <div className="tooltip" data-tip="Due Time">
          <div className="flex items-center gap-1">
          <IoMdAlarm/>
-         <p className="text-sm mt-1"> 11:20 AM</p> 
+         <p className="text-sm mt-1">{dueTime? dueTime : 'select due time'}</p> 
          </div>
      </div>
          </div>
        </div>
        <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
        <div>
-         <label>Date</label> <br />
-       <input type="date" className="w-full border p-2 outline-none focus-within:outline-none"/>
+         {location.pathname==='/app/allTasks'? <>
+          <label>Date</label> <br />
+          <input type="date" className="w-full border p-2 outline-none focus-within:outline-none"/>
+          </>
+          :
+          <>
+          <label>Today</label> <br />
+          </>}
        </div>
       <div className="mt-2">
          <label>Time</label> <br />
@@ -91,7 +100,7 @@ const Task = ({id}) => {
      </div>
      <div className="dropdown">
      <div className="tooltip" data-tip="Reminder">
-       <div tabIndex={0} role="button" className="m-1 flex items-center text-sm gap-1"><IoNotificationsOutline />11: 00Am</div>
+       <div tabIndex={0} role="button" className="m-1 flex items-center text-sm gap-1"><IoNotificationsOutline />{reminderTime? reminderTime : 'Select Reminder Time'}</div>
        </div>
        <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
        <div className="mt-2">
@@ -105,6 +114,7 @@ const Task = ({id}) => {
          <div>
          <Select
         options={options}
+        defaultValue={task?.priority? priority : 'Select priority'}
       />
          </div>
  </div>

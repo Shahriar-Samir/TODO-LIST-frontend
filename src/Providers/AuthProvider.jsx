@@ -16,17 +16,15 @@ const AuthProvider = ({children}) => {
     
     useEffect(()=>{
             onAuthStateChanged(auth,(currentUser)=>{
+                setUser(currentUser)
                 if(currentUser){
                       axiosSecure.get(`/user/${currentUser.uid}`)
                       .then(res=>{
                         if(res.data){
                             const {displayName,photoURL} =res.data
                             updateAccount({displayName,photoURL})
-                            .then(()=>{
-
+                            .then(()=>{ 
                                 setLoading(false) 
-                                setUser(currentUser) 
-
                             })
                         }
                         if(!res.data){
