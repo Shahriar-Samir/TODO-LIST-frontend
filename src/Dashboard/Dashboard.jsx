@@ -9,8 +9,16 @@ import {motion} from 'framer-motion'
 import { IoClose } from 'react-icons/io5';
 import { AuthContext } from '../Providers/AuthProvider';
 import { toast } from 'react-toastify';
+import Select from 'react-select';
+import useAxios from '../hooks/useAxios';
 
 const Dashboard = () => {
+  const options = [
+    { value: 'Most Important', label: 'Most Important' },
+    { value: 'Important', label: 'Important' },
+    { value: 'Normal', label: 'Normal' },
+  ];
+
   const md = useMediaQuery('(min-width:768px)');
   const {user,logout,setLoading,loading} = useContext(AuthContext)
 
@@ -56,7 +64,38 @@ const Dashboard = () => {
         toast.error('Something went wrong')
       })
   }
+  const nameRef = useRef()
+  const descriptionRef = useRef()
+  const  dateRef = useRef()
+  const timeRef = useRef()
+  const priorityRef = useRef()
+  const reminderRef = useRef()
 
+  const axiosSecure = useAxios()
+  const addTask = ()=>{
+    const name = nameRef.current.textContent
+    const description = descriptionRef.current.textContent
+    const convertedDueDate = new Date(dateRef.current.value)
+    const dueDate = convertedDueDate.toDateString()
+    const dueTime = timeRef.current.value
+    const reminderTime = reminderRef.current.value
+    const priority = priorityRef?.current?.props?.value?.value
+    const task = {uid:user?.uid,name,description,dueDate,dueDate,dueTime,priority,reminderTime}
+    if(!name){
+      toast.error('Task name required')
+    }
+    else{
+     axiosSecure.post('/addUserTask', task)
+    .then(()=>{
+      toast.success('New Task Added')
+    })
+    .catch(()=>{
+      toast.error('Something went wrong')
+    })
+    }
+}
+
+  
   
     return (
         <div className='bg-gradient-to-r from-emerald-100 to-cyan-100 bg-cyan-100  hover:bg-gradient-to-r hover:from-emerald-100 hover:to-cyan-100 hover:bg-cyan-100'>
@@ -129,6 +168,7 @@ const Dashboard = () => {
                 <label className="px-0 input outline-0 border-0 flex items-center gap-2 border-none outline-none focus-within:outline-none h-fit">    
   <p  contentEditable={true} 
    suppressContentEditableWarning={true}
+   ref={nameRef}
   className={`outline-none w-full max-w-[250px] cursor-text text-black font-bold  focus-within:before:content-none ${taskName?  "" : "before:content-['Task_name'] text-gray-500"}`}    
   onInput={changeTaskName} 
 ></p>
@@ -141,46 +181,44 @@ const Dashboard = () => {
                 <label className="px-0 input  flex items-center gap-2  border-none outline-none focus-within:outline-none h-fit">    
   <p  contentEditable={true} 
    suppressContentEditableWarning={true}
+   ref={descriptionRef}
   className={`outline-none w-full cursor-text  focus-within:before:content-none ${descripiton?  "" : "before:content-['Description'] text-gray-300"}`}    
   onInput={changeDescription} 
 ></p></label>
-<div className="flex ">
+<div className="flex items-center gap-3">
 <div className="dropdown ">
   <div tabIndex={0} role="button" className="btn m-1">Due Date</div>
   <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-30 w-52 p-2 shadow">
   <div>
     <label>Date</label> <br />
-  <input type="date" className="w-full border p-2 outline-none focus-within:outline-none"/>
+  <input type="date" ref={dateRef} className="w-full border p-2 outline-none focus-within:outline-none"/>
   </div>
  <div className="mt-2">
     <label>Time</label> <br />
- <input type="time" className="w-full border p-2 outline-none focus-within:outline-none"/>
+ <input type="time" ref={timeRef} className="w-full border p-2 outline-none focus-within:outline-none"/>
  </div>
-<button className="p-1 bg-slate-200 font-semibold rounded-md mt-3 w-full">Save</button>
   </ul>
 </div>
-<div className="dropdown ">
-  <div tabIndex={0} role="button" className="btn m-1">Priority</div>
-  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[30] w-52 p-2 shadow">
-    <li><p>Compulsory</p></li>
-    <li><p>Most Important</p></li>
-    <li><p>Important</p></li>
-    <button className="p-1 bg-slate-200 font-semibold rounded-md mt-3 w-full">Save</button>
-  </ul>
-</div>
+
 <div className="dropdown ">
   <div tabIndex={0} role="button" className="btn m-1">Reminder</div>
   <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[30] w-52 p-2 shadow right-0">
   <div className="mt-2">
     <label>Time</label> <br />
- <input type="time" className="w-full border p-2 outline-none focus-within:outline-none"/>
+ <input type="time" ref={reminderRef} className="w-full border p-2 outline-none focus-within:outline-none"/>
  </div>
-<button className="p-1 bg-slate-200 font-semibold rounded-md mt-3 w-full">Save</button>
+
   </ul>
 </div>
+<Select
+    
+         ref={priorityRef}
+        options={options}
+        className='text-sm'
+      />
 </div>
 <div className='flex w-full justify-end gap-3'>
-    <button className='btn bg-green-500 text-white'>Add Task</button>
+    <button className='btn bg-green-500 text-white' onClick={addTask}>Add Task</button>
 <form method="dialog">
         {/* if there is a button in form, it will close the modal */}
         <button className="btn bg-red-500 text-white">Cancel</button>

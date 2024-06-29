@@ -5,12 +5,9 @@ import { IoClose, IoNotificationsOutline } from "react-icons/io5";
 import Select from 'react-select';
 import { BsThreeDots } from "react-icons/bs";
 import { useLocation } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import useAxios from '../hooks/useAxios';
-import Loading from '../Home/Loading';
 import { AuthContext } from '../Providers/AuthProvider';
 import {toast, ToastContainer} from 'react-toastify'
-
 const options = [
     { value: 'Most Important', label: 'Most Important' },
     { value: 'Important', label: 'Important' },
