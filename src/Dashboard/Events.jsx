@@ -10,9 +10,14 @@ import {
   TodayButton,
 
 } from '@devexpress/dx-react-scheduler-material-ui';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import AllTasks from '../Components/AllTasks';
 import { CiCalendar } from 'react-icons/ci';
+import useAxios from '../hooks/useAxios';
+import { IoClose } from 'react-icons/io5';
+import Select from 'react-select';
+import { AuthContext } from '../Providers/AuthProvider';
+import { toast, ToastContainer } from 'react-toastify';
 
 const appointments = [
 
@@ -125,6 +130,7 @@ const Events = () => {
 
       return (
         <div className='w-10/12 mx-auto '>
+          <ToastContainer/>
                <div className="flex mt-5 border-b pb-3 border-black justify-between">
             <div>
             <h1 className=''>{today}</h1>
@@ -190,6 +196,12 @@ const CustomAppointment = ({ children, ...restProps }) => {
 
 
 const DayCellComponent = ({startDate,...resProps}) => {
+  const {user} = useContext(AuthContext)
+  const options = [
+    { value: 'Most Important', label: 'Most Important' },
+    { value: 'Important', label: 'Important' },
+    { value: 'Normal', label: 'Normal' },
+  ];
   const [descripiton,setDescription] = useState()
   const [taskName,setTaskName] = useState()
 
@@ -200,60 +212,104 @@ const DayCellComponent = ({startDate,...resProps}) => {
   const changeTaskName = (e)=>{
       setTaskName(e.target.textContent)
   }
+  const nameRef = useRef()
+const descriptionRef = useRef()
+const  dateRef = useRef()
+const timeRef = useRef()
+const priorityRef = useRef()
+const reminderRef = useRef()
+
+const axiosSecure = useAxios()
+
+const addTask = ()=>{
+  const name = nameRef.current.textContent
+  const description = descriptionRef.current.textContent
+  const dueDate = dateRef.current.textContent
+  const dueTime = timeRef.current.value
+  const reminderTime = reminderRef.current.value
+  const priority = priorityRef?.current?.props?.value?.value
+  const task = {uid:user?.uid,name,description,dueDate,dueTime,priority,reminderTime}
+  if(!name){
+    toast.error('Task name required')
+  }
+  else{
+   axiosSecure.post('/addUserTask', task)
+  .then(()=>{
+    toast.success('New Task Added')
+  })
+  .catch(()=>{
+    toast.error('Something went wrong')
+  })
+  }
+}
     return <>
-     <dialog id={startDate} className="modal modal-bottom sm:modal-middle">
+    <dialog id={startDate} className="modal w-11/12 mx-auto modal-bottom sm:modal-middle">
   <div className="modal-box p-0 bg-transparent h-full shadow-none flex justify-center items-start flex-col w-full">
   <div className="flex flex-col gap-2 border rounded-xl p-3 bg-white w-full">
+                <div className='flex w-full justify-between items-center'>
                 <label className="px-0 input outline-0 border-0 flex items-center gap-2 border-none outline-none focus-within:outline-none h-fit">    
   <p  contentEditable={true} 
    suppressContentEditableWarning={true}
-  className={`outline-none w-full cursor-text text-black font-bold  focus-within:before:content-none ${taskName?  "" : "before:content-['Task_name'] text-gray-500"}`}    
+   ref={nameRef}
+  className={`outline-none w-full max-w-[250px] cursor-text text-black font-bold  focus-within:before:content-none ${taskName?  "" : "before:content-['Task_name'] text-gray-500"}`}    
   onInput={changeTaskName} 
 ></p>
 </label>
+<form method="dialog">
+        {/* if there is a button in form, it will close the modal */}
+        <button className="text-2xl"><IoClose/></button>
+      </form>
+                </div>
                 <label className="px-0 input  flex items-center gap-2  border-none outline-none focus-within:outline-none h-fit">    
   <p  contentEditable={true} 
    suppressContentEditableWarning={true}
+   ref={descriptionRef}
   className={`outline-none w-full cursor-text  focus-within:before:content-none ${descripiton?  "" : "before:content-['Description'] text-gray-300"}`}    
   onInput={changeDescription} 
 ></p></label>
 <div className="flex items-center gap-3">
-<div className="tooltip" data-tip="Due date">
-    <div className="flex items-center gap-1">
-    <CiCalendar />
-    <p className="text-sm mt-1">{startDate.toDateString()}</p> 
-    </div>
-</div>
 <div className="dropdown ">
-  <div tabIndex={0} role="button" className="btn m-1">Priority</div>
-  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[30] w-52 p-2 shadow">
-    <li><p>Compulsory</p></li>
-    <li><p>Most Important</p></li>
-    <li><p>Important</p></li>
-    <button className="p-1 bg-slate-200 font-semibold rounded-md mt-3 w-full">Save</button>
+  <div tabIndex={0} role="button" className="btn m-1">Due Date</div>
+  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-30 w-52 p-2 shadow">
+  <div>
+    <label>Date</label> <br />
+    <p ref={dateRef}>{startDate.toDateString()}</p>
+  </div>
+ <div className="mt-2">
+    <label>Time</label> <br />
+ <input type="time" ref={timeRef} className="w-full border p-2 outline-none focus-within:outline-none"/>
+ </div>
   </ul>
 </div>
+
 <div className="dropdown ">
   <div tabIndex={0} role="button" className="btn m-1">Reminder</div>
-  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[30] w-52 p-2 shadow">
+  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[30] w-52 p-2 shadow right-0">
   <div className="mt-2">
     <label>Time</label> <br />
- <input type="time" className="w-full border p-2 outline-none focus-within:outline-none"/>
+ <input type="time" ref={reminderRef} className="w-full border p-2 outline-none focus-within:outline-none"/>
  </div>
-<button className="p-1 bg-slate-200 font-semibold rounded-md mt-3 w-full">Save</button>
+
   </ul>
 </div>
+<Select
+    
+         ref={priorityRef}
+        options={options}
+        className='text-sm'
+      />
 </div>
-<div className='flex w-full justify-end gap-3'>
-    <button className='btn bg-green-500 text-white'>Add Task</button>
-<form method="dialog">
+<form method="dialog" className='flex w-full justify-end gap-3'>
+    <button className='btn bg-green-500 text-white' onClick={addTask}>Add Task</button>
+
         {/* if there is a button in form, it will close the modal */}
         <button className="btn bg-red-500 text-white">Cancel</button>
       </form>
-</div>
+
 </div>
 
   </div>
+  
 </dialog>
     <MonthView.TimeTableCell {...resProps} className='w-full' startDate={startDate} onClick={()=>{ 
       document.getElementById(startDate).showModal()}}>
