@@ -119,7 +119,7 @@ const AllTasksPage = () => {
         setAddTaskSection(false)
     }
 
-    console.log(tasks)
+
     if(isFetching){
         return <Loading/>
     }
@@ -196,17 +196,17 @@ const AllTasksPage = () => {
     }} className="checkbox rounded-full" />
   </label>
 </div>
-<div className="w-full" role="button" onClick={()=>{
-          document.getElementById(item._id)?.showModal()
-       
-       }}>
+<div className="w-full" role="button" >
     <div className="flex justify-between items-center">
     <h1 className="font-bold">{item.name}</h1>
     <div className="flex gap-4 items-center text-2xl">
-    <div className="tooltip" data-tip="Edit Task">
+    <div onClick={()=>{
+          document.getElementById(item._id)?.showModal()
+       
+       }} className="tooltip" data-tip="Edit Task" >
     <CiEdit className="text-yellow-600"/>
 </div>
-    <div className="tooltip" data-tip="Delete Task">
+    <div  className="tooltip" data-tip="Delete Task">
     <MdDelete className="text-red-500"/>
 </div>
 
@@ -224,7 +224,7 @@ const AllTasksPage = () => {
     <div className="tooltip" data-tip="Due Time">
     <div className="flex items-center gap-1">
     <IoMdAlarm/>
-    <p className="text-sm mt-1">{item.dueTime===''? "No time selected" :dueTime}</p> 
+    <p className="text-sm mt-1">{!item?.dueDate? "No time selected" : item?.dueDate ===''? 'No time selected' : item?.dueTime}</p> 
     </div>
 </div>
 

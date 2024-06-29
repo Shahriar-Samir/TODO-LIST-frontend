@@ -127,7 +127,7 @@ const AllTasksPage = () => {
 
     return (
         <div className='w-10/12 mx-auto '>
-            <ToastContainer/>
+            <ToastContainer className='z-50'/>
             <div className="flex mt-5 border-b border-black pb-3  justify-between">
             <div>
             <h1 className=''>{today}</h1>
@@ -197,14 +197,14 @@ const AllTasksPage = () => {
     }} className="checkbox rounded-full" />
   </label>
 </div>
-<div className="w-full" role="button" onClick={()=>{
-          document.getElementById(item._id)?.showModal()
-       
-       }}>
+<div className="w-full" role="button">
     <div className="flex justify-between items-center">
     <h1 className="font-bold">{item.name}</h1>
     <div className="flex gap-4 items-center text-2xl">
-    <div className="tooltip" data-tip="Edit Task">
+    <div className="tooltip" data-tip="Edit Task" onClick={()=>{
+          document.getElementById(item._id)?.showModal()
+       
+       }}>
     <CiEdit className="text-yellow-600"/>
 </div>
     <div className="tooltip" data-tip="Delete Task">

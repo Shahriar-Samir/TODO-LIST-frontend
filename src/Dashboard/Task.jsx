@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { CiCalendar } from 'react-icons/ci';
 import { IoMdAlarm } from 'react-icons/io';
 import { IoClose, IoNotificationsOutline } from "react-icons/io5";
 import Select from 'react-select';
 import { BsThreeDots } from "react-icons/bs";
 import { useLocation } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import useAxios from '../hooks/useAxios';
+import Loading from '../Home/Loading';
+import { AuthContext } from '../Providers/AuthProvider';
+import {toast, ToastContainer} from 'react-toastify'
 
 const options = [
     { value: 'Most Important', label: 'Most Important' },
@@ -13,9 +18,43 @@ const options = [
   ];
 
 const Task = ({id,task}) => {
+  const nameRef = useRef(null)
+  const descriptionRef = useRef(null)
+  const timeRef = useRef(null)
+  const dateRef = useRef(null)
+  const reminderRef = useRef(null)
+  const priorityRef = useRef(null)
+
   const location = useLocation()
     const [editSave,setEditSave] = useState(false)
-    const {name,description,dueDate,dueTime,reminderTime} = task
+    const {name,description,dueDate,dueTime,reminderTime,_id,priority} = task
+    const [dateDefault,setDateDefault] = useState()
+
+
+
+    useEffect(()=>{
+        if(dueDate === 'Invalid Date'){
+            setDateDefault()
+        }
+        else{
+
+
+          // Parse the date string
+          let date = new Date(dueDate);
+  
+          // Extract the components of the date
+          let year = date.getFullYear();
+          let month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
+          let day = String(date.getDate()).padStart(2, '0');
+  
+          // Format the date in YYYY-MM-DD format
+          let formattedDate = `${year}-${month}-${day}`;
+          setDateDefault(formattedDate)
+        }
+    },[])
+
+    const axiosSecure = useAxios()
+    const {user} = useContext(AuthContext)
 
     const showButtons = ()=>{
             setEditSave(true)
@@ -23,6 +62,47 @@ const Task = ({id,task}) => {
     const hideButtons = ()=>{
             setEditSave(false)
     }
+
+
+
+
+   
+    const updateTask = ()=>{
+      const nameValue = nameRef.current.textContent
+      const descriptionValue = descriptionRef.current.textContent
+      const convertedDueDate =location.pathname==='/app/allTasks'?  new Date(dateRef.current.value) : ''
+      const dueDateValue =location.pathname==='/app/allTasks'? convertedDueDate?.toDateString() : dueDate
+      const dueTimeValue = timeRef.current.value
+      const reminderTimeValue = reminderRef.current.value
+      const priorityValue = priorityRef?.current?.props?.value?.value
+      const task = {uid:user?.uid,name:nameValue,description:descriptionValue ,dueDate:dueDateValue,dueTime:dueTimeValue,priority:priorityValue,reminderTime:reminderTimeValue}
+       axiosSecure.patch(`/updateUserTask/${_id}`, task)
+      .then(()=>{
+        toast.success('Updated Task')
+        hideButtons()
+      })
+      .catch(()=>{
+        toast.error('Something went wrong')
+      })
+      
+    }
+    const duplicate = ()=>{
+      const task = {uid:user?.uid,name,description,dueDate,dueTime,priority,reminderTime}
+      if(!name){
+        toast.error('Task name required')
+      }
+      else{
+       axiosSecure.post('/addUserTask', task)
+      .then(()=>{
+        toast.success('New Duplicate Task Added')
+      })
+      .catch(()=>{
+        toast.error('Something went wrong')
+      })
+      }
+    }
+
+   
 
     return (
         <div className='cursor-auto'>
@@ -32,13 +112,13 @@ const Task = ({id,task}) => {
     
 <div className='bg-white p-4 w-full rounded-lg'>
 <div className='flex justify-between items-center gap-10'>
-<h3 className="font-bold text-lg outline-none border-none"  suppressContentEditableWarning={true} contentEditable={true} onFocus={showButtons} onBlur={hideButtons}>{name}</h3>
+<h3 className="font-bold text-lg outline-none border-none"  suppressContentEditableWarning={true} contentEditable={true} onFocus={showButtons}  ref={nameRef}>{name}</h3>
 
 <div className='flex items-center'>
 <div className="dropdown">
   <div tabIndex={0} role="button" className="m-1"><BsThreeDots  className='w-[50px] text-xl'/></div>
   <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-[120px] p-2 shadow right-0">
-    <li><a>Duplicate</a></li>
+    <li onClick={duplicate}><a>Duplicate</a></li>
     <li><a>Delete</a></li>
   </ul>
 </div>
@@ -48,18 +128,7 @@ const Task = ({id,task}) => {
       </form>
 </div>
 </div>
-    <p className="mt-4 mb-4 outline-none border-none" onFocus={showButtons} onBlur={hideButtons} contentEditable={true}  suppressContentEditableWarning={true}>{description? description : 'write description'}</p>
-   {
-    editSave?  <div className='flex w-full justify-end gap-3'>
-    <button className='btn bg-green-500 text-white'>Save</button>
-<form method="dialog">
-        {/* if there is a button in form, it will close the modal */}
-        <button className="btn bg-red-500 text-white">Cancel</button>
-      </form>
-      
-      
-</div> : ''
-   }
+    <p className="mt-4 mb-4 outline-none border-none" onFocus={showButtons} contentEditable={true}  suppressContentEditableWarning={true} ref={descriptionRef}>{description? description : 'write description'}</p>
  <div className='flex justify-between items-center'>
  <div className='flex flex-col'>
          
@@ -84,7 +153,7 @@ const Task = ({id,task}) => {
        <div>
          {location.pathname==='/app/allTasks'? <>
           <label>Date</label> <br />
-          <input type="date" className="w-full border p-2 outline-none focus-within:outline-none"/>
+          <input onFocus={showButtons} type="date" defaultValue={dateDefault} ref={dateRef} className="w-full border p-2 outline-none focus-within:outline-none"/>
           </>
           :
           <>
@@ -93,9 +162,9 @@ const Task = ({id,task}) => {
        </div>
       <div className="mt-2">
          <label>Time</label> <br />
-      <input type="time" className="w-full border p-2 outline-none focus-within:outline-none"/>
+      <input onFocus={showButtons} type="time" ref={timeRef} defaultValue={dueTime} className="w-full border p-2 outline-none focus-within:outline-none"/>
       </div>
-     <button className="p-1 bg-slate-200 font-semibold rounded-md mt-3 w-full">Save</button>
+     
        </ul>
      </div>
      <div className="dropdown">
@@ -105,19 +174,30 @@ const Task = ({id,task}) => {
        <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
        <div className="mt-2">
          <label>Time</label> <br />
-      <input type="time" className="w-full border p-2 outline-none focus-within:outline-none"/>
+      <input onFocus={showButtons} type="time" ref={reminderRef} defaultValue={reminderTime} className="w-full border p-2 outline-none focus-within:outline-none"/>
       </div>
-     <button className="p-1 bg-slate-200 font-semibold rounded-md mt-3 w-full">Save</button>
        </ul>
      </div>
          </div>
-         <div>
+         <div className='flex flex-row-reverse items-center gap-2'>
          <Select
+         onFocus={showButtons}
+         ref={priorityRef}
         options={options}
-        defaultValue={task?.priority? priority : 'Select priority'}
+        className='text-sm'
       />
+      <h1 className='text-sm'>{priority}</h1>
          </div>
+         
  </div>
+ {
+    editSave?  <div className='flex w-full justify-end gap-3'>
+    <button className='btn bg-green-500 text-white' onClick={updateTask}>Save</button>
+        <button className="btn bg-red-500 text-white" onClick={hideButtons}>Cancel</button>
+      
+      
+</div> : ''
+   }
 </div>
   </div>
 
