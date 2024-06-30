@@ -84,7 +84,8 @@ const Task = ({id,task}) => {
       
     }
     const duplicate = ()=>{
-      const task = {uid:user?.uid,name,description,dueDate,dueTime,priority,reminderTime}
+      const status = 'upcoming'
+      const task = {uid:user?.uid,name,description,dueDate,dueTime,priority,reminderTime,status}
       if(!name){
         toast.error('Task name required')
       }

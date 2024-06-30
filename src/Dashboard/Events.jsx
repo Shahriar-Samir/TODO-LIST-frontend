@@ -18,8 +18,11 @@ import { IoClose } from 'react-icons/io5';
 import Select from 'react-select';
 import { AuthContext } from '../Providers/AuthProvider';
 import { toast, ToastContainer } from 'react-toastify';
+import { useQuery } from '@tanstack/react-query';
+import Loading from '../Home/Loading';
 
-const appointments = [
+
+const appointments2 = [
 
   {
     id: 1,
@@ -74,10 +77,14 @@ const appointments = [
   
 ];
 
+
 const limitAppointments = (appointments, limitPerDay = 2) => {
+ 
+
+
   // Group appointments by day
   const groupedAppointments = appointments.reduce((acc, appointment) => {
-    const dateKey = appointment.startDate.toDateString();
+    const dateKey = appointment.startDate.toDateString()
     acc[dateKey] = acc[dateKey] || [];
     acc[dateKey].push(appointment);
     return acc;
@@ -112,22 +119,76 @@ const limitAppointments = (appointments, limitPerDay = 2) => {
 };
 
 
-  const newAppointments = limitAppointments(appointments)
 
 
 const Events = () => {
+  
+  const axiosSecure = useAxios()
+  const {user} = useContext(AuthContext)
+  
+  const {data:allTasks,isFetching} = useQuery({
+    queryKey: ['allTasks'],
+    initialData:[],
+    queryFn: ()=>
+      axiosSecure.get(`/userTasksAll/${user?.uid}`)
+    .then(res=>{
+      return res.data
+    })
+  })
+  
+
   const [today,setToday] = useState()
   const [presentTime,setPresentTime] = useState()
-
+  
   useEffect(()=>{
     setInterval(()=>{
-        const date = new Date()
-        setToday(date.toLocaleDateString())
-        setPresentTime(date.toLocaleTimeString())
+      const date = new Date()
+      setToday(date.toLocaleDateString())
+      setPresentTime(date.toLocaleTimeString())
     },1000)
-},[])
+  },[])
+  
+  const convertToYearMonthDay = (dateString) => {
+    // Split the date string to extract day, month abbreviation, and year
+    const parts = dateString.split(' ');
+    const day = parseInt(parts[2]); // 30
+    const monthAbbreviation = parts[1]; // "Jun"
+    const year = parseInt(parts[3]); // 2024
+  
+    // Map month abbreviation to month index (JavaScript months are zero-indexed)
+    const monthsMap = {
+      'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3,
+      'May': 4, 'Jun': 5, 'Jul': 6, 'Aug': 7,
+      'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
+    };
+    const monthIndex = monthsMap[monthAbbreviation];
+  
+    // Return array [year, month (1-based), day]
+    return [year, monthIndex , day];
+  };
 
 
+  if(isFetching){
+    return <Loading/>
+  }
+
+
+  const appointments = allTasks?.map(task=>{
+    const resultArray = convertToYearMonthDay(task?.dueDate)
+    const month = resultArray[1]
+    const date = resultArray[2]
+    const year = resultArray[0]
+    return {
+      id: 6,
+      title: task?.name,
+      startDate: new Date(year, month,date, 18, 0),
+      endDate: new Date(year, month, date, 18, 1),
+      status: task?.status
+    }
+  })
+  
+
+  const newAppointments = limitAppointments(appointments)
       return (
         <div className='w-10/12 mx-auto '>
           <ToastContainer/>
@@ -145,8 +206,7 @@ const Events = () => {
           </div>
           <Paper className='w-full md:w-11/12 mx-auto mt-3'>
         <Scheduler
-          data={newAppointments}
-        >
+          data={newAppointments}>
           <ViewState
           />
           <MonthView 
@@ -157,8 +217,8 @@ const Events = () => {
           <TodayButton/>
 
           <Appointments
-        appointmentComponent={CustomAppointment}
-      />
+        appointmentComponent={CustomAppointment}/>
+      
         </Scheduler>
       </Paper>
         </div>
@@ -170,7 +230,6 @@ export default Events;
 const CustomAppointment = ({ children, ...restProps }) => {
   // Determine the status from the children props if available
   const status = children[1]?.props?.data?.status || 'unfinished';
-
   // Check if restProps.data.more is true to show "+X more" styling
   const isMore = restProps.data?.more;
 
@@ -179,9 +238,9 @@ const CustomAppointment = ({ children, ...restProps }) => {
   // Assign different classes based on status
   if (status === 'finished') {
     className = 'bg-green-500 text-white font-semibold text-sm';
-  } else if (status === 'upComing') {
+  } else if (status === 'upcoming') {
     className = 'bg-blue-500 text-white font-semibold text-sm';
-  } else {
+  } else if(status==='unfinished'){
     className = `bg-red-500 text-white font-semibold text-sm relative ${isMore ? 'bg-gray-300 text-gray-700 text-xs' : ''}`;
   }
 
@@ -228,7 +287,8 @@ const addTask = ()=>{
   const dueTime = timeRef.current.value
   const reminderTime = reminderRef.current.value
   const priority = priorityRef?.current?.props?.value?.value
-  const task = {uid:user?.uid,name,description,dueDate,dueTime,priority,reminderTime}
+  const status = 'upcoming'
+  const task = {uid:user?.uid,name,description,dueDate,dueDate,dueTime,priority,reminderTime,status}
   if(!name){
     toast.error('Task name required')
   }
