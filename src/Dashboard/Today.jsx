@@ -129,6 +129,19 @@ const AllTasksPage = () => {
      })
 }
 
+const finishTask = (e,id)=>{
+  if(e.target.checked === true)
+    axiosSecure.patch(`/checkTask/${id}`)
+  .then(()=>{
+            document.getElementById(id+'main').style.display = 'none'
+    toast.success('Task completed')
+  })
+  .catch(()=>{
+    toast.error('Something went wrong')
+  })
+}
+
+
 
     if(isFetching){
         return <Loading/>
@@ -201,9 +214,8 @@ const AllTasksPage = () => {
           <div className="form-control">
   <label className="cursor-pointer label">
 
-    <input type="checkbox" defaultChecked={false} onClick={(event)=>{
-      event.stopPropagation();
-    }} className="checkbox rounded-full" />
+
+    <input type="checkbox" defaultChecked={false} onClick={(e)=>finishTask(e,item._id)}  className="checkbox rounded-full" />
   </label>
 </div>
 <div className="w-full" role="button" >
