@@ -11,8 +11,22 @@ import { AuthContext } from '../Providers/AuthProvider';
 import { toast } from 'react-toastify';
 import Select from 'react-select';
 import useAxios from '../hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
+import Loading from '../Home/Loading';
+import Footer from '../Components/Footer';
 
 const Dashboard = () => {
+  const axiosSecure = useAxios()
+  const {user,logout,setLoading,loading} = useContext(AuthContext)
+  const {data,isFetching} = useQuery({
+        queryKey: ['amounts'],
+        queryFn: ()=>
+          axiosSecure.get(`/userTasksAmounts/${user?.uid}`)
+        .then(res=>{
+            return res.data
+        })
+  })
+
   const options = [
     { value: 'Most Important', label: 'Most Important' },
     { value: 'Important', label: 'Important' },
@@ -20,7 +34,7 @@ const Dashboard = () => {
   ];
 
   const md = useMediaQuery('(min-width:768px)');
-  const {user,logout,setLoading,loading} = useContext(AuthContext)
+
 
     const [descripiton,setDescription] = useState()
     const [taskName,setTaskName] = useState()
@@ -71,7 +85,7 @@ const Dashboard = () => {
   const priorityRef = useRef()
   const reminderRef = useRef()
 
-  const axiosSecure = useAxios()
+  
   const addTask = ()=>{
     const name = nameRef.current.textContent
     const description = descriptionRef.current.textContent
@@ -96,7 +110,11 @@ const Dashboard = () => {
     }
 }
 
-  
+  if(isFetching){
+    return <Loading/>
+  }
+
+
   
     return (
         <div className='bg-gradient-to-r from-emerald-100 to-cyan-100 bg-cyan-100  hover:bg-gradient-to-r hover:from-emerald-100 hover:to-cyan-100 hover:bg-cyan-100'>
@@ -121,14 +139,14 @@ const Dashboard = () => {
       <li className=''><NavLink to='/app/allTasks' className={({isActive})=> isActive? `p-2 rounded-lg text-sm flex justify-normal w-full border border-black ` : `p-2 rounded-lg text-sm flex justify-normal w-full border border-transparent`}>
       <div className='flex justify-between w-full'>
       <p>All Task</p>
-      <div className="badge text-xs">+10</div>
+      <div className="badge text-xs">{data.allTasksLength}</div>
       </div>
       </NavLink>
       </li>
       <li className=''><NavLink to='/app/today' className={({isActive})=> isActive? `p-2 rounded-lg text-sm flex justify-normal w-full border border-black` : `p-2 rounded-lg text-sm flex justify-normal w-full border border-transparent`}>
       <div className='flex justify-between w-full'>
       <p>Today</p>
-      <div className="badge text-xs">+4</div>
+      <div className="badge text-xs">{data.todayTasksLength}</div>
       </div>
       </NavLink>
       </li>
@@ -142,7 +160,7 @@ const Dashboard = () => {
 <Tooltip title='Notifications'>
 <Link  to='/app/notifications' className="flex items-center relative w-[50px]">
 <IoMdNotifications className='text-2xl text-blue-400'/>
-  <div className="badge bg-red-500 text-white font-bold absolute right-1 top-0 p-1">+19</div>
+  <div className="badge bg-red-500 text-white font-bold absolute right-1 top-0 p-1">{data.notificationsLength}</div>
 </Link>
 </Tooltip>
 <div className="dropdown">
@@ -159,7 +177,10 @@ const Dashboard = () => {
 
 </div>
             </nav>
+  <div className='min-h-[100vh]'>
   <Outlet/>
+  </div>
+  <Footer/>
   </div>
 </div>
 <dialog id="my_modal_5" className="modal w-11/12 mx-auto modal-bottom sm:modal-middle">

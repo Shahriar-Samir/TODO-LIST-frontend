@@ -22,60 +22,6 @@ import { useQuery } from '@tanstack/react-query';
 import Loading from '../Home/Loading';
 
 
-const appointments2 = [
-
-  {
-    id: 1,
-    title: 'with John',
-    startDate: new Date(2024, 5, 1, 10, 0), // June 1st, 2024, 10:00 AM
-    endDate: new Date(2024, 5, 1, 11, 30),
-    status: 'finished'
-  },
-  {
-    id: 2,
-    title: 'Lunch with Sarah',
-    startDate: new Date(2024, 5, 5, 12, 0), // June 5th, 2024, 12:00 PM
-    endDate: new Date(2024, 5, 5, 13, 0),
-        status: 'finished'
-  },
-  {
-    id: 3,
-    title: 'Conference call',
-    startDate: new Date(2024, 5, 10, 14, 0), // June 10th, 2024, 2:00 PM
-    endDate: new Date(2024, 5, 10, 15, 0),
-    status: 'upComing'
-  },
-  
-  {
-    id: 521343,
-    title: 'Project presentation',
-    startDate: new Date(2024, 5, 20, 13, 0), // June 20th, 2024, 1:00 PM
-    endDate: new Date(2024, 5, 20, 14, 30),
-    status: 'unfinished'
-  },
-  {
-    id: 522313,
-    title: 'Project presentation',
-    startDate: new Date(2024, 5, 20, 13, 0), // June 20th, 2024, 1:00 PM
-    endDate: new Date(2024, 5, 20, 14, 30),
-    status: 'unfinished'
-  },
-  {
-    id: 5213,
-    title: 'Project presentation',
-    startDate: new Date(2024, 5, 20, 13, 0), // June 20th, 2024, 1:00 PM
-    endDate: new Date(2024, 5, 20, 14, 30),
-    status: 'unfinished'
-  },
-  {
-    id: 6,
-    title: 'Dinner with clients',
-    startDate: new Date(2024, 5, 25, 18, 0), // June 25th, 2024, 6:00 PM
-    endDate: new Date(2024, 5, 25, 20, 0),
-    status: 'unfinished'
-  },
-  
-];
 
 
 const limitAppointments = (appointments, limitPerDay = 2) => {
@@ -130,10 +76,20 @@ const Events = () => {
     queryKey: ['allTasks'],
     initialData:[],
     queryFn: ()=>
-      axiosSecure.get(`/userTasksAll/${user?.uid}`)
+      axiosSecure.get(`/userTasksAllEvents/${user?.uid}`)
     .then(res=>{
       return res.data
     })
+  })
+  const {data:tasksAmount,isFetching2} = useQuery({
+    queryKey: ['tasksAmount'],
+    initialData:{},
+    queryFn: ()=> 
+      axiosSecure.get(`/userTasksAllAmounts/${user?.uid}`)
+      .then(res=>{
+         return res.data
+      })
+
   })
   
 
@@ -168,7 +124,7 @@ const Events = () => {
   };
 
 
-  if(isFetching){
+  if(isFetching || isFetching2){
     return <Loading/>
   }
 
@@ -187,7 +143,7 @@ const Events = () => {
     }
   })
   
-
+ 
   const newAppointments = limitAppointments(appointments)
       return (
         <div className='w-10/12 mx-auto '>
@@ -199,10 +155,10 @@ const Events = () => {
             </div>
             <h1 className='text-3xl font-bold '>Events</h1>
             </div>
-          <div className='flex flex-col justify-between py-2 w-11/12 mx-auto'>
-          <h1 className='font-bold text-blue-500'>Upcoming Tasks: 10</h1>
-            <h1 className='font-bold text-green-500'>Completed Tasks: 5</h1>
-            <h1 className='font-bold text-red-500'>Late Finished Tasks: 6</h1>
+          <div className='flex gap-3 md:gap-10 flex-col md:flex-row justify-between md:justify-center py-2 w-11/12 mx-auto mt-4'>
+          <h1 className='font-bold text-blue-500'>Upcoming Tasks: {tasksAmount.upcomingTasksLength}</h1>
+            <h1 className='font-bold text-green-500'>Completed Tasks: {tasksAmount.finishedTasksLength}</h1>
+            <h1 className='font-bold text-red-500'>Unfinished Tasks: {tasksAmount.unfinishedTasksLength}</h1>
           </div>
           <Paper className='w-full md:w-11/12 mx-auto mt-3'>
         <Scheduler
@@ -288,7 +244,7 @@ const addTask = ()=>{
   const reminderTime = reminderRef.current.value
   const priority = priorityRef?.current?.props?.value?.value
   const status = 'upcoming'
-  const task = {uid:user?.uid,name,description,dueDate,dueDate,dueTime,priority,reminderTime,status}
+  const task = {uid:user?.uid,name,description,dueDate,dueTime,priority,reminderTime,status}
   if(!name){
     toast.error('Task name required')
   }

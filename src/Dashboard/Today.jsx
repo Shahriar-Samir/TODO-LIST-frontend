@@ -120,13 +120,22 @@ const AllTasksPage = () => {
         setAddTaskSection(false)
     }
 
+    const deleteTask = (id)=>{
+      document.getElementById(id+'main').style.display = 'none'
+     axiosSecure.delete(`/deleteUserTask/${id}`)
+     .then(()=>{
+         toast.success("Task has been deleted")       
+         document.getElementById(id+'delete').style.display = 'none'
+     })
+}
+
 
     if(isFetching){
         return <Loading/>
     }
 
     return (
-        <div className='w-10/12 mx-auto '>
+        <div className='w-10/12 mx-auto ' >
             <ToastContainer/>
             <div className="flex mt-5 border-b border-black pb-3  justify-between">
             <div>
@@ -187,7 +196,7 @@ const AllTasksPage = () => {
 </motion.div>
 <Reorder.Group axis="y"  values={items} onReorder={setItems} className="mt-5 flex flex-col gap-5 w-full">
       {tasks?.map((item) => (
-        <Reorder.Item key={item._id}  value={item} className="flex gap-2 w-full shadow-md border-black pb-2">
+        <Reorder.Item id={item._id+'main'} key={item._id}  value={item} className="flex gap-2 w-full shadow-md border-black pb-2">
         <Task id={item._id} task={item}/>
           <div className="form-control">
   <label className="cursor-pointer label">
@@ -200,15 +209,28 @@ const AllTasksPage = () => {
 <div className="w-full" role="button" >
     <div className="flex justify-between items-center">
     <h1 className="font-bold">{item.name}</h1>
-    <div className="flex gap-4 items-center text-2xl">
+    <div className="flex gap-4 items-center text-2xl pe-4">
     <div onClick={()=>{
           document.getElementById(item._id)?.showModal()
        
        }} className="tooltip" data-tip="Edit Task" >
     <CiEdit className="text-yellow-600"/>
 </div>
-    <div  className="tooltip" data-tip="Delete Task">
-    <MdDelete className="text-red-500"/>
+<div className="tooltip" data-tip="Delete Task">
+    <MdDelete className="text-red-500" onClick={()=>document.getElementById(item._id+'delete').showModal()}/>
+    <dialog id={item._id+'delete'} className="modal modal-bottom sm:modal-middle">
+  <div className="modal-box">
+    <h3 className="font-bold text-lg">Are you sure you want to delete this task?</h3>
+    <p className="py-2"></p>
+    <div className="modal-action ">
+      
+      <form method="dialog" className="flex justify-center w-full gap-5">
+      <button className="btn bg-red-500 text-white" onClick={()=>deleteTask(item._id)}>Delete</button>
+        <button className="btn">Cancel</button>
+      </form>
+    </div>
+  </div>
+</dialog>
 </div>
 
     </div>

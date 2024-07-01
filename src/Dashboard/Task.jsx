@@ -100,7 +100,17 @@ const Task = ({id,task}) => {
       }
     }
 
-   
+    
+    const deleteTask = ()=>{
+      document.getElementById(_id).style.display = 'none'
+      axiosSecure.delete(`/deleteUserTask/${_id}`)
+      .then(()=>{
+        toast.success("Task has been deleted")       
+        document.getElementById(_id+'main').style.display = 'none'
+
+     })
+}
+
 
     return (
         <div className='cursor-auto'>
@@ -117,7 +127,12 @@ const Task = ({id,task}) => {
   <div tabIndex={0} role="button" className="m-1"><BsThreeDots  className='w-[50px] text-xl'/></div>
   <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-[120px] p-2 shadow right-0">
     <li onClick={duplicate}><a>Duplicate</a></li>
-    <li><a>Delete</a></li>
+    
+<form method='dialog'>
+<li onClick={deleteTask}><a>Delete</a></li>
+</form>
+
+
   </ul>
 </div>
 <form method="dialog">

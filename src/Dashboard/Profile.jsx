@@ -10,15 +10,6 @@ import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from '@mui/material';
 
 
-const data = [
-    {
-      name: 'Tasks',
-      'Finished': 50,
-      'Upcoming': 10,
-      'Late Finished': 25,
-    },
-
-  ];
 
 
  
@@ -32,6 +23,16 @@ const data = [
     queryKey: [user?.uid],
     queryFn: ()=> 
       axiosSecure.get(`/user/${user?.uid}`)
+      .then(res=>{
+         return res.data
+      })
+
+  })
+  const {data:tasksAmount,isFetching2} = useQuery({
+    queryKey: ['tasksAmount'],
+    initialData:{},
+    queryFn: ()=> 
+      axiosSecure.get(`/userTasksAllAmounts/${user?.uid}`)
       .then(res=>{
          return res.data
       })
@@ -124,10 +125,20 @@ const data = [
     })
   }
 
-  if(isFetching){
+  if(isFetching || isFetching2){
     return <Loading/>
   }
 
+  
+const data = [
+  {
+    name: 'Tasks',
+    'Finished': tasksAmount.finishedTasksLength,
+    'Upcoming': tasksAmount.upcomingTasksLength,
+    'Unfinished': tasksAmount.unfinishedTasksLength,
+  },
+
+];
     return (
     
         <>
@@ -140,7 +151,7 @@ const data = [
            <div className='flex gap-10 items-center w-full justify-center'>
            <img src={user?.photoURL ? user.photoURL : '/logos/user.png'} className='w-[80px] h-[80px] rounded-full object-cover'/>
           <div>
-          <p>{userData?.displayName}</p>
+          <p className='font-bold text-xl'>{userData?.displayName}</p>
           <p>{userData?.email}</p>
           </div>
            </div>
@@ -219,7 +230,7 @@ const data = [
           <Legend />
           <Bar dataKey="Finished" fill="#7BEE99" activeBar={<Rectangle fill="#7BEE99"  />} />
           <Bar dataKey="Upcoming" fill="#7BC0EE" activeBar={<Rectangle fill="#7BC0EE"  />} />
-          <Bar dataKey="Late Finished" fill="#EE7B7B" activeBar={<Rectangle fill="#EE7B7B"  />} />
+          <Bar dataKey="Unfinished" fill="#EE7B7B" activeBar={<Rectangle fill="#EE7B7B"  />} />
         </BarChart>
       
       </ResponsiveContainer>
