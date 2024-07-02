@@ -157,12 +157,12 @@ const AllTasksPage = () => {
             <h1 className='text-3xl font-bold '>Pending Tasks</h1>
             </div>
             <div className='mt-5'>
-                <button onClick={openAddTask} className="flex items-center gap-2  text-md" onMouseEnter={mouseIn} onMouseLeave={mouseOut}>{icon ?<IoIosAddCircle  className="text-green-500 text-2xl"/> : <IoIosAdd  className="text-green-500 text-2xl"/>} Add Task</button> 
+                <button onClick={openAddTask} className="flex items-center gap-2  text-md" onMouseEnter={mouseIn} onMouseLeave={mouseOut}>{icon ?<IoIosAddCircle  className="text-white text-2xl"/> : <IoIosAdd  className="text-white text-2xl"/>} Add Task</button> 
                 <motion.div className={` flex-col gap-2 shadow-md rounded-md p-3 ${addTaskSection? 'flex' : 'hidden'}`}>
                 <label className="px-0 bg-transparent input outline-0 border-0 flex items-center gap-2 border-none outline-none focus-within:outline-none h-fit">    
   <p  contentEditable={true} 
    suppressContentEditableWarning={true}
-  className={`outline-none w-full cursor-text bg-transparent text-black font-bold  focus-within:before:content-none ${taskName?  "" : "before:content-['Task_name'] text-gray-500"}`}    
+  className={`outline-none w-full cursor-text bg-transparent text-black font-bold  focus-within:before:content-none ${taskName?  "text-white" : "before:content-['Task_name'] text-black"}`}    
   onInput={changeTaskName} 
   ref={nameRef}
 ></p>
@@ -171,38 +171,38 @@ const AllTasksPage = () => {
   <p  contentEditable={true} 
   ref={descriptionRef}
    suppressContentEditableWarning={true}
-  className={`outline-none w-full cursor-text bg-transparent focus-within:before:content-none ${descripiton?  "" : "before:content-['Description'] text-gray-500"}`}    
+  className={`outline-none w-full cursor-text bg-transparent focus-within:before:content-none ${descripiton?  "text-white" : "before:content-['Description'] text-black"}`}    
   onInput={changeDescription} 
   name='taskName'
 ></p></label>
 <div className="flex items-center gap-1">
 <div className="dropdown">
-  <div tabIndex={0} role="button" className="btn bg-white m-1">Due Date</div>
-  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow">
+  <div tabIndex={0} role="button" className="btn bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500 m-1">Due Date</div>
+  <ul tabIndex={0} className="dropdown-content menu bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg  rounded-box z-10 w-52 p-2 ">
   <div>
     <label>Date</label> <br />
-  <input type="date" ref={dateRef} className="w-full border p-2 outline-none focus-within:outline-none"/>
+  <input type="date" ref={dateRef} className="bg-transparent w-full border p-2 outline-none focus-within:outline-none"/>
   </div>
  <div className="mt-2">
     <label>Time</label> <br />
- <input type="time" ref={timeRef} className="w-full border p-2 outline-none focus-within:outline-none"/>
+ <input type="time" ref={timeRef} className="bg-transparent w-full border p-2 outline-none focus-within:outline-none"/>
  </div>
   </ul>
 </div>
 
 <div className="dropdown">
-  <div tabIndex={0} role="button" className="btn bg-white m-1">Reminder</div>
-  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+  <div tabIndex={0} role="button" className="btn bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500 m-1">Reminder</div>
+  <ul tabIndex={0} className="dropdown-content menu bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg  rounded-box z-[1] w-52 p-2 ">
   <div className="mt-2">
     <label>Time</label> <br />
- <input type="time" ref={reminderRef} className="w-full border p-2 outline-none focus-within:outline-none"/>
+ <input type="time" ref={reminderRef} className="w-full border p-2 outline-none focus-within:outline-none bg-transparent"/>
  </div>
   </ul>
 </div>
-<Select options={options}  placeholder='Priority' ref={priorityRef}/>
+<Select options={options}  placeholder='Priority' className="text-black" ref={priorityRef}/>
 </div>
 <div className='flex w-full justify-end gap-3'>
-    <button className='btn bg-green-400 text-white' onClick={addTask}>Add Task</button>
+    <button className='btn bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500 ' onClick={addTask}>Add Task</button>
     <button className="btn bg-red-500 text-white" onClick={closeAddTask}>Cancel</button>
 </div>
 </motion.div>

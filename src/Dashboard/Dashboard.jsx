@@ -14,8 +14,18 @@ import useAxios from '../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../Home/Loading';
 import Footer from '../Components/Footer';
+import io from 'socket.io-client';
 
 const Dashboard = () => {
+const socket = io('http://localhost:5000');
+const [notifications, setNotifications] = useState(0);
+
+useEffect(()=>{
+  socket.on('initialNotifications', (initialNotifications) => {
+    setNotifications(initialNotifications)})
+
+  },[])
+
   const axiosSecure = useAxios()
   const {user,logout,setLoading,loading} = useContext(AuthContext)
   const {data,isFetching} = useQuery({
@@ -117,13 +127,13 @@ const Dashboard = () => {
 
   
     return (
-        <div className='bg-gradient-to-r from-emerald-100 to-cyan-100 bg-cyan-100  hover:bg-gradient-to-r hover:from-emerald-100 hover:to-cyan-100 hover:bg-cyan-100'>
+        <div className='bg-gradient-to-r from-indigo-400 to-cyan-400 text-white'>
          
         <div className="drawer lg:drawer-open flex ">
  
   <motion.div initial={{x:-600}} animate={{x: navbar===true? 0 : -600}} transition={{ease:'anticipate'}} className="w-2/4 md:w-2/4 lg:w-1/4 h-[100vh] absolute md:static z-30 md:block">
     <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-  <ul className={`flex flex-col ${md? 'bg-transparent' : 'bg-gradient-to-r from-emerald-100 to-cyan-100 bg-cyan-100  hover:bg-gradient-to-r hover:from-emerald-100 hover:to-cyan-100 hover:bg-cyan-100'} gap-4 p-4 w-full h-full text-black border-[#e2e2e2] shadow-xl`}>
+  <ul className={`flex flex-col ${md? 'bg-transparent' : 'bg-gradient-to-r from-emerald-100 to-cyan-100 bg-cyan-100  hover:bg-gradient-to-r hover:from-emerald-100 hover:to-cyan-100 hover:bg-cyan-100'} gap-4 p-4 w-full h-full text-white border-[#e2e2e2] shadow-xl`}>
     <div className='flex w-full justify-center items-center flex-col'>
       <div className='w-full flex justify-end'>
         <IoClose className='text-green-500 text-3xl md:hidden' onClick={closeNavbar}/>
@@ -135,22 +145,21 @@ const Dashboard = () => {
         <input className='p-2 outline-0 rounded-lg w-full' placeholder='search '/>
         <FaSearch className='absolute top-3 right-2'/>
         </div>
-     <li onClick={()=>document.getElementById('my_modal_5').showModal()}><button className="flex items-center gap-2 text-md btn bg-green-400 border-none text-white hover:bg-green-500 w-full" > Add Task <IoIosAddCircle  className="text-2xl"/></button></li> 
-      <li className=''><NavLink to='/app/allTasks' className={({isActive})=> isActive? `p-2 rounded-lg text-sm flex justify-normal w-full border border-black ` : `p-2 rounded-lg text-sm flex justify-normal w-full border border-transparent`}>
+     <li onClick={()=>document.getElementById('my_modal_5').showModal()}><button className="flex items-center gap-2 text-md btn bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500  w-full" > Add Task <IoIosAddCircle  className="text-2xl"/></button></li> 
+      <NavLink to='/app/allTasks' className={({isActive})=> isActive? `btn bg-transparent border-none shadow-md hover:bg-transparent text-white rounded-lg text-sm flex justify-normal w-full underline shadow-blue-200` : `btn bg-transparent border-none shadow-md hover:bg-transparent text-white rounded-lg text-sm flex justify-normal w-full `}>
       <div className='flex justify-between w-full'>
       <p>All Task</p>
       <div className="badge text-xs">{data.allTasksLength}</div>
       </div>
       </NavLink>
-      </li>
-      <li className=''><NavLink to='/app/today' className={({isActive})=> isActive? `p-2 rounded-lg text-sm flex justify-normal w-full border border-black` : `p-2 rounded-lg text-sm flex justify-normal w-full border border-transparent`}>
+      <NavLink to='/app/today' className={({isActive})=> isActive? `btn bg-transparent border-none shadow-md hover:bg-transparent text-white rounded-lg text-sm flex justify-normal w-full underline shadow-blue-200` : `btn bg-transparent border-none shadow-md hover:bg-transparent text-white rounded-lg text-sm flex justify-normal w-full `}>
       <div className='flex justify-between w-full'>
       <p>Today</p>
       <div className="badge text-xs">{data.todayTasksLength}</div>
       </div>
       </NavLink>
-      </li>
-      <li className='w-full'><NavLink className={({isActive})=> isActive? `p-2 rounded-lg text-sm flex justify-normal w-full border border-black ` : `p-2 rounded-lg text-sm flex justify-normal w-full border border-transparent`} to='/app/events'>Events</NavLink></li>
+      
+      <NavLink className={({isActive})=> isActive? `btn bg-transparent border-none shadow-md hover:bg-transparent text-white rounded-lg text-sm flex justify-normal w-full border border-white underline shadow-blue-200` : `btn bg-transparent border-none shadow-md hover:bg-transparent text-white rounded-lg text-sm flex justify-normal w-full border border-transparent `} to='/app/events'>Events</NavLink>
     </ul>
   </motion.div>
   <div className='w-full md:w-3/4 overflow-auto h-[100vh]' onClick={closeNavbar}>
@@ -160,7 +169,7 @@ const Dashboard = () => {
 <Tooltip title='Notifications'>
 <Link  to='/app/notifications' className="flex items-center relative w-[50px]">
 <IoMdNotifications className='text-2xl text-blue-400'/>
-  <div className="badge bg-red-500 text-white font-bold absolute right-1 top-0 p-1">{data.notificationsLength}</div>
+  <div className="badge bg-red-500 text-white font-bold absolute right-1 top-0 p-1">{notifications.notificationsLength}</div>
 </Link>
 </Tooltip>
 <div className="dropdown">
@@ -185,13 +194,13 @@ const Dashboard = () => {
 </div>
 <dialog id="my_modal_5" className="modal w-11/12 mx-auto modal-bottom sm:modal-middle">
   <div className="modal-box p-0 bg-transparent h-full shadow-none flex justify-center items-start flex-col w-full">
-  <div className="flex flex-col gap-2 border rounded-xl p-3 bg-white w-full">
-                <div className='flex w-full justify-between items-center'>
-                <label className="px-0 input outline-0 border-0 flex items-center gap-2 border-none outline-none focus-within:outline-none h-fit">    
+  <div className="flex flex-col gap-2 border rounded-xl p-3 bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white w-full">
+                <div className='flex w-full justify-between items-center bg-transparent'>
+                <label className="px-0 input outline-0 border-0 flex items-center gap-2 border-none outline-none focus-within:outline-none h-fit bg-transparent">    
   <p  contentEditable={true} 
    suppressContentEditableWarning={true}
    ref={nameRef}
-  className={`outline-none w-full max-w-[250px] cursor-text text-black font-bold  focus-within:before:content-none ${taskName?  "" : "before:content-['Task_name'] text-gray-500"}`}    
+  className={`outline-none w-full max-w-[250px] cursor-text  font-bold text-white  focus-within:before:content-none ${taskName?  "" : " before:content-['Task_name']"}`}    
   onInput={changeTaskName} 
 ></p>
 </label>
@@ -200,34 +209,34 @@ const Dashboard = () => {
         <button className="text-2xl"><IoClose/></button>
       </form>
                 </div>
-                <label className="px-0 input  flex items-center gap-2  border-none outline-none focus-within:outline-none h-fit">    
+                <label className="px-0 input  flex items-center gap-2  border-none outline-none focus-within:outline-none h-fit bg-transparent">    
   <p  contentEditable={true} 
    suppressContentEditableWarning={true}
    ref={descriptionRef}
-  className={`outline-none w-full cursor-text  focus-within:before:content-none ${descripiton?  "" : "before:content-['Description'] text-gray-300"}`}    
+  className={`outline-none w-full text-white bg-transparent cursor-text  focus-within:before:content-none ${descripiton?  "" : "before:content-['Description']"}`}    
   onInput={changeDescription} 
 ></p></label>
 <div className="flex items-center gap-3">
 <div className="dropdown ">
-  <div tabIndex={0} role="button" className="btn m-1">Due Date</div>
-  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-30 w-52 p-2 shadow">
+  <div tabIndex={0} role="button" className="btn m-1 bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500">Due Date</div>
+  <ul tabIndex={0} className="dropdown-content menu bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white rounded-box z-30 w-52 p-2 shadow">
   <div>
     <label>Date</label> <br />
-  <input type="date" ref={dateRef} className="w-full border p-2 outline-none focus-within:outline-none"/>
+  <input type="date" ref={dateRef} className="bg-transparent w-full border p-2 outline-none focus-within:outline-none"/>
   </div>
  <div className="mt-2">
     <label>Time</label> <br />
- <input type="time" ref={timeRef} className="w-full border p-2 outline-none focus-within:outline-none"/>
+ <input type="time" ref={timeRef} className=" bg-transparent w-full border p-2 outline-none focus-within:outline-none"/>
  </div>
   </ul>
 </div>
 
 <div className="dropdown ">
-  <div tabIndex={0} role="button" className="btn m-1">Reminder</div>
-  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[30] w-52 p-2 shadow right-0">
+  <div tabIndex={0} role="button" className="btn m-1 bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500">Reminder</div>
+  <ul tabIndex={0} className="dropdown-content menu bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg rounded-box z-[30] w-52 p-2  right-0">
   <div className="mt-2">
     <label>Time</label> <br />
- <input type="time" ref={reminderRef} className="w-full border p-2 outline-none focus-within:outline-none"/>
+ <input type="time" ref={reminderRef} className="w-full border p-2 outline-none focus-within:outline-none bg-transparent"/>
  </div>
 
   </ul>
@@ -236,14 +245,14 @@ const Dashboard = () => {
     
          ref={priorityRef}
         options={options}
-        className='text-sm'
+        className='text-sm text-black'
       />
 </div>
 <div className='flex w-full justify-end gap-3'>
-    <button className='btn bg-green-500 text-white' onClick={addTask}>Add Task</button>
+    <button className='btn bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500 ' onClick={addTask}>Add Task</button>
 <form method="dialog">
         {/* if there is a button in form, it will close the modal */}
-        <button className="btn bg-red-500 text-white">Cancel</button>
+        <button className="btn bg-red-500 border-none text-white">Cancel</button>
       </form>
 </div>
 </div>

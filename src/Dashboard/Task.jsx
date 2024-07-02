@@ -114,18 +114,18 @@ const Task = ({id,task}) => {
 
     return (
         <div className='cursor-auto'>
-    <dialog id={id} className="modal">
+    <dialog id={id} className="modal ">
       
-  <div className="modal-box h-full flex justify-center items-center shadow-none bg-transparent p-0">
+  <div className="modal-box  h-full flex justify-center items-center shadow-none bg-transparent p-0">
     
-<div className='bg-white p-4 w-full rounded-lg'>
+<div className='bg-gradient-to-r from-indigo-400 to-cyan-400 text-white p-4 w-full rounded-lg'>
 <div className='flex justify-between items-center gap-10'>
 <h3 className="font-bold text-lg outline-none border-none"  suppressContentEditableWarning={true} contentEditable={true} onFocus={showButtons}  ref={nameRef}>{name}</h3>
 
 <div className='flex items-center'>
 <div className="dropdown">
   <div tabIndex={0} role="button" className="m-1"><BsThreeDots  className='w-[50px] text-xl'/></div>
-  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-[120px] p-2 shadow right-0">
+  <ul tabIndex={0} className="dropdown-content menu bg-gradient-to-r from-indigo-400 to-cyan-400 rounded-box z-[1] w-[120px] p-2 shadow right-0">
     <li onClick={duplicate}><a>Duplicate</a></li>
     
 <form method='dialog'>
@@ -162,11 +162,11 @@ const Task = ({id,task}) => {
      </div>
          </div>
        </div>
-       <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+       <ul tabIndex={0} className="dropdown-content menu bg-gradient-to-r from-indigo-400 to-cyan-400 rounded-box z-[1] w-52 p-2 shadow">
        <div>
          {location.pathname==='/app/allTasks'? <>
           <label>Date</label> <br />
-          <input onFocus={showButtons} type="date" defaultValue={dateDefault} ref={dateRef} className="w-full border p-2 outline-none focus-within:outline-none"/>
+          <input onFocus={showButtons} type="date" defaultValue={dateDefault} ref={dateRef} className="w-full border p-2 outline-none focus-within:outline-none bg-transparent"/>
           </>
           :
           <>
@@ -175,7 +175,7 @@ const Task = ({id,task}) => {
        </div>
       <div className="mt-2">
          <label>Time</label> <br />
-      <input onFocus={showButtons} type="time" ref={timeRef} defaultValue={dueTime} className="w-full border p-2 outline-none focus-within:outline-none"/>
+      <input onFocus={showButtons} type="time" ref={timeRef} defaultValue={dueTime} className="w-full border p-2 outline-none focus-within:outline-none bg-transparent"/>
       </div>
      
        </ul>
@@ -184,10 +184,10 @@ const Task = ({id,task}) => {
      <div className="tooltip" data-tip="Reminder">
        <div tabIndex={0} role="button" className="m-1 flex items-center text-sm gap-1"><IoNotificationsOutline />{reminderTime? reminderTime : 'Select Reminder Time'}</div>
        </div>
-       <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+       <ul tabIndex={0} className="dropdown-content menu bg-gradient-to-r from-indigo-400 to-cyan-400 rounded-box z-[1] w-52 p-2 shadow">
        <div className="mt-2">
          <label>Time</label> <br />
-      <input onFocus={showButtons} type="time" ref={reminderRef} defaultValue={reminderTime} className="w-full border p-2 outline-none focus-within:outline-none"/>
+      <input onFocus={showButtons} type="time" ref={reminderRef} defaultValue={reminderTime} className="w-full border p-2 outline-none focus-within:outline-none bg-transparent"/>
       </div>
        </ul>
      </div>
@@ -197,7 +197,7 @@ const Task = ({id,task}) => {
          onFocus={showButtons}
          ref={priorityRef}
         options={options}
-        className='text-sm'
+        className='text-sm text-black '
       />
       <h1 className='text-sm'>{priority}</h1>
          </div>
@@ -205,8 +205,8 @@ const Task = ({id,task}) => {
  </div>
  {
     editSave?  <div className='flex w-full justify-end gap-3'>
-    <button className='btn bg-green-500 text-white' onClick={updateTask}>Save</button>
-        <button className="btn bg-red-500 text-white" onClick={hideButtons}>Cancel</button>
+    <button className='btn  bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500' onClick={updateTask}>Save</button>
+        <button className="btn bg-red-500 border-none text-white" onClick={hideButtons}>Cancel</button>
       
       
 </div> : ''
