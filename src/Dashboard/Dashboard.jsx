@@ -16,18 +16,31 @@ import Loading from '../Home/Loading';
 import Footer from '../Components/Footer';
 import io from 'socket.io-client';
 
+
 const Dashboard = () => {
-const socket = io('http://localhost:5000');
-const [notifications, setNotifications] = useState(0);
+const [notificationsLength, setNotificationsLength] = useState(0);
+const socket = io('http://localhost:5001');
+const {user,logout,setLoading,loading} = useContext(AuthContext)
 
 useEffect(()=>{
-  socket.on('initialNotifications', (initialNotifications) => {
-    setNotifications(initialNotifications)})
+ 
 
-  },[])
+  if(user?.uid){
+  }
+  socket.emit('userUid', user?.uid)
+  socket.on('notificationsLength', data => {
+    setNotificationsLength(data);
+    
+  });
+  return () => {
+    socket.off('notificationsLength');
+    socket.off('userUid');
+  };
+  },[socket])
+  
 
   const axiosSecure = useAxios()
-  const {user,logout,setLoading,loading} = useContext(AuthContext)
+ 
   const {data,isFetching} = useQuery({
         queryKey: ['amounts'],
         queryFn: ()=>
@@ -169,7 +182,7 @@ useEffect(()=>{
 <Tooltip title='Notifications'>
 <Link  to='/app/notifications' className="flex items-center relative w-[50px]">
 <IoMdNotifications className='text-2xl text-blue-400'/>
-  <div className="badge bg-red-500 text-white font-bold absolute right-1 top-0 p-1">{notifications.notificationsLength}</div>
+  <div className="badge bg-red-500 text-white font-bold absolute right-1 top-0 p-1">{notificationsLength}</div>
 </Link>
 </Tooltip>
 <div className="dropdown">
