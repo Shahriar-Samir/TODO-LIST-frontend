@@ -18,9 +18,9 @@ import { IoClose } from 'react-icons/io5';
 import Select from 'react-select';
 import { AuthContext } from '../Providers/AuthProvider';
 import { toast, ToastContainer } from 'react-toastify';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Loading from '../Home/Loading';
-
+import {io} from 'socket.io-client'
 
 
 
@@ -91,6 +91,22 @@ const Events = () => {
       })
 
   })
+  const queryClient = useQueryClient()
+
+  useEffect(()=>{ 
+        const socket = io('http://localhost:5001', {withCredentials:true})
+        socket.connect()
+        socket.on('allEventTasks',(newData)=>{
+             queryClient.setQueryData(['allTasks'],(oldData)=>{
+                    return newData
+             })
+        })
+
+        return ()=>{
+            socket.close()
+        }
+
+  },[])
   
 
   const [today,setToday] = useState()
@@ -129,13 +145,13 @@ const Events = () => {
   }
 
 
-  const appointments = allTasks?.map(task=>{
+  const appointments = allTasks?.map((task,index)=>{
     const resultArray = convertToYearMonthDay(task?.dueDate)
     const month = resultArray[1]
     const date = resultArray[2]
     const year = resultArray[0]
     return {
-      id: 6,
+      id: index,
       title: task?.name,
       startDate: new Date(year, month,date, 18, 0),
       endDate: new Date(year, month, date, 18, 1),

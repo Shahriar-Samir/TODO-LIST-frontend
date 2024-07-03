@@ -165,10 +165,12 @@ const AllTasksPage = () => {
                 return newData
               })
         })
+
+        
   
         return ()=>{
           socket.off('getAllTasks')
-          socket.disconnect()
+          socket.close()
         }
       
 
