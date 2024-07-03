@@ -62,6 +62,25 @@ useEffect(()=>{
         })
   })
 
+
+  useEffect(()=>{
+    const socket = io('http://localhost:5001',{
+      withCredentials: true
+    });
+    socket.connect()
+    socket.on('amounts', (newData) => {
+      queryClient.setQueryData(['amounts'], (oldData)=>{
+        return newData
+      })
+    });
+    return () => {
+      socket.off('amounts')
+      socket.disconnect()
+    };
+    },[])
+    
+
+
   const options = [
     { value: 'Most Important', label: 'Most Important' },
     { value: 'Important', label: 'Important' },
@@ -274,7 +293,9 @@ useEffect(()=>{
       />
 </div>
 <div className='flex w-full justify-end gap-3'>
-    <button className='btn bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500 ' onClick={addTask}>Add Task</button>
+ <form method='dialog'>
+ <button className='btn bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500 ' onClick={addTask}>Add Task</button>
+ </form>
 <form method="dialog">
         {/* if there is a button in form, it will close the modal */}
         <button className="btn bg-red-500 border-none text-white">Cancel</button>

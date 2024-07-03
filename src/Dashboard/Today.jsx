@@ -9,10 +9,10 @@ import Task from "./Task";
 import Select from 'react-select';
 import { toast, ToastContainer } from "react-toastify";
 import useAxios from "../hooks/useAxios";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../Providers/AuthProvider";
 import Loading from "../Home/Loading";
-
+import {io} from 'socket.io-client'
 
 
 const AllTasksPage = () => {
@@ -56,9 +56,10 @@ const AllTasksPage = () => {
 
     const {user} = useContext(AuthContext)
     const axiosSecure = useAxios()
+    const queryClient = useQueryClient()
 
     const {data:tasks, isFetching} = useQuery({
-          queryKey: [user],
+          queryKey: ['todayTasks'],
           initialData:[],
           queryFn: ()=>
               axiosSecure.get(`/userTasksToday/${user?.uid}`)
@@ -67,6 +68,20 @@ const AllTasksPage = () => {
               })
           
     })
+
+    useEffect(()=>{
+        const socket = io('http://localhost:5001', {withCredentials:true})
+        socket.connect()
+        socket.on('todayTasks', (newData)=>{
+            queryClient.setQueryData(['todayTasks'], (oldData)=>{
+                return newData
+            })
+        })
+        return ()=>{
+          socket.off('todayTasks')
+            socket.disconnect()
+        }
+    },[])
 
     const nameRef = useRef(null)
     const descriptionRef = useRef(null)
@@ -92,6 +107,7 @@ const AllTasksPage = () => {
           else{
            axiosSecure.post('/addUserTask', task)
           .then(()=>{
+            closeAddTask()
             toast.success('New Task Added')
           })
           .catch(()=>{
