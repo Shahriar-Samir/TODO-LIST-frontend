@@ -11,15 +11,27 @@ import { AuthContext } from '../Providers/AuthProvider';
 import { toast } from 'react-toastify';
 import Select from 'react-select';
 import useAxios from '../hooks/useAxios';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Loading from '../Home/Loading';
 import Footer from '../Components/Footer';
 import io from 'socket.io-client';
 
 
 const Dashboard = () => {
-const [notificationsLength, setNotificationsLength] = useState(0);
 const {user,logout,setLoading,loading} = useContext(AuthContext)
+const queryClient = useQueryClient()
+
+const {data:notificationsLength,isFetching:notiFetching} = useQuery({
+  queryKey: ['notiLen'],
+  queryFn: ()=>
+    axiosSecure.get(`/userNotiLengths/${user?.uid}`)
+  .then(res=>{
+      return res.data
+  })
+})
+
+
+
 
 
 useEffect(()=>{
@@ -27,12 +39,12 @@ useEffect(()=>{
     withCredentials: true
   });
   socket.connect()
-  socket.on('notificationsLength', data => {
-    setNotificationsLength(data);
-    
+  socket.on('notificationsLength', (newData) => {
+    queryClient.setQueryData(['notiLen'], (oldData)=>{
+      return newData
+    })
   });
   return () => {
-    socket.off('userUid')
     socket.off('notificationsLength')
     socket.disconnect()
   };
@@ -133,11 +145,11 @@ useEffect(()=>{
     }
 }
 
-  if(isFetching){
+  if(isFetching || notiFetching){
     return <Loading/>
   }
 
-
+  
   
     return (
         <div className='bg-gradient-to-r from-indigo-400 to-cyan-400 text-white'>
@@ -182,7 +194,7 @@ useEffect(()=>{
 <Tooltip title='Notifications'>
 <Link  to='/app/notifications' className="flex items-center relative w-[50px]">
 <IoMdNotifications className='text-2xl text-blue-400'/>
-  <div className="badge bg-red-500 text-white font-bold absolute right-1 top-0 p-1">{notificationsLength}</div>
+  <div className="badge bg-red-500 text-white font-bold absolute right-1 top-0 p-1">{notificationsLength?.notiLen}</div>
 </Link>
 </Tooltip>
 <div className="dropdown">

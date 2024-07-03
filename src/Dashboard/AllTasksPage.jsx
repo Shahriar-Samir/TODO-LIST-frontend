@@ -161,7 +161,6 @@ const AllTasksPage = () => {
         const socket = io('http://localhost:5001',{withCredentials:true})
        socket.connect()
         socket.on('getAllTasks', (newData)=>{
-              console.log(newData)
               queryClient.setQueryData(['Tasks'], (oldData)=>{
                 return newData
               })
