@@ -101,6 +101,11 @@ const Events = () => {
                     return newData
              })
         })
+        socket.on('eventTasksAmount',(newData)=>{
+             queryClient.setQueryData(['tasksAmount'],(oldData)=>{
+                    return newData
+             })
+        })
 
         return ()=>{
             socket.close()
@@ -172,8 +177,8 @@ const Events = () => {
             <h1 className='text-3xl font-bold '>Events</h1>
             </div>
           <div className='flex gap-3 md:gap-10 flex-col md:flex-row justify-between md:justify-center py-2 w-11/12 mx-auto mt-4'>
-          <h1 className='font-bold text-blue-500'>Upcoming Tasks: {tasksAmount.upcomingTasksLength}</h1>
-            <h1 className='font-bold text-green-500'>Completed Tasks: {tasksAmount.finishedTasksLength}</h1>
+          <h1 className='font-bold text-blue-700'>Upcoming Tasks: {tasksAmount.upcomingTasksLength}</h1>
+            <h1 className='font-bold text-green-300'>Completed Tasks: {tasksAmount.finishedTasksLength}</h1>
             <h1 className='font-bold text-red-500'>Unfinished Tasks: {tasksAmount.unfinishedTasksLength}</h1>
           </div>
           <Paper className='w-full md:w-11/12 mx-auto mt-3'>
