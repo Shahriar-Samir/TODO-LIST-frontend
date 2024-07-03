@@ -23,10 +23,11 @@ const {user,logout,setLoading,loading} = useContext(AuthContext)
 
 
 useEffect(()=>{
-  const socket = io('http://localhost:5001');
-  socket.emit('userUid', user?.uid)
+  const socket = io('http://localhost:5001',{
+    withCredentials: true
+  });
+  socket.connect()
   socket.on('notificationsLength', data => {
-    console.log(data)
     setNotificationsLength(data);
     
   });

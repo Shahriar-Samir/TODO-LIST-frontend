@@ -156,11 +156,10 @@ const AllTasksPage = () => {
     },[])
 
 
-
+    
     useEffect(()=>{
-        const socket = io('http://localhost:5001')
-      socket.connect()
-        socket.emit('userUid', user?.uid)
+        const socket = io('http://localhost:5001',{withCredentials:true})
+       socket.connect()
         socket.on('getAllTasks', (newData)=>{
               console.log(newData)
               queryClient.setQueryData(['Tasks'], (oldData)=>{
@@ -169,7 +168,6 @@ const AllTasksPage = () => {
         })
   
         return ()=>{
-          socket.off('userUid')
           socket.off('getAllTasks')
           socket.disconnect()
         }
