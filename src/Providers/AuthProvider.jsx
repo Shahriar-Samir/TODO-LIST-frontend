@@ -18,7 +18,7 @@ const AuthProvider = ({children}) => {
             onAuthStateChanged(auth,(currentUser)=>{
                 setUser(currentUser)
                 if(currentUser){
-                      axiosSecure.get(`/user/${currentUser.uid}`)
+                      axiosSecure.post(`/jwt`, {email:currentUser.email,uid:currentUser.uid})
                       .then(res=>{
                         if(res.data){
                             const {displayName,photoURL} =res.data
@@ -38,8 +38,8 @@ const AuthProvider = ({children}) => {
                    
                     }
                     else{
+                        axiosSecure.post('/logout', currentUser)
                         setLoading(false)
-                        setUser(null)
                     }
             })
     },[])

@@ -19,24 +19,23 @@ import io from 'socket.io-client';
 
 const Dashboard = () => {
 const [notificationsLength, setNotificationsLength] = useState(0);
-const socket = io('http://localhost:5001');
 const {user,logout,setLoading,loading} = useContext(AuthContext)
 
-useEffect(()=>{
- 
 
-  if(user?.uid){
-  }
+useEffect(()=>{
+  const socket = io('http://localhost:5001');
   socket.emit('userUid', user?.uid)
   socket.on('notificationsLength', data => {
+    console.log(data)
     setNotificationsLength(data);
     
   });
   return () => {
-    socket.off('notificationsLength');
-    socket.off('userUid');
+    socket.off('userUid')
+    socket.off('notificationsLength')
+    socket.disconnect()
   };
-  },[socket])
+  },[])
   
 
   const axiosSecure = useAxios()

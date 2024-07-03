@@ -9,13 +9,17 @@ import Task from "./Task";
 import Select from 'react-select';
 import { toast, ToastContainer } from "react-toastify";
 import useAxios from "../hooks/useAxios";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../Providers/AuthProvider";
 import Loading from "../Home/Loading";
+import { io } from "socket.io-client";
 
 
 
 const AllTasksPage = () => {
+ 
+    
+
   const options = [
     { value: 'Most Important', label: 'Most Important' },
     { value: 'Important', label: 'Important' },
@@ -25,6 +29,7 @@ const AllTasksPage = () => {
     const [today,setToday] = useState()
     const [presentTime,setPresentTime] = useState()
     const [icon,setIcon] = useState(false)
+    const [items,setItems] = useState([])
 
 
     const [descripiton,setDescription] = useState()
@@ -45,27 +50,22 @@ const AllTasksPage = () => {
         setIcon(false)
     }
 
-    useEffect(()=>{
-        setInterval(()=>{
-            const date = new Date()
-            setToday(date.toLocaleDateString())
-            setPresentTime(date.toLocaleTimeString())
-        },1000)
+   
 
-    },[])
+
 
     const {user} = useContext(AuthContext)
     const axiosSecure = useAxios()
+    const queryClient = useQueryClient()
 
-    const {data:tasks, isFetching} = useQuery({
-          queryKey: [user],
-          initialData:[],
-          queryFn: ()=>
-              axiosSecure.get(`/userTasksAll/${user?.uid}`)
-              .then(res=>{
-                return res.data
-              })
-          
+ 
+    const {data:tasks, error, isFetching} = useQuery({
+          queryKey: ['Tasks'],
+          initialData: [],
+          queryFn: ()=> axiosSecure.get(`/userTasksAll/${user?.uid}`)
+                        .then(res=>{
+                          return res.data
+                        })
     })
 
     const nameRef = useRef(null)
@@ -77,7 +77,9 @@ const AllTasksPage = () => {
 
 
 
+
     const addTask = ()=>{
+          closeAddTask()
           const name = nameRef.current.textContent
           const description = descriptionRef.current.textContent
           const convertedDueDate = new Date(dateRef.current.value)
@@ -103,7 +105,7 @@ const AllTasksPage = () => {
 
 
  
-    const [items,setItems] = useState(tasks)
+   
 
 
     const [addTaskSection,setAddTaskSection] = useState(false)
@@ -142,9 +144,45 @@ const AllTasksPage = () => {
           })
     }
 
+    useEffect(()=>{
+      setItems(tasks)
+    
+      setInterval(()=>{
+          const date = new Date()
+          setToday(date.toLocaleDateString())
+          setPresentTime(date.toLocaleTimeString())
+      },1000)
+
+    },[])
+
+
+
+    useEffect(()=>{
+        const socket = io('http://localhost:5001')
+      socket.connect()
+        socket.emit('userUid', user?.uid)
+        socket.on('getAllTasks', (newData)=>{
+              console.log(newData)
+              queryClient.setQueryData(['Tasks'], (oldData)=>{
+                return newData
+              })
+        })
+  
+        return ()=>{
+          socket.off('userUid')
+          socket.off('getAllTasks')
+          socket.disconnect()
+        }
+      
+
+    },[])
+
+ 
+ 
     if(isFetching){
         return <Loading/>
     }
+
 
     return (
         <div className='w-10/12 mx-auto '>
