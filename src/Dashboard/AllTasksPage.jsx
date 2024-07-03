@@ -265,14 +265,14 @@ const AllTasksPage = () => {
 </div>
     <div className="tooltip" data-tip="Delete Task">
     <MdDelete className="text-red-500" onClick={()=>document.getElementById(item._id+'delete').showModal()}/>
-    <dialog id={item._id+'delete'} className="modal modal-bottom sm:modal-middle">
-  <div className="modal-box">
+    <dialog id={item._id+'delete'} className="modal modal-bottom sm:modal-middle ">
+  <div className="modal-box  bg-gradient-to-r from-indigo-400 to-cyan-400 ">
     <h3 className="font-bold text-lg">Are you sure you want to delete this task?</h3>
     <p className="py-2"></p>
     <div className="modal-action ">
       
       <form method="dialog" className="flex justify-center w-full gap-5">
-      <button className="btn bg-red-500 text-white" onClick={()=>deleteTask(item._id)}>Delete</button>
+      <button className="btn bg-red-500 text-white border-none" onClick={()=>deleteTask(item._id)}>Delete</button>
         <button className="btn">Cancel</button>
       </form>
     </div>

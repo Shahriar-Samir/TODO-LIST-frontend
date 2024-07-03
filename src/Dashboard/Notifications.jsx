@@ -69,7 +69,7 @@ const Notifications = () => {
             </div>
           </div>
 <dialog id={item._id} className="modal modal-bottom sm:modal-middle">
-  <div className="modal-box">
+  <div className="modal-box  bg-gradient-to-r from-indigo-400 to-cyan-400 ">
     <h3 className="font-bold text-lg">{item.title}</h3>
     <p className="py-4">{item.description}</p>
     <div className="modal-action">

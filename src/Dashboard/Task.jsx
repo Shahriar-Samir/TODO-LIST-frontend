@@ -204,7 +204,7 @@ const Task = ({id,task}) => {
          
  </div>
  {
-    editSave?  <div className='flex w-full justify-end gap-3'>
+    editSave?  <div className='flex w-full justify-end gap-3 '>
     <button className='btn  bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500' onClick={updateTask}>Save</button>
         <button className="btn bg-red-500 border-none text-white" onClick={hideButtons}>Cancel</button>
       

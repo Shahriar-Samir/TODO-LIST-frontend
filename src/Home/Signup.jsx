@@ -48,7 +48,7 @@ const Signup = () => {
   }
 
     return (
-        <div className='flex flex-col justify-center items-center h-[150vh] gap-12 lg:h-[140vh] '>
+        <div className='flex flex-col justify-center items-center h-[150vh] gap-12 lg:h-[140vh]   bg-gradient-to-r from-indigo-400 to-cyan-400 text-white'>
           <ToastContainer/>
                       <img src='/logos/cover.png' className='w-[250px]'/>
           <div className='w-11/12 md:w-1/2 max-w-[350px]'>
@@ -72,25 +72,25 @@ const Signup = () => {
     
             </div>
             <div className='flex items-center gap-3 mt-2'>
-            <hr class=" border border-black w-full" />
+            <hr class=" border border-white w-full" />
             <p>or</p>
-            <hr class=" border border-black w-full" />
+            <hr class=" border border-white w-full" />
             </div>
             <div className="form-control mt-1">
           <label className="label">
-            <span className="label-text">User name</span>
+            <span className="label-text text-white">User name</span>
           </label>
           <input type="text" name='userName' placeholder="user name" className="input input-bordered" required />
         </div>
         <div className="form-control mt-1">
           <label className="label">
-            <span className="label-text">Email</span>
+            <span className="label-text text-white">Email</span>
           </label>
           <input type="email" placeholder="email" name='email' className="input input-bordered" required />
         </div>
         <div className="form-control">
           <label className="label">
-            <span className="label-text">Password</span>
+            <span className="label-text text-white">Password</span>
           </label>
           <div className='relative'>
           <input type="password" placeholder="password" name='password' className="input input-bordered w-full" required />
@@ -99,7 +99,7 @@ const Signup = () => {
           </div>
         </div>
         <div className="form-control mt-6">
-        { loading? <button disabled={true} className="btn text-white bg-gradient-to-r from-emerald-400 to-cyan-400 bg-cyan-500  hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 hover:bg-cyan-500 "><span className="loading loading-spinner loading-md"></span></button> : <button className="btn text-white bg-gradient-to-r from-emerald-400 to-cyan-400 bg-cyan-500  hover:bg-gradient-to-r hover:from-emerald-500 hover:to-cyan-500 hover:bg-cyan-500 ">Login</button>}
+        {loading? <button disabled={true} className="btn text-white  bg-gradient-to-r from-indigo-400 to-cyan-400 "><span className="loading loading-spinner loading-md border-none"></span></button> : <button className="btn  bg-gradient-to-r from-indigo-400 to-cyan-400 text-white border-none  hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500 ">Submit</button>}
         </div>
       </form>
       <button className='btn w-full mt-4'>Try as guest</button>

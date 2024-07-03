@@ -281,33 +281,33 @@ const addTask = ()=>{
 }
     return <>
     <dialog id={startDate} className="modal w-11/12 mx-auto modal-bottom sm:modal-middle">
-  <div className="modal-box p-0 bg-transparent h-full shadow-none flex justify-center items-start flex-col w-full">
-  <div className="flex flex-col gap-2 border rounded-xl p-3 bg-white w-full">
-                <div className='flex w-full justify-between items-center'>
-                <label className="px-0 input outline-0 border-0 flex items-center gap-2 border-none outline-none focus-within:outline-none h-fit">    
+  <div className="modal-box  p-0 bg-transparent h-full shadow-none flex justify-center items-start flex-col w-full">
+  <div className="flex flex-col gap-2 border rounded-xl p-3  bg-gradient-to-r from-indigo-400 to-cyan-400 border-none w-full">
+                <div className='flex w-full justify-between items-center bg-transparent'>
+                <label className="px-0 input outline-0 border-0 flex items-center gap-2 border-none outline-none focus-within:outline-none h-fit bg-transparent">    
   <p  contentEditable={true} 
    suppressContentEditableWarning={true}
    ref={nameRef}
-  className={`outline-none w-full max-w-[250px] cursor-text text-black font-bold  focus-within:before:content-none ${taskName?  "" : "before:content-['Task_name'] text-gray-500"}`}    
+  className={`outline-none w-full max-w-[250px] cursor-text text-black font-bold  focus-within:before:content-none bg-transparent ${taskName?  "" : "before:content-['Task_name'] text-gray-600"}`}    
   onInput={changeTaskName} 
 ></p>
 </label>
 <form method="dialog">
         {/* if there is a button in form, it will close the modal */}
-        <button className="text-2xl"><IoClose/></button>
+        <button className="text-2xl text-white"><IoClose/></button>
       </form>
                 </div>
-                <label className="px-0 input  flex items-center gap-2  border-none outline-none focus-within:outline-none h-fit">    
+                <label className="px-0 input  flex items-center gap-2  border-none outline-none focus-within:outline-none h-fit bg-transparent">    
   <p  contentEditable={true} 
    suppressContentEditableWarning={true}
    ref={descriptionRef}
-  className={`outline-none w-full cursor-text  focus-within:before:content-none ${descripiton?  "" : "before:content-['Description'] text-gray-300"}`}    
+  className={`outline-none w-full cursor-text  focus-within:before:content-none bg-transparent${descripiton?  "text-black" : "before:content-['Description'] text-gray-300"}`}    
   onInput={changeDescription} 
 ></p></label>
 <div className="flex items-center gap-3">
 <div className="dropdown ">
-  <div tabIndex={0} role="button" className="btn m-1">Due Date</div>
-  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-30 w-52 p-2 shadow">
+  <div tabIndex={0} role="button" className="btn m-1  bg-gradient-to-r from-indigo-400 to-cyan-400 text-black border-none text-white">Due Date</div>
+  <ul tabIndex={0} className="dropdown-content menu b bg-gradient-to-r from-indigo-400 to-cyan-400  rounded-box z-30 w-52 p-2 shadow text-white">
   <div>
     <label>Date</label> <br />
     <p ref={dateRef}>{startDate.toDateString()}</p>
@@ -320,7 +320,7 @@ const addTask = ()=>{
 </div>
 
 <div className="dropdown ">
-  <div tabIndex={0} role="button" className="btn m-1">Reminder</div>
+  <div tabIndex={0} role="button" className="btn m-1  bg-gradient-to-r from-indigo-400 to-cyan-400  text-white border-none ">Reminder</div>
   <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[30] w-52 p-2 shadow right-0">
   <div className="mt-2">
     <label>Time</label> <br />
@@ -337,10 +337,10 @@ const addTask = ()=>{
       />
 </div>
 <form method="dialog" className='flex w-full justify-end gap-3'>
-    <button className='btn bg-green-500 text-white' onClick={addTask}>Add Task</button>
+    <button className='btn  bg-gradient-to-r from-indigo-400 to-cyan-400  text-white border-none'  onClick={addTask}>Add Task</button>
 
         {/* if there is a button in form, it will close the modal */}
-        <button className="btn bg-red-500 text-white">Cancel</button>
+        <button className="btn bg-red-500 text-white border-none">Cancel</button>
       </form>
 
 </div>
