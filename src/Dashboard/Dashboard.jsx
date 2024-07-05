@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FaBars, FaHamburger, FaSearch } from 'react-icons/fa';
 import { IoIosAdd, IoIosAddCircle } from 'react-icons/io';
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { CiEdit } from "react-icons/ci";
 import { IoMdNotifications } from "react-icons/io";
 import { Tooltip, useMediaQuery } from '@mui/material';
@@ -30,6 +30,7 @@ const {data:notificationsLength,isFetching:notiFetching} = useQuery({
   })
 })
 
+const navigate = useNavigate()
 
 
 
@@ -164,6 +165,14 @@ useEffect(()=>{
     }
 }
 
+
+    const search = (e)=>{
+      e.preventDefault()
+      const form = e.target
+      const queryData = form.query.value
+      navigate(`/app/search?uid=${user.uid}&query=${queryData}`)
+    }
+
   if(isFetching || notiFetching){
     return <Loading/>
   }
@@ -185,10 +194,10 @@ useEffect(()=>{
     <img src='/logos/cover.png' className='w-[100px] h-[100px] object-contain'/>
     </div>
       {/* Sidebar content here */}
-        <div className='bg-white flex justify-between rounded-lg relative w-full'>
-        <input className='p-2 outline-0 rounded-lg w-full' placeholder='search '/>
-        <FaSearch className='absolute top-3 right-2'/>
-        </div>
+        <form onSubmit={search} className='bg-white flex justify-between rounded-lg relative w-full'>
+        <input className='p-2 outline-0 rounded-lg w-full text-black' name='query' placeholder='search tasks' />
+       <button> <FaSearch className='absolute top-3 right-2 text-black'/></button>
+        </form>
      <li onClick={()=>document.getElementById('my_modal_5').showModal()}><button className="flex items-center gap-2 text-md btn bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500  w-full" > Add Task <IoIosAddCircle  className="text-2xl"/></button></li> 
       <NavLink to='/app/allTasks' className={({isActive})=> isActive? `btn bg-transparent border-none shadow-md hover:bg-transparent text-white rounded-lg text-sm flex justify-normal w-full underline shadow-blue-200` : `btn bg-transparent border-none shadow-md hover:bg-transparent text-white rounded-lg text-sm flex justify-normal w-full `}>
       <div className='flex justify-between w-full'>
@@ -222,7 +231,7 @@ useEffect(()=>{
     <img src={user?.photoURL ? user.photoURL : '/logos/user.png'} className='w-[50px] h-[50px] object-cover rounded-full border-2 border-blue-500 outline-none'/>
   </div>
   </Tooltip>
-  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow right-0 mt-2">
+  <ul tabIndex={0} className="dropdown-content menu bg-gradient-to-r from-indigo-400 to-cyan-400 rounded-box z-[1] w-52 p-2 shadow right-0 mt-2">
     <li><Link to={`/app/profile`}>Profile</Link></li>
     {loading? <li><a className='font-bold'><span className="loading loading-spinner loading-md"></span></a></li> : <li onClick={signOut}><a className='font-bold'>Logout</a></li>}
   </ul>
