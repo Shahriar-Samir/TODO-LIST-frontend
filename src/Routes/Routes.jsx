@@ -9,6 +9,7 @@ import AllTasksPage from '../Dashboard/AllTasksPage';
 import Notifications from '../Dashboard/Notifications';
 import Profile from '../Dashboard/Profile';
 import PrivateRoute from '../Providers/PrivateRoute';
+import Search from '../Dashboard/Search';
 
 const router = createBrowserRouter([
     {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
             {
                 path:'profile',
                 element: <Profile/>
+            },
+            {
+                path:'search',
+                element: <Search/>
             },
         ]
     },

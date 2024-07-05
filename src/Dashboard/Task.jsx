@@ -14,7 +14,7 @@ const options = [
     { value: 'Normal', label: 'Normal' },
   ];
 
-const Task = ({id,task}) => {
+const Task = ({id,task,getUpdated}) => {
   const nameRef = useRef(null)
   const descriptionRef = useRef(null)
   const timeRef = useRef(null)
@@ -75,6 +75,7 @@ const Task = ({id,task}) => {
       const task = {uid:user?.uid,name:nameValue,description:descriptionValue ,dueDate:dueDateValue,dueTime:dueTimeValue,priority:priorityValue,reminderTime:reminderTimeValue}
        axiosSecure.patch(`/updateUserTask/${_id}`, task)
       .then(()=>{
+        getUpdated(nameValue+descriptionValue+dueDateValue+dueTimeValue+reminderTimeValue+priorityValue)
         toast.success('Updated Task')
         hideButtons()
       })
