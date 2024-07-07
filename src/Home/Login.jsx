@@ -5,11 +5,13 @@ import { FaGithub } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Providers/AuthProvider';
 import { toast, ToastContainer } from 'react-toastify';
+import useAxios from '../hooks/useAxios';
 
 
 const Login = () => {
-  const {signIn,loading,setLoading} = useContext(AuthContext)
+  const {signIn,loading,setLoading,singInWithGoogle} = useContext(AuthContext)
   const navigate = useNavigate()
+  const axiosSecure = useAxios()
   
   const submit = (e)=>{
     e.preventDefault()
@@ -44,6 +46,31 @@ const Login = () => {
       }
   }
 
+  const googleLogin = ()=>{
+    singInWithGoogle()
+    .then(res=>{
+      axiosSecure.get(`/user/${res.user.uid}`)
+      .then((res2)=>{
+             if(res2.data){
+              setLoading(false)
+              navigate('/app/today')
+             }
+             else{
+              axiosSecure.post('/addUser', {uid:res.user.uid,displayName:res.user.displayName,email:res.user.email,photoURL:res.user.photoURL,phoneNumber:res.user.phoneNumber})
+              .then(()=>{
+                  setLoading(false)
+                  navigate('/app/today')
+            })
+             }
+      })
+
+    })
+    .catch(()=>{
+      setLoading(false)
+        toast.error('Something went wrong')
+    })
+  }
+
     return (
       <>
        <ToastContainer/>
@@ -62,7 +89,7 @@ const Login = () => {
             <h1 className='text-sm font-bold text-end mt-5'>Log in with</h1>
             <div className='grid grid-cols-3 gap-1 mt-6'>
 
-                 <div className='flex items-center text-sm gap-1 justify-center border p-3 border-gray-500 hover:outline hover:outline-gray-700' role='button'>
+                 <div className='flex items-center text-sm gap-1 justify-center border p-3 border-gray-500 hover:outline hover:outline-gray-700' role='button' onClick={googleLogin}>
                   <h1>Google</h1>
                  <FaGoogle />
                  </div>
