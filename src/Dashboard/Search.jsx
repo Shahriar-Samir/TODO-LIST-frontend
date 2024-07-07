@@ -64,6 +64,15 @@ const Search = () => {
         return <Loading/>
     }
 
+    const deleteTask = (id)=>{
+        document.getElementById(id+'main').style.display = 'none'
+       axiosSecure.delete(`/deleteUserTask/${id}`)
+       .then(()=>{
+           toast.success("Task has been deleted")       
+           document.getElementById(id+'delete').style.display = 'none'
+       })
+ }
+
     const finishTask = (e,id)=>{
         if(e.target.checked === true)
           axiosSecure.patch(`/checkTask/${id}`)
@@ -79,7 +88,7 @@ const Search = () => {
     return (
         <div >
             <ToastContainer/>
-         {searchResults.length > 0 ? <div className='w-full mx-auto flex flex-col gap-3 mt-5'>
+         {searchResults.length > 0 ? <div className='w-10/12 mx-auto flex flex-col gap-3 mt-5'>
 
             <h1 className='text-center font-semibold mt-1'>Search results for: {query}</h1>
             <Reorder.Group axis="y"  values={items} onReorder={setItems} className="mt-5 flex flex-col gap-5 w-full">
