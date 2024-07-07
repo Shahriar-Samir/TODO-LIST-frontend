@@ -7,17 +7,19 @@ import { AuthContext } from '../Providers/AuthProvider';
 import { toast, ToastContainer } from 'react-toastify';
 import useAxios from '../hooks/useAxios';
 import { Helmet } from 'react-helmet-async';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 
 const Login = () => {
   const {signIn,loading,setLoading,singInWithGoogle,singInWithGithub,singInWithFacebook} = useContext(AuthContext)
   const navigate = useNavigate()
   const axiosSecure = useAxios()
+  const axiosPublic = useAxiosPublic()
   
   const googleLogin = ()=>{
     singInWithGoogle()
     .then(res=>{
-      axiosSecure.get(`/user/${res.user.uid}`)
+      axiosPublic.get(`/userExist/${res.user.uid}`)
       .then((res2)=>{
              if(res2.data){
               setLoading(false)
@@ -41,7 +43,7 @@ const Login = () => {
   const githubLogin = ()=>{
     singInWithGithub()
     .then(res=>{
-      axiosSecure.get(`/user/${res.user.uid}`)
+      axiosPublic.get(`/userExist/${res.user.uid}`)
       .then((res2)=>{
              if(res2.data){
               setLoading(false)
@@ -66,7 +68,7 @@ const Login = () => {
   const facebookLogin = ()=>{
     singInWithFacebook()
     .then(res=>{
-      axiosSecure.get(`/user/${res.user.uid}`)
+      axiosPublic.get(`/userExist/${res.user.uid}`)
       .then((res2)=>{
              if(res2.data){
               setLoading(false)
