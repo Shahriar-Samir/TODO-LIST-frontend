@@ -3,12 +3,14 @@ import React from 'react';
 const Footer = () => {
     return (
         <div className='mt-16'>
-            <footer className="footer p-10 bg-transparent text-black" style={{boxShadow: '0px 1px 5px gray'}}>
+            <footer className="pt-10 px-10 pb-2 bg-transparent " style={{boxShadow: '0px 1px 5px gray'}}>
+  <div className='footer '>
   <aside>
-    <img src='/logos/checkit.png' className='w-[50px] h-[50px] object-contain'/>
+  <div className='flex justify-center items-center gap-5'>
+                     <img src='/logos/cover.png' className='w-[50px]'/>
+                     <h1 className='font-bold text-3xl'>Check It</h1>
+                     </div>
     <p>
-      <span className='text-xl font-bold'>Check It</span>
-      <br />
       Manage Your Tasks
     </p>
   </aside>
@@ -50,6 +52,8 @@ const Footer = () => {
       </a>
     </div>
   </nav>
+  </div>
+        <h1 className='text-center mt-4'>© 2024 Check It. All rights reserved.</h1>
 </footer>
         </div>
     );

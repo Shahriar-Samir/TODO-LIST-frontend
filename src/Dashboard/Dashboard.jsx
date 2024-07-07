@@ -191,10 +191,13 @@ useEffect(()=>{
       <div className='w-full flex justify-end'>
         <IoClose className='text-green-500 text-3xl md:hidden' onClick={closeNavbar}/>
       </div>
-    <img src='/logos/cover.png' className='w-[100px] h-[100px] object-contain'/>
+      <div className='flex justify-center items-center gap-5'>
+                     <img src='/logos/cover.png' className='w-[50px]'/>
+                     <h1 className='font-bold text-3xl'>Check It</h1>
+                     </div>
     </div>
       {/* Sidebar content here */}
-        <form onSubmit={search} className='bg-white flex justify-between rounded-lg relative w-full'>
+        <form onSubmit={search} className='bg-white mt-3 flex justify-between rounded-lg relative w-full'>
         <input className='p-2 outline-0 rounded-lg w-full text-black' name='query' placeholder='search tasks' />
        <button> <FaSearch className='absolute top-3 right-2 text-black'/></button>
         </form>
