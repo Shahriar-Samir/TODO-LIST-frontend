@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
@@ -47,8 +47,20 @@ const Signup = () => {
       })
   }
 
+
+  const [isPassword,setIsPassword] = useState(true)
+
+  const openPass = ()=>{
+      if(isPassword){
+        setIsPassword(false)
+      }
+      else{
+        setIsPassword(true)
+      }
+  }
+
     return (
-        <div className='flex flex-col justify-center items-center h-[150vh] gap-12 lg:h-[140vh]   bg-gradient-to-r from-indigo-400 to-cyan-400 text-white'>
+        <div className='flex flex-col justify-center items-center h-[150vh] gap-3 lg:h-[140vh]   bg-gradient-to-r from-indigo-400 to-cyan-400 text-white'>
           <ToastContainer/>
                      <div className='flex justify-center items-center gap-5'>
                      <img src='/logos/cover.png' className='w-[70px]'/>
@@ -58,7 +70,7 @@ const Signup = () => {
           <form className="" onSubmit={submit}>
             <h1 className='text-sm font-bold text-end'>Create an account with</h1>
 
-            <div className='grid grid-cols-3 gap-1 mt-6'>
+            <div className='grid grid-cols-3 gap-1 mt-3'>
 
                  <div className='flex items-center text-sm gap-1 justify-center border p-3 border-gray-400 hover:outline hover:outline-gray-200' role='button'>
                   <h1>Google</h1>
@@ -96,9 +108,12 @@ const Signup = () => {
             <span className="label-text text-white">Password</span>
           </label>
           <div className='relative'>
-          <input type="password" placeholder="password" name='password' className="input input-bordered w-full" required />
-            <FaEye className='absolute top-4 right-4 text-xl'/>
-            <FaEyeSlash className='absolute top-4 right-4 text-xl'/>
+          <input type={isPassword? 'password' : 'text'} name='password' placeholder="password" className="input input-bordered w-full" required />
+           {
+            isPassword?
+             <FaEye onClick={openPass} role='button' className='absolute top-4 right-4 text-xl text-black'/> :
+             <FaEyeSlash onClick={openPass} role='button' className='absolute top-4 right-4 text-xl text-black'/>
+           }
           </div>
         </div>
         <div className="form-control mt-6">

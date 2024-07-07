@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
@@ -32,6 +32,18 @@ const Login = () => {
        })
  
   }
+
+  const [isPassword,setIsPassword] = useState(true)
+
+  const openPass = ()=>{
+      if(isPassword){
+        setIsPassword(false)
+      }
+      else{
+        setIsPassword(true)
+      }
+  }
+
     return (
       <>
        <ToastContainer/>
@@ -80,9 +92,12 @@ const Login = () => {
             <span className="label-text text-white">Password</span>
           </label>
           <div className='relative'>
-          <input type="password" name='password' placeholder="password" className="input input-bordered w-full" required />
-            <FaEye className='absolute top-4 right-4 text-xl text-black'/>
-            <FaEyeSlash className='absolute top-4 right-4 text-xl text-black'/>
+          <input type={isPassword? 'password' : 'text'} name='password' placeholder="password" className="input input-bordered w-full" required />
+           {
+            isPassword?
+             <FaEye onClick={openPass} role='button' className='absolute top-4 right-4 text-xl text-black'/> :
+             <FaEyeSlash onClick={openPass} role='button' className='absolute top-4 right-4 text-xl text-black'/>
+           }
           </div>
         </div>
         <div className="form-control mt-6">
