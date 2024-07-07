@@ -63,6 +63,32 @@ const Signup = () => {
     })
   }
 
+  const facebookLogin = ()=>{
+    singInWithFacebook()
+    .then(res=>{
+      axiosSecure.get(`/user/${res.user.uid}`)
+      .then((res2)=>{
+             if(res2.data){
+              setLoading(false)
+              navigate('/app/today')
+             }
+             else{
+              axiosSecure.post('/addUser', {uid:res.user.uid,displayName:res.user.displayName,email:res.user.email,photoURL:res.user.photoURL,phoneNumber:res.user.phoneNumber})
+              .then(()=>{
+                  setLoading(false)
+                  navigate('/app/today')
+            })
+             }
+      })
+
+    })
+    .catch((err)=>{
+      console.log(err)
+      setLoading(false)
+        toast.error('Something went wrong')
+    })
+  }
+
   const submit = (e)=>{
     e.preventDefault()
       const form = e.target
@@ -127,7 +153,7 @@ const Signup = () => {
                   <h1>Google</h1>
                  <FaGoogle />
                  </div>
-                 <div className='flex items-center text-sm gap-1 justify-center border p-3 border-gray-400  hover:outline hover:outline-gray-200'>
+                 <div className='flex items-center text-sm gap-1 justify-center border p-3 border-gray-400  hover:outline hover:outline-gray-200' onClick={facebookLogin}>
                   <h1>Facebook</h1>
                   <FaFacebookF />
                  </div>

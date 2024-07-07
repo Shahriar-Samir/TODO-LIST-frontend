@@ -62,6 +62,31 @@ const Login = () => {
         toast.error('Something went wrong')
     })
   }
+  const facebookLogin = ()=>{
+    singInWithFacebook()
+    .then(res=>{
+      axiosSecure.get(`/user/${res.user.uid}`)
+      .then((res2)=>{
+             if(res2.data){
+              setLoading(false)
+              navigate('/app/today')
+             }
+             else{
+              axiosSecure.post('/addUser', {uid:res.user.uid,displayName:res.user.displayName,email:res.user.email,photoURL:res.user.photoURL,phoneNumber:res.user.phoneNumber})
+              .then(()=>{
+                  setLoading(false)
+                  navigate('/app/today')
+            })
+             }
+      })
+
+    })
+    .catch((err)=>{
+      console.log(err)
+      setLoading(false)
+        toast.error('Something went wrong')
+    })
+  }
 
 
   const submit = (e)=>{
@@ -121,7 +146,7 @@ const Login = () => {
                   <h1>Google</h1>
                  <FaGoogle />
                  </div>
-                 <div className='flex items-center text-sm gap-1 justify-center border p-3 border-gray-500  hover:outline hover:outline-gray-700 cursor-pointer' >
+                 <div className='flex items-center text-sm gap-1 justify-center border p-3 border-gray-500  hover:outline hover:outline-gray-700 cursor-pointer' onClick={facebookLogin}>
                   <h1>Facebook</h1>
                   <FaFacebookF />
                  </div>
