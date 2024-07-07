@@ -1,7 +1,6 @@
 
 import { useQuery } from '@tanstack/react-query';
-import React, { PureComponent, useContext, useRef, useState } from 'react';
-import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, {  useContext, useRef, useState } from 'react';
 import useAxios from '../hooks/useAxios';
 import { AuthContext } from '../Providers/AuthProvider';
 import Loading from '../Home/Loading';
@@ -139,6 +138,7 @@ const data = [
   },
 
 ];
+
     return (
     
         <>
@@ -206,34 +206,7 @@ const data = [
             </>
             }
            </div>
-           <div className='flex gap-5 items-center w-full justify-between'>
-            <p contentEditable={true}  suppressContentEditableWarning={true}>Password</p>
-            <button className='btn bg-white'>Change Password</button>
-           </div>
         </div>
-        <ResponsiveContainer width={md? "50%" : "100%"} height="50%" className='flex mx-auto mt-10 '>
-        <BarChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="Finished" fill="#7BEE99" activeBar={<Rectangle fill="#7BEE99"  />} />
-          <Bar dataKey="Upcoming" fill="#7BC0EE" activeBar={<Rectangle fill="#7BC0EE"  />} />
-          <Bar dataKey="Unfinished" fill="#EE7B7B" activeBar={<Rectangle fill="#EE7B7B"  />} />
-        </BarChart>
-      
-      </ResponsiveContainer>
 
       </>
   

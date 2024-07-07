@@ -37,14 +37,17 @@ const Login = () => {
        <ToastContainer/>
         <div className='flex flex-col justify-center items-center gap-10 h-[130vh] md:flex-row md:gap-20 lg:gap-32  bg-gradient-to-r from-indigo-400 to-cyan-400 text-white'>
              
-               <div className='w-full md:max-w-[350px]  flex justify-center items-center flex-col'>
-                <img src='/logos/cover.png' className='w-[300px]'/>
-                <h1 className='w-full mt-6 text-center'>Your Ultimate Task Management Solution</h1>
+               <div className='w-11/12 md:max-w-[450px]  flex justify-center items-center flex-col'>
+                <img src='/logos/note.png' className='w-[1200px]'/>
+                <h1 className='w-full mt-4 text-center text-4xl font-semibold'>Your Ultimate Task Management Solution</h1>
                 </div>
           <div className='w-11/12 md:w-1/2 max-w-[350px]'>
           <form onSubmit={submit}>
-            <h1 className='text-sm font-bold text-end'>Log in with</h1>
-
+          <div className='flex justify-center items-center gap-5'>
+                     <img src='/logos/cover.png' className='w-[70px]'/>
+                     <h1 className='font-bold text-4xl'>Check It</h1>
+                     </div>
+            <h1 className='text-sm font-bold text-end mt-5'>Log in with</h1>
             <div className='grid grid-cols-3 gap-1 mt-6'>
 
                  <div className='flex items-center text-sm gap-1 justify-center border p-3 border-gray-500 hover:outline hover:outline-gray-700' role='button'>
@@ -86,7 +89,6 @@ const Login = () => {
           {loading? <button disabled={true} className="btn text-white  bg-gradient-to-r from-indigo-400 to-cyan-400 "><span className="loading loading-spinner loading-md border-none"></span></button> : <button className="btn  bg-gradient-to-r from-indigo-400 to-cyan-400 text-white border-none  hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500 ">Login</button>}
         </div>
       </form>
-      <button className='btn w-full mt-4'>Try as guest</button>
       <p className='mt-3 text-center text-sm'>Don't have an account? <Link className='underline font-bold' to='/signup'>Create new account</Link></p>
           </div>
         </div>

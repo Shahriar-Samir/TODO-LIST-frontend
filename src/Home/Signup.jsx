@@ -50,7 +50,10 @@ const Signup = () => {
     return (
         <div className='flex flex-col justify-center items-center h-[150vh] gap-12 lg:h-[140vh]   bg-gradient-to-r from-indigo-400 to-cyan-400 text-white'>
           <ToastContainer/>
-                      <img src='/logos/cover.png' className='w-[250px]'/>
+                     <div className='flex justify-center items-center gap-5'>
+                     <img src='/logos/cover.png' className='w-[70px]'/>
+                     <h1 className='font-bold text-4xl'>Check It</h1>
+                     </div>
           <div className='w-11/12 md:w-1/2 max-w-[350px]'>
           <form className="" onSubmit={submit}>
             <h1 className='text-sm font-bold text-end'>Create an account with</h1>
@@ -102,7 +105,6 @@ const Signup = () => {
         {loading? <button disabled={true} className="btn text-white  bg-gradient-to-r from-indigo-400 to-cyan-400 "><span className="loading loading-spinner loading-md border-none"></span></button> : <button className="btn  bg-gradient-to-r from-indigo-400 to-cyan-400 text-white border-none  hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500 ">Submit</button>}
         </div>
       </form>
-      <button className='btn w-full mt-4'>Try as guest</button>
       <p className='mt-3 text-center text-sm'>Already have an account? <Link className='underline font-bold' to='/'>Login</Link></p>
           </div>
         </div>
