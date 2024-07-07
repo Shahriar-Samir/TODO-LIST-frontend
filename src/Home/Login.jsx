@@ -9,10 +9,61 @@ import useAxios from '../hooks/useAxios';
 
 
 const Login = () => {
-  const {signIn,loading,setLoading,singInWithGoogle} = useContext(AuthContext)
+  const {signIn,loading,setLoading,singInWithGoogle,singInWithGithub,singInWithFacebook} = useContext(AuthContext)
   const navigate = useNavigate()
   const axiosSecure = useAxios()
   
+  const googleLogin = ()=>{
+    singInWithGoogle()
+    .then(res=>{
+      axiosSecure.get(`/user/${res.user.uid}`)
+      .then((res2)=>{
+             if(res2.data){
+              setLoading(false)
+              navigate('/app/today')
+             }
+             else{
+              axiosSecure.post('/addUser', {uid:res.user.uid,displayName:res.user.displayName,email:res.user.email,photoURL:res.user.photoURL,phoneNumber:res.user.phoneNumber})
+              .then(()=>{
+                  setLoading(false)
+                  navigate('/app/today')
+            })
+             }
+      })
+
+    })
+    .catch(()=>{
+      setLoading(false)
+        toast.error('Something went wrong')
+    })
+  }
+  const githubLogin = ()=>{
+    singInWithGithub()
+    .then(res=>{
+      axiosSecure.get(`/user/${res.user.uid}`)
+      .then((res2)=>{
+             if(res2.data){
+              setLoading(false)
+              navigate('/app/today')
+             }
+             else{
+              axiosSecure.post('/addUser', {uid:res.user.uid,displayName:res.user.displayName,email:res.user.email,photoURL:res.user.photoURL,phoneNumber:res.user.phoneNumber})
+              .then(()=>{
+                  setLoading(false)
+                  navigate('/app/today')
+            })
+             }
+      })
+
+    })
+    .catch((err)=>{
+      console.log(err)
+      setLoading(false)
+        toast.error('Something went wrong')
+    })
+  }
+
+
   const submit = (e)=>{
     e.preventDefault()
       const form = e.target
@@ -46,30 +97,7 @@ const Login = () => {
       }
   }
 
-  const googleLogin = ()=>{
-    singInWithGoogle()
-    .then(res=>{
-      axiosSecure.get(`/user/${res.user.uid}`)
-      .then((res2)=>{
-             if(res2.data){
-              setLoading(false)
-              navigate('/app/today')
-             }
-             else{
-              axiosSecure.post('/addUser', {uid:res.user.uid,displayName:res.user.displayName,email:res.user.email,photoURL:res.user.photoURL,phoneNumber:res.user.phoneNumber})
-              .then(()=>{
-                  setLoading(false)
-                  navigate('/app/today')
-            })
-             }
-      })
 
-    })
-    .catch(()=>{
-      setLoading(false)
-        toast.error('Something went wrong')
-    })
-  }
 
     return (
       <>
@@ -97,7 +125,7 @@ const Login = () => {
                   <h1>Facebook</h1>
                   <FaFacebookF />
                  </div>
-                 <div className='flex items-center text-sm gap-1 justify-center border p-3 border-gray-500  hover:outline hover:outline-gray-700 cursor-pointer'>
+                 <div className='flex items-center text-sm gap-1 justify-center border p-3 border-gray-500  hover:outline hover:outline-gray-700 cursor-pointer' onClick={githubLogin}>
                   <h1>Github</h1>
                   <FaGithub/>
                  </div>

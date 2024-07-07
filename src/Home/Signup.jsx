@@ -9,9 +9,60 @@ import useAxios from '../hooks/useAxios';
 
 
 const Signup = () => {
-  const {createAccount,updateAccount,loading,setLoading} = useContext(AuthContext)
+  const {createAccount,updateAccount,loading,setLoading,singInWithGoogle,singInWithGithub,singInWithFacebook} = useContext(AuthContext)
   const navigate = useNavigate()
+  const axiosSecure = useAxios()
   
+  const googleLogin = ()=>{
+    singInWithGoogle()
+    .then(res=>{
+      axiosSecure.get(`/user/${res.user.uid}`)
+      .then((res2)=>{
+             if(res2.data){
+              setLoading(false)
+              navigate('/app/today')
+             }
+             else{
+              axiosSecure.post('/addUser', {uid:res.user.uid,displayName:res.user.displayName,email:res.user.email,photoURL:res.user.photoURL,phoneNumber:res.user.phoneNumber})
+              .then(()=>{
+                  setLoading(false)
+                  navigate('/app/today')
+            })
+             }
+      })
+
+    })
+    .catch(()=>{
+      setLoading(false)
+        toast.error('Something went wrong')
+    })
+  }
+  const githubLogin = ()=>{
+    singInWithGithub()
+    .then(res=>{
+      axiosSecure.get(`/user/${res.user.uid}`)
+      .then((res2)=>{
+             if(res2.data){
+              setLoading(false)
+              navigate('/app/today')
+             }
+             else{
+              axiosSecure.post('/addUser', {uid:res.user.uid,displayName:res.user.displayName,email:res.user.email,photoURL:res.user.photoURL,phoneNumber:res.user.phoneNumber})
+              .then(()=>{
+                  setLoading(false)
+                  navigate('/app/today')
+            })
+             }
+      })
+
+    })
+    .catch((err)=>{
+      console.log(err)
+      setLoading(false)
+        toast.error('Something went wrong')
+    })
+  }
+
   const submit = (e)=>{
     e.preventDefault()
       const form = e.target
@@ -72,7 +123,7 @@ const Signup = () => {
 
             <div className='grid grid-cols-3 gap-1 mt-3'>
 
-                 <div className='flex items-center text-sm gap-1 justify-center border p-3 border-gray-400 hover:outline hover:outline-gray-200' role='button'>
+                 <div className='flex items-center text-sm gap-1 justify-center border p-3 border-gray-400 hover:outline hover:outline-gray-200' role='button' onClick={googleLogin}>
                   <h1>Google</h1>
                  <FaGoogle />
                  </div>
@@ -80,7 +131,7 @@ const Signup = () => {
                   <h1>Facebook</h1>
                   <FaFacebookF />
                  </div>
-                 <div className='flex items-center text-sm gap-1 justify-center border p-3 border-gray-400  hover:outline hover:outline-gray-200'>
+                 <div className='flex items-center text-sm gap-1 justify-center border p-3 border-gray-400  hover:outline hover:outline-gray-200' onClick={githubLogin}>
                   <h1>Github</h1>
                   <FaGithub/>
                  </div>
