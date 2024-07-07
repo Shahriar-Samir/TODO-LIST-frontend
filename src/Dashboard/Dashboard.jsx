@@ -197,9 +197,9 @@ useEffect(()=>{
                      </div>
     </div>
       {/* Sidebar content here */}
-        <form onSubmit={search} className='bg-white mt-3 flex justify-between rounded-lg relative w-full'>
-        <input className='p-2 outline-0 rounded-lg w-full text-black' name='query' placeholder='search tasks' />
-       <button> <FaSearch className='absolute top-3 right-2 text-black'/></button>
+        <form onSubmit={search} className='text-white mt-3 flex justify-between rounded-lg relative w-full bg-transparent border border-white'>
+        <input className='p-2 outline-0 rounded-lg w-full  bg-transparent placeholder:text-gray-200' name='query' placeholder='search tasks' />
+       <button> <FaSearch className='absolute top-3 right-2 '/></button>
         </form>
      <li onClick={()=>document.getElementById('my_modal_5').showModal()}><button className="flex items-center gap-2 text-md btn bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500  w-full" > Add Task <IoIosAddCircle  className="text-2xl"/></button></li> 
       <NavLink to='/app/allTasks' className={({isActive})=> isActive? `btn bg-transparent border-none shadow-md hover:bg-transparent text-white rounded-lg text-sm flex justify-normal w-full underline shadow-blue-200` : `btn bg-transparent border-none shadow-md hover:bg-transparent text-white rounded-lg text-sm flex justify-normal w-full `}>

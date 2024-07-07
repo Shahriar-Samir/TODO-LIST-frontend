@@ -12,6 +12,7 @@ import { MdDelete } from 'react-icons/md';
 import { IoMdAlarm } from 'react-icons/io';
 import { toast, ToastContainer } from 'react-toastify';
 import { io } from 'socket.io-client';
+import { Helmet } from 'react-helmet-async';
 
 const Search = () => {
     const axiosSecure = useAxios()
@@ -87,6 +88,9 @@ const Search = () => {
 
     return (
         <div >
+                 <Helmet>
+            <title>{query} -Search | Check It</title>
+          </Helmet>
             <ToastContainer/>
          {searchResults.length > 0 ? <div className='w-10/12 mx-auto flex flex-col gap-3 mt-5'>
 

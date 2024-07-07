@@ -13,6 +13,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../Providers/AuthProvider";
 import Loading from "../Home/Loading";
 import {io} from 'socket.io-client'
+import { Helmet } from "react-helmet-async";
 
 
 const AllTasksPage = () => {
@@ -165,6 +166,9 @@ const finishTask = (e,id)=>{
 
     return (
         <div className='w-10/12 mx-auto ' >
+                 <Helmet>
+            <title>Today | Check It</title>
+          </Helmet>
             <ToastContainer/>
             <div className="flex mt-5 border-b border-black pb-3  justify-between">
             <div>

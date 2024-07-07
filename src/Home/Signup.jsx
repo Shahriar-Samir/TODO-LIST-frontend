@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Providers/AuthProvider';
 import {toast,ToastContainer} from 'react-toastify'
 import useAxios from '../hooks/useAxios';
+import { Helmet } from 'react-helmet-async';
 
 
 const Signup = () => {
@@ -138,6 +139,9 @@ const Signup = () => {
 
     return (
         <div className='flex flex-col justify-center items-center h-[150vh] gap-3 lg:h-[140vh]   bg-gradient-to-r from-indigo-400 to-cyan-400 text-white'>
+          <Helmet>
+            <title>Signup | Check It</title>
+          </Helmet>
           <ToastContainer/>
                      <div className='flex justify-center items-center gap-5'>
                      <img src='/logos/cover.png' className='w-[70px]'/>

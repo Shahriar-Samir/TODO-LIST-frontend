@@ -8,6 +8,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Loading from '../Home/Loading';
 import {io} from 'socket.io-client'
 import { formatDistanceToNow } from 'date-fns';
+import { Helmet } from 'react-helmet-async';
 
 
 
@@ -76,6 +77,9 @@ const Notifications = () => {
 
       return (
         <div className='w-10/12 mx-auto '>
+                 <Helmet>
+            <title>Notifications | Check It</title>
+          </Helmet>
                <div className="flex mt-5 border-b pb-3 border-black justify-end">
             <h1 className='text-3xl font-bold '>Notifications</h1>
             </div>

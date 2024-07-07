@@ -7,6 +7,7 @@ import Loading from '../Home/Loading';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 
 
 
@@ -15,7 +16,6 @@ import { useMediaQuery } from '@mui/material';
 
  const Profile = ()=>{
   const axiosSecure = useAxios()
-  const md = useMediaQuery('(min-width:768px)');
   const {user} = useContext(AuthContext)
 
   const {data:userData,isFetching} = useQuery({
@@ -129,19 +129,14 @@ import { useMediaQuery } from '@mui/material';
   }
 
   
-const data = [
-  {
-    name: 'Tasks',
-    'Finished': tasksAmount.finishedTasksLength,
-    'Upcoming': tasksAmount.upcomingTasksLength,
-    'Unfinished': tasksAmount.unfinishedTasksLength,
-  },
 
-];
 
     return (
     
         <>
+               <Helmet>
+            <title>{user?.displayName} | Check It</title>
+          </Helmet>
         <ToastContainer/>
           <div className="flex mt-5 border-b pb-3 border-black justify-end w-11/12 mx-auto" >
             <h1 className='text-3xl font-bold '>Profile</h1>

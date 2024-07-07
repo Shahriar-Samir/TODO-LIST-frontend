@@ -280,6 +280,9 @@ const addTask = ()=>{
   }
 }
     return <>
+           <Helmet>
+            <title>Events | Check It</title>
+          </Helmet>
     <dialog id={startDate} className="modal w-11/12 mx-auto modal-bottom sm:modal-middle">
   <div className="modal-box  p-0 bg-transparent h-full shadow-none flex justify-center items-start flex-col w-full">
   <div className="flex flex-col gap-2 border rounded-xl p-3  bg-gradient-to-r from-indigo-400 to-cyan-400 border-none w-full">
