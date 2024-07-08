@@ -36,7 +36,7 @@ const navigate = useNavigate()
 
 
 useEffect(()=>{
-  const socket = io('https://todo-list-backend-seven.vercel.app',{
+  const socket = io('https://todo-list-backend-seven.vercel.app/',{
     withCredentials: true
   });
   socket.connect()
@@ -65,7 +65,7 @@ useEffect(()=>{
 
 
   useEffect(()=>{
-    const socket = io('https://todo-list-backend-seven.vercel.app',{
+    const socket = io('https://todo-list-backend-seven.vercel.app/',{
       withCredentials: true
     });
     socket.connect()
