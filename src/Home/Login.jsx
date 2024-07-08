@@ -171,14 +171,14 @@ const Login = () => {
           <label className="label">
             <span className="label-text text-white">Email</span>
           </label>
-          <input type="email" placeholder="email" name='email' className="input input-bordered" required />
+          <input type="email" placeholder="email" name='email' className="input input-bordered text-black" required />
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text text-white">Password</span>
           </label>
           <div className='relative'>
-          <input type={isPassword? 'password' : 'text'} name='password' placeholder="password" className="input input-bordered w-full" required />
+          <input type={isPassword? 'password' : 'text'} name='password' placeholder="password" className="input input-bordered w-full text-black" required />
            {
             isPassword?
              <FaEye onClick={openPass} role='button' className='absolute top-4 right-4 text-xl text-black'/> :
