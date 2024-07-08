@@ -36,19 +36,13 @@ const navigate = useNavigate()
 
 
 useEffect(()=>{
-  const socket = io('https://todo-list-backend-ku5w.onrender.com',{
-    withCredentials: true
-  });
+  const socket = io('https://todo-list-backend-ku5w.onrender.com',{withCredentials:true, transports: ['websocket', 'polling']})
   socket.connect()
   socket.on('notificationsLength', (newData) => {
     queryClient.setQueryData(['notiLen'], (oldData)=>{
       return newData
     })
   });
-  return () => {
-    socket.off('notificationsLength')
-    socket.disconnect()
-  };
   },[])
   
 
@@ -65,19 +59,13 @@ useEffect(()=>{
 
 
   useEffect(()=>{
-    const socket = io('https://todo-list-backend-ku5w.onrender.com',{
-      withCredentials: true
-    });
+    const socket = io('https://todo-list-backend-ku5w.onrender.com',{withCredentials:true, transports: ['websocket', 'polling']})
     socket.connect()
     socket.on('amounts', (newData) => {
       queryClient.setQueryData(['amounts'], (oldData)=>{
         return newData
       })
     });
-    return () => {
-      socket.off('amounts')
-      socket.disconnect()
-    };
     },[])
     
 

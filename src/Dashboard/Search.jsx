@@ -41,7 +41,7 @@ const Search = () => {
     const queryClient= useQueryClient()
 
     useEffect(()=>{
-        const socket = io('https://todo-list-backend-ku5w.onrender.com',{withCredentials:true})
+      const socket = io('https://todo-list-backend-ku5w.onrender.com',{withCredentials:true, transports: ['websocket', 'polling']})
        socket.connect()
        socket.emit('searchTasks', query)
         socket.on('getSearchTasks', (newData)=>{
@@ -50,10 +50,7 @@ const Search = () => {
               })
         })
 
-        return ()=>{
-          socket.off('getSearchTasks')
-          socket.close()
-        }
+      
       
 
     },[updateTask])

@@ -35,7 +35,7 @@ const Notifications = () => {
   const queryClient = useQueryClient()
 
   useEffect(()=>{
-    const socket = io('https://todo-list-backend-ku5w.onrender.com',{withCredentials:true})
+    const socket = io('https://todo-list-backend-ku5w.onrender.com',{withCredentials:true, transports: ['websocket', 'polling']})
     socket.connect()
 
     socket.on('notifications', (newData)=>{
@@ -44,10 +44,7 @@ const Notifications = () => {
         })
     })
 
-    return ()=>{
-      socket.off('notifications')
-      socket.close()
-    }
+    
   },[])
 
 

@@ -159,20 +159,13 @@ const AllTasksPage = () => {
 
     
     useEffect(()=>{
-        const socket = io('https://todo-list-backend-ku5w.onrender.com',{withCredentials:true})
+        const socket = io('https://todo-list-backend-ku5w.onrender.com',{withCredentials:true, transports: ['websocket', 'polling']})
        socket.connect()
         socket.on('getAllTasks', (newData)=>{
               queryClient.setQueryData(['Tasks'], (oldData)=>{
                 return newData
               })
         })
-
-        
-  
-        return ()=>{
-          socket.off('getAllTasks')
-          socket.close()
-        }
       
 
     },[])
