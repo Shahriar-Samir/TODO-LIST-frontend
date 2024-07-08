@@ -36,7 +36,7 @@ const navigate = useNavigate()
 
 
 useEffect(()=>{
-  const socket = io('http://localhost:5001',{
+  const socket = io('https://todo-list-backend-seven.vercel.app',{
     withCredentials: true
   });
   socket.connect()
@@ -65,7 +65,7 @@ useEffect(()=>{
 
 
   useEffect(()=>{
-    const socket = io('http://localhost:5001',{
+    const socket = io('https://todo-list-backend-seven.vercel.app',{
       withCredentials: true
     });
     socket.connect()

@@ -159,7 +159,7 @@ const AllTasksPage = () => {
 
     
     useEffect(()=>{
-        const socket = io('http://localhost:5001',{withCredentials:true})
+        const socket = io('https://todo-list-backend-seven.vercel.app',{withCredentials:true})
        socket.connect()
         socket.on('getAllTasks', (newData)=>{
               queryClient.setQueryData(['Tasks'], (oldData)=>{
