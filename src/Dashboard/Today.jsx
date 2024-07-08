@@ -78,7 +78,10 @@ const AllTasksPage = () => {
                 return newData
             })
         })
-     
+        return ()=>{
+          socket.off('getAllTasks')
+          socket.close()
+        }
     },[])
 
     const nameRef = useRef(null)

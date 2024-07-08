@@ -107,6 +107,10 @@ const Events = () => {
                     return newData
              })
         })
+        return ()=>{
+          socket.off('getAllTasks')
+          socket.close()
+        }
 
 
   },[])

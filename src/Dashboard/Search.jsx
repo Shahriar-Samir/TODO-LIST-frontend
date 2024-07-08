@@ -51,7 +51,10 @@ const Search = () => {
         })
 
       
-      
+        return ()=>{
+          socket.off('getAllTasks')
+          socket.close()
+        }
 
     },[updateTask])
 

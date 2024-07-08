@@ -43,6 +43,10 @@ useEffect(()=>{
       return newData
     })
   });
+  return ()=>{
+    socket.off('getAllTasks')
+    socket.close()
+  }
   },[])
   
 
@@ -66,6 +70,10 @@ useEffect(()=>{
         return newData
       })
     });
+    return ()=>{
+      socket.off('getAllTasks')
+      socket.close()
+    }
     },[])
     
 

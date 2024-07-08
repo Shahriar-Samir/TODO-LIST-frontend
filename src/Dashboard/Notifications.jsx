@@ -44,6 +44,11 @@ const Notifications = () => {
         })
     })
 
+    return ()=>{
+      socket.off('getAllTasks')
+      socket.close()
+    }
+
     
   },[])
 
