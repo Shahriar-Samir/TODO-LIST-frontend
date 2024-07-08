@@ -95,7 +95,7 @@ const Events = () => {
   const queryClient = useQueryClient()
 
   useEffect(()=>{ 
-        const socket = io('http://localhost:5001', {withCredentials:true})
+        const socket = io('https://todo-list-backend-seven.vercel.app', {withCredentials:true})
         socket.connect()
         socket.on('allEventTasks',(newData)=>{
              queryClient.setQueryData(['allTasks'],(oldData)=>{
