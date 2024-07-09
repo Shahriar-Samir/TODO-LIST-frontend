@@ -44,7 +44,7 @@ useEffect(()=>{
     })
   });
   return ()=>{
-    socket.off('getAllTasks')
+    socket.off('notificationsLength')
     socket.close()
   }
   },[])
@@ -71,7 +71,7 @@ useEffect(()=>{
       })
     });
     return ()=>{
-      socket.off('getAllTasks')
+      socket.off('amounts')
       socket.close()
     }
     },[])

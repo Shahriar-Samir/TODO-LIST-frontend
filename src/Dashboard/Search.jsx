@@ -52,7 +52,8 @@ const Search = () => {
 
       
         return ()=>{
-          socket.off('getAllTasks')
+          socket.off('searchTasks')
+          socket.off('getSearchTasks')
           socket.close()
         }
 

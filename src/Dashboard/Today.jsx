@@ -79,7 +79,7 @@ const AllTasksPage = () => {
             })
         })
         return ()=>{
-          socket.off('getAllTasks')
+          socket.off('todayTasks')
           socket.close()
         }
     },[])

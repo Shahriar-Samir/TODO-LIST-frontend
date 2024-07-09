@@ -45,7 +45,7 @@ const Notifications = () => {
     })
 
     return ()=>{
-      socket.off('getAllTasks')
+      socket.off('notifications')
       socket.close()
     }
 

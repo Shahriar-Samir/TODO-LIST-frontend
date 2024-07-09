@@ -108,7 +108,8 @@ const Events = () => {
              })
         })
         return ()=>{
-          socket.off('getAllTasks')
+          socket.off('allEventTasks')
+          socket.off('eventTasksAmount')
           socket.close()
         }
 
