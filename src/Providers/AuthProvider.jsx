@@ -16,7 +16,7 @@ const AuthProvider = ({children}) => {
     
     useEffect(()=>{
             onAuthStateChanged(auth,(currentUser)=>{
-                setUser(currentUser)
+               
                 if(currentUser){
                       axiosSecure.post(`/jwt`, {email:currentUser.email,uid:currentUser.uid})
                       .then(res=>{
@@ -24,6 +24,7 @@ const AuthProvider = ({children}) => {
                             const {displayName,photoURL} =res.data
                             updateAccount({displayName,photoURL})
                             .then(()=>{ 
+                                setUser(currentUser)
                                 setLoading(false) 
                             })
                         }
@@ -33,12 +34,14 @@ const AuthProvider = ({children}) => {
                         }
                       })
                       .catch(()=>{
+                        setUser(null)
                         setLoading(false)
                     })
                    
                     }
                     else{
                         axiosSecure.post('/logout', currentUser)
+                        setUser(null)
                         setLoading(false)
                     }
             })
@@ -74,6 +77,7 @@ const AuthProvider = ({children}) => {
     }
     const logout= ()=>{
         setLoading(true)
+        setUser(null)
         return signOut(auth)
     }
 

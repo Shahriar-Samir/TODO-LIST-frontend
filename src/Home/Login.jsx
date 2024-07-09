@@ -13,7 +13,6 @@ import {motion} from 'framer-motion'
 
 const Login = () => {
   const {signIn,loading,setLoading,singInWithGoogle,singInWithGithub,singInWithFacebook} = useContext(AuthContext)
-  const navigate = useNavigate()
   const axiosSecure = useAxios()
   const axiosPublic = useAxiosPublic()
   
@@ -23,14 +22,14 @@ const Login = () => {
       axiosPublic.get(`/userExist/${res.user.uid}`)
       .then((res2)=>{
              if(res2.data){
-              setLoading(false)
-              navigate('/app/today')
+          
+              
              }
              else{
               axiosSecure.post('/addUser', {uid:res.user.uid,displayName:res.user.displayName,email:res.user.email,photoURL:res.user.photoURL,phoneNumber:res.user.phoneNumber})
               .then(()=>{
-                  setLoading(false)
-                  navigate('/app/today')
+   
+                  
             })
              }
       })
@@ -47,14 +46,12 @@ const Login = () => {
       axiosPublic.get(`/userExist/${res.user.uid}`)
       .then((res2)=>{
              if(res2.data){
-              setLoading(false)
-              navigate('/app/today')
+              
              }
              else{
               axiosSecure.post('/addUser', {uid:res.user.uid,displayName:res.user.displayName,email:res.user.email,photoURL:res.user.photoURL,phoneNumber:res.user.phoneNumber})
               .then(()=>{
-                  setLoading(false)
-                  navigate('/app/today')
+                  
             })
              }
       })
@@ -72,14 +69,12 @@ const Login = () => {
       axiosPublic.get(`/userExist/${res.user.uid}`)
       .then((res2)=>{
              if(res2.data){
-              setLoading(false)
-              navigate('/app/today')
+              
              }
              else{
               axiosSecure.post('/addUser', {uid:res.user.uid,displayName:res.user.displayName,email:res.user.email,photoURL:res.user.photoURL,phoneNumber:res.user.phoneNumber})
               .then(()=>{
-                  setLoading(false)
-                  navigate('/app/today')
+                  
             })
              }
       })
@@ -100,8 +95,7 @@ const Login = () => {
       const password = form.password.value
       signIn(email,password)
       .then(()=>{
-        setLoading(false)
-     navigate('/app/today')
+     
           })
       .catch((err)=>{
         setLoading(false)

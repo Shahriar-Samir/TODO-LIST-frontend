@@ -13,7 +13,6 @@ import {motion} from 'framer-motion'
 
 const Signup = () => {
   const {createAccount,updateAccount,loading,setLoading,singInWithGoogle,singInWithGithub,singInWithFacebook} = useContext(AuthContext)
-  const navigate = useNavigate()
   const axiosSecure = useAxios()
   const axiosPublic = useAxiosPublic()
   
@@ -23,14 +22,13 @@ const Signup = () => {
       axiosPublic.get(`/userExist/${res.user.uid}`)
       .then((res2)=>{
              if(res2.data){
-              setLoading(false)
-              navigate('/app/today')
+              
              }
              else{
               axiosSecure.post('/addUser', {uid:res.user.uid,displayName:res.user.displayName,email:res.user.email,photoURL:res.user.photoURL,phoneNumber:res.user.phoneNumber})
               .then(()=>{
-                  setLoading(false)
-                  navigate('/app/today')
+
+                  
             })
              }
       })
@@ -47,21 +45,18 @@ const Signup = () => {
       axiosPublic.get(`/userExist/${res.user.uid}`)
       .then((res2)=>{
              if(res2.data){
-              setLoading(false)
-              navigate('/app/today')
+              
              }
              else{
               axiosSecure.post('/addUser', {uid:res.user.uid,displayName:res.user.displayName,email:res.user.email,photoURL:res.user.photoURL,phoneNumber:res.user.phoneNumber})
               .then(()=>{
-                  setLoading(false)
-                  navigate('/app/today')
+              
             })
              }
       })
 
     })
     .catch((err)=>{
-      console.log(err)
       setLoading(false)
         toast.error('Something went wrong')
     })
@@ -73,21 +68,19 @@ const Signup = () => {
       axiosPublic.get(`/userExist/${res.user.uid}`)
       .then((res2)=>{
              if(res2.data){
-              setLoading(false)
-              navigate('/app/today')
+              
              }
              else{
               axiosSecure.post('/addUser', {uid:res.user.uid,displayName:res.user.displayName,email:res.user.email,photoURL:res.user.photoURL,phoneNumber:res.user.phoneNumber})
               .then(()=>{
-                  setLoading(false)
-                  navigate('/app/today')
+           
+                  
             })
              }
       })
 
     })
     .catch((err)=>{
-      console.log(err)
       setLoading(false)
         toast.error('Something went wrong')
     })
@@ -106,8 +99,7 @@ const Signup = () => {
             .then(()=>{
               axiosSecure.post('/addUser', {uid:res.user.uid,displayName:userName,email:email})
               .then(()=>{
-                  setLoading(false)
-                  navigate('/app/today')
+                  
   
             })
             })

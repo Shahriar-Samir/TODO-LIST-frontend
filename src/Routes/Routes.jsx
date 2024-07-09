@@ -10,6 +10,7 @@ import Notifications from '../Dashboard/Notifications';
 import Profile from '../Dashboard/Profile';
 import PrivateRoute from '../Providers/PrivateRoute';
 import Search from '../Dashboard/Search';
+import HideRoute from '../Providers/HideRoute';
 
 const router = createBrowserRouter([
     {
@@ -19,11 +20,11 @@ const router = createBrowserRouter([
     children:[
         {
             path:'/',
-            element: <Login/>
+            element: <HideRoute><Login/></HideRoute>
         },
         {
             path:'/signup',
-            element: <Signup/>
+            element: <HideRoute><Signup/></HideRoute>
         },
     ]
     },
