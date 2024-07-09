@@ -95,7 +95,7 @@ const Search = () => {
             <ToastContainer/>
          {searchResults.length > 0 ? <div className='w-10/12 mx-auto flex flex-col gap-3 mt-5'>
 
-            <h1 className='text-center font-semibold mt-1'>Search results for: {query}</h1>
+            <h1 className='text-center font-semibold mt-1'>Search results for: "{query}"</h1>
             <Reorder.Group axis="y"  values={items} onReorder={setItems} className="mt-5 flex flex-col gap-5 w-full">
       {searchResults?.map((item) => (
         <Reorder.Item id={item._id+'main'} key={item._id}  value={item} className="flex gap-2 w-full shadow-md border-black pb-2">
@@ -158,7 +158,7 @@ const Search = () => {
     </Reorder.Group>
             
          </div> : <div className='flex w-full justify-center items-center h-[100vh]'>
-                        <h1 className='text-xl font-bold'>No results found for {}</h1>
+                        <h1 className='text-xl font-bold'>No results found for "{query}"</h1>
             </div>}
        </div>
     );

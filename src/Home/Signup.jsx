@@ -8,6 +8,7 @@ import {toast,ToastContainer} from 'react-toastify'
 import useAxios from '../hooks/useAxios';
 import { Helmet } from 'react-helmet-async';
 import useAxiosPublic from '../hooks/useAxiosPublic';
+import {motion} from 'framer-motion'
 
 
 const Signup = () => {
@@ -139,18 +140,44 @@ const Signup = () => {
       }
   }
 
+
+  const containerVariants = {
+    hidden:{
+      opacity:0,
+      scale:0.8
+    },
+    visible:{
+        opacity:1,
+        scale:1,
+        transition:{
+          delayChildren:0.3,
+          staggerChildren: 0.2
+        }
+    }
+  }
+  const childVariants = {
+    hidden:{
+      opacity:0,
+      scale:0.8
+    },
+    visible:{
+        opacity:1,
+        scale:1
+    }
+  }
+
     return (
-        <div className='flex flex-col justify-center items-center h-[150vh] gap-3 lg:h-[140vh]   bg-gradient-to-r from-indigo-400 to-cyan-400 text-white'>
+        <motion.div className='flex flex-col justify-center items-center h-[150vh] gap-3 lg:h-[140vh]   bg-gradient-to-r from-indigo-400 to-cyan-400 text-white'>
           <Helmet>
             <title>Signup | Check It</title>
           </Helmet>
           <ToastContainer/>
-                     <div className='flex justify-center items-center gap-5'>
+                     <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:1}} className='flex justify-center items-center gap-5'>
                      <img src='/logos/cover.png' className='w-[70px]'/>
                      <h1 className='font-bold text-4xl'>Check It</h1>
-                     </div>
+                     </motion.div>
           <div className='w-11/12 md:w-1/2 max-w-[350px]'>
-          <form className="" onSubmit={submit}>
+          <motion.form className="" onSubmit={submit} variants={containerVariants} initial='hidden' animate='visible'>
             <h1 className='text-sm font-bold text-end'>Create an account with</h1>
 
             <div className='grid grid-cols-3 gap-1 mt-3'>
@@ -174,19 +201,19 @@ const Signup = () => {
             <p>or</p>
             <hr class=" border border-white w-full" />
             </div>
-            <div className="form-control mt-1">
+            <motion.div className="form-control mt-1" variants={childVariants}>
           <label className="label">
             <span className="label-text text-white">User name</span>
           </label>
           <input type="text" name='userName' placeholder="user name" className="input input-bordered text-black" required />
-        </div>
-        <div className="form-control mt-1">
+        </motion.div>
+        <motion.div variants={childVariants} className="form-control mt-1">
           <label className="label">
             <span className="label-text text-white">Email</span>
           </label>
           <input type="email" placeholder="email" name='email' className="input input-bordered text-black" required />
-        </div>
-        <div className="form-control">
+        </motion.div>
+        <motion.div variants={childVariants} className="form-control">
           <label className="label">
             <span className="label-text text-white">Password</span>
           </label>
@@ -198,14 +225,14 @@ const Signup = () => {
              <FaEyeSlash onClick={openPass} role='button' className='absolute top-4 right-4 text-xl text-black'/>
            }
           </div>
-        </div>
+        </motion.div>
         <div className="form-control mt-6">
         {loading? <button disabled={true} className="btn text-white  bg-gradient-to-r from-indigo-400 to-cyan-400 "><span className="loading loading-spinner loading-md border-none"></span></button> : <button className="btn  bg-gradient-to-r from-indigo-400 to-cyan-400 text-white border-none  hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500 ">Submit</button>}
         </div>
-      </form>
+      </motion.form>
       <p className='mt-3 text-center text-sm'>Already have an account? <Link className='underline font-bold' to='/'>Login</Link></p>
           </div>
-        </div>
+        </motion.div>
     );
 };
 

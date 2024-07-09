@@ -176,21 +176,21 @@ useEffect(()=>{
   
   
     return (
-        <div className='bg-gradient-to-r from-indigo-400 to-cyan-400 text-white'>
+        <div className='bg-gradient-to-r from-indigo-400 to-cyan-400 text-white '>
          
-        <div className="drawer lg:drawer-open flex ">
+        <div className="drawer lg:drawer-open flex" >
  
-  <motion.div initial={{x:-600}} animate={{x: navbar===true? 0 : -600}} transition={{ease:'anticipate'}} className="w-2/4 md:w-2/4 lg:w-1/4 h-[100vh] absolute md:static z-30 md:block">
+  <motion.div initial={{x:-600}} animate={{x: navbar===true? 0 : -600}} transition={{ease:'anticipate'}} className="w-2/4 md:w-2/4 lg:w-1/4 h-[100vh] absolute md:static z-30 md:block overflow-hidden">
     <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
   <ul className={`flex flex-col ${md? 'bg-transparent' : 'bg-gradient-to-r from-emerald-100 to-cyan-100 bg-cyan-100  hover:bg-gradient-to-r hover:from-emerald-100 hover:to-cyan-100 hover:bg-cyan-100'} gap-4 p-4 w-full h-full text-white border-[#e2e2e2] shadow-xl`}>
     <div className='flex w-full justify-center items-center flex-col'>
       <div className='w-full flex justify-end'>
         <IoClose className='text-green-500 text-3xl md:hidden' onClick={closeNavbar}/>
       </div>
-      <div className='flex justify-center items-center gap-5'>
+      <motion.div initial={{scale:0,opacity:0.5}} animate={{scale:1,opacity:1}} transition={{duration:1,delay:0.5,ease:'easeIn',type:'spring',damping:5}} className='flex justify-center items-center gap-5'>
                      <img src='/logos/cover.png' className='w-[50px]'/>
                      <h1 className='font-bold text-3xl'>Check It</h1>
-                     </div>
+                     </motion.div>
     </div>
       {/* Sidebar content here */}
         <form onSubmit={search} className='text-white mt-3 flex justify-between rounded-lg relative w-full bg-transparent border border-white'>
@@ -214,8 +214,8 @@ useEffect(()=>{
       <NavLink className={({isActive})=> isActive? `btn bg-transparent border-none shadow-md hover:bg-transparent text-white rounded-lg text-sm flex justify-normal w-full border border-white underline shadow-blue-200` : `btn bg-transparent border-none shadow-md hover:bg-transparent text-white rounded-lg text-sm flex justify-normal w-full border border-transparent `} to='/app/events'>Events</NavLink>
     </ul>
   </motion.div>
-  <div className='w-full md:w-3/4 overflow-auto h-[100vh]' onClick={closeNavbar}>
-  <nav className='flex justify-end items-center  px-5 py-3 gap-5 top-0 sticky z-10'>
+  <div className='w-full md:w-3/4 overflow-auto h-[100vh] overflow-x-hidden' onClick={closeNavbar}>
+  <motion.nav initial={{x:500}} animate={{x:0}} transition={{duration:0.5,delay:1}} className='flex justify-end items-center  px-5 py-3 gap-5 top-0 sticky z-10'>
 <div className='flex justify-end items-center rounded-2xl border border-[#e2e2e2] shadow-md px-5 py-3 gap-5'>
   <FaBars onClick={openNavbar} className='md:hidden'/>
 <Tooltip title='Notifications'>
@@ -237,7 +237,7 @@ useEffect(()=>{
 </div>
 
 </div>
-            </nav>
+            </motion.nav>
   <div className='min-h-[100vh]'>
   <Outlet/>
   </div>

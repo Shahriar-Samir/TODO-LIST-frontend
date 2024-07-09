@@ -186,7 +186,7 @@ const AllTasksPage = () => {
             <title>All Tasks | Check It</title>
           </Helmet>
             <ToastContainer className='z-50'/>
-            <div className="flex mt-5 border-b border-black pb-3  justify-between">
+            <div className="flex mt-5 border-b border-white pb-3  justify-between">
             <div>
             <h1 className=''>{today}</h1>
             <h1 className='font-sans text-xl font-bold'>{presentTime}</h1>

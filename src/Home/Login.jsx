@@ -8,6 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import useAxios from '../hooks/useAxios';
 import { Helmet } from 'react-helmet-async';
 import useAxiosPublic from '../hooks/useAxiosPublic';
+import {motion} from 'framer-motion'
 
 
 const Login = () => {
@@ -125,6 +126,34 @@ const Login = () => {
       }
   }
 
+  const containerVariants = {
+    hidden:{
+      opacity:0,
+      scale:0.8
+    },
+    visible:{
+        opacity:1,
+        scale:1,
+        transition:{
+          delayChildren:0.3,
+          staggerChildren: 0.5
+        }
+    }
+  }
+  const childVariants = {
+    hidden:{
+      x:700,
+      opacity:0
+    },
+    visible:{
+      x:0,
+      opacity:1,
+      transition:{
+        duration:0.4,
+        type: 'spring'
+      }
+    }
+  }
 
 
     return (
@@ -133,18 +162,18 @@ const Login = () => {
             <title>Login | Check It</title>
           </Helmet>
        <ToastContainer/>
-        <div className='flex flex-col justify-center items-center gap-10 h-[130vh] md:flex-row md:gap-20 lg:gap-32  bg-gradient-to-r from-indigo-400 to-cyan-400 text-white'>
+        <div className='flex flex-col justify-center items-center gap-10 h-[130vh] md:flex-row md:gap-20 lg:gap-32  bg-gradient-to-r from-indigo-400 to-cyan-400 text-white overflow-hidden'>
              
-               <div className='w-11/12 md:max-w-[450px]  flex justify-center items-center flex-col'>
+               <motion.div  initial={{x:-800}} animate={{x:0}} transition={{duration:0.7, type:'spring',damping:20, delay:0.7}}  className='w-11/12 md:max-w-[450px]  flex justify-center items-center flex-col'>
                 <img src='/logos/note.png' className='w-[1200px]'/>
                 <h1 className='w-full mt-4 text-center text-4xl font-semibold'>Your Ultimate Task Management Solution</h1>
-                </div>
+                </motion.div>
           <div className='w-11/12 md:w-1/2 max-w-[350px]'>
-          <form onSubmit={submit}>
-          <div className='flex justify-center items-center gap-5'>
+          <motion.form onSubmit={submit} variants={containerVariants} initial='hidden' animate='visible'>
+          <motion.div className='flex justify-center items-center gap-5' initial={{scale:0}} animate={{scale:1}} transition={{duration:1,type:'spring', damping:8}}>
                      <img src='/logos/cover.png' className='w-[70px]'/>
-                     <h1 className='font-bold text-4xl'>Check It</h1>
-                     </div>
+                     <motion.h1 className='font-bold text-4xl' >Check It</motion.h1>
+                     </motion.div>
             <h1 className='text-sm font-bold text-end mt-5'>Log in with</h1>
             <div className='grid grid-cols-3 gap-1 mt-6'>
 
@@ -167,13 +196,13 @@ const Login = () => {
             <p>or</p>
             <hr class=" border border-white w-full" />
             </div>
-        <div className="form-control mt-1">
+        <motion.div variants={childVariants} className="form-control mt-1">
           <label className="label">
             <span className="label-text text-white">Email</span>
           </label>
           <input type="email" placeholder="email" name='email' className="input input-bordered text-black" required />
-        </div>
-        <div className="form-control">
+        </motion.div>
+        <motion.div variants={childVariants} className="form-control">
           <label className="label">
             <span className="label-text text-white">Password</span>
           </label>
@@ -185,11 +214,11 @@ const Login = () => {
              <FaEyeSlash onClick={openPass} role='button' className='absolute top-4 right-4 text-xl text-black'/>
            }
           </div>
-        </div>
+        </motion.div>
         <div className="form-control mt-6">
           {loading? <button disabled={true} className="btn text-white  bg-gradient-to-r from-indigo-400 to-cyan-400 "><span className="loading loading-spinner loading-md border-none"></span></button> : <button className="btn  bg-gradient-to-r from-indigo-400 to-cyan-400 text-white border-none  hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500 ">Login</button>}
         </div>
-      </form>
+      </motion.form>
       <p className='mt-3 text-center text-sm'>Don't have an account? <Link className='underline font-bold' to='/signup'>Create new account</Link></p>
           </div>
         </div>
