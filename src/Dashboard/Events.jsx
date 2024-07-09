@@ -11,8 +11,7 @@ import {
 
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { useContext, useEffect, useRef, useState } from 'react';
-import AllTasks from '../Components/AllTasks';
-import { CiCalendar } from 'react-icons/ci';
+import {motion} from 'framer-motion'
 import useAxios from '../hooks/useAxios';
 import { IoClose } from 'react-icons/io5';
 import Select from 'react-select';
@@ -173,10 +172,14 @@ const Events = () => {
         <div className='w-10/12 mx-auto '>
           <ToastContainer/>
                <div className="flex mt-5 border-b pb-3 border-black justify-between">
-            <div>
-            <h1 className=''>{today}</h1>
-            <h1 className='font-sans text-xl font-bold'>{presentTime}</h1>
-            </div>
+               {today && presentTime ?
+             <div>
+             <h1 className=''>{today}</h1>
+             <h1 className='font-sans text-xl font-bold'>{presentTime}</h1>
+             </div>
+              :
+              <span className="loading loading-dots loading-md text-white"></span>
+            }
             <h1 className='text-3xl font-bold '>Events</h1>
             </div>
           <div className='flex gap-3 md:gap-10 flex-col md:flex-row justify-between md:justify-center py-2 w-11/12 mx-auto mt-4'>
@@ -184,7 +187,8 @@ const Events = () => {
             <h1 className='font-bold text-green-300'>Completed Tasks: {tasksAmount.finishedTasksLength}</h1>
             <h1 className='font-bold text-red-500'>Unfinished Tasks: {tasksAmount.unfinishedTasksLength}</h1>
           </div>
-          <Paper className='w-full md:w-11/12 mx-auto mt-3'>
+          <motion.div initial={{scale:0,x:500,opacity:0}} animate={{scale:1,x:0,opacity:1}} transition={{duration:1}} className='w-full md:w-11/12 mx-auto mt-3'>
+          <Paper className='w-full '>
         <Scheduler
           data={newAppointments}>
           <ViewState
@@ -201,6 +205,7 @@ const Events = () => {
       
         </Scheduler>
       </Paper>
+          </motion.div>
         </div>
       )
 };
