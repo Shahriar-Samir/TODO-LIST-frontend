@@ -170,7 +170,7 @@ const finishTask = (e,id)=>{
             <title>Today | Check It</title>
           </Helmet>
             <ToastContainer/>
-            <div className="flex mt-5 border-b border-black pb-3  justify-between">
+            <div className="flex mt-5 border-b border-white pb-3  justify-between">
             {today && presentTime ?
              <div>
              <h1 className=''>{today}</h1>
@@ -227,7 +227,7 @@ const finishTask = (e,id)=>{
 <Select options={options}  className="text-black" placeholder='Priority' ref={priorityRef}/>
 </div>
 <div className='flex w-full justify-end gap-3'>
-    <button className='btn bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500 text-white' onClick={addTask}>Add Task</button>
+    <button className='btn bg-gradient-to-r from-indigo-400 to-cyan-400 border-none text-white shadow-lg hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-500 ' onClick={addTask}>Add Task</button>
     <button className="btn bg-red-500 text-white border-none" onClick={closeAddTask}>Cancel</button>
 </div>
 </motion.div>
@@ -273,19 +273,20 @@ const finishTask = (e,id)=>{
     </div>
     <p className="">{item.description}</p>
     
-    <div className="flex gap-4">
+    <div className="flex gap-4 items-center">
     <div className="tooltip" data-tip="Due date">
     <div className="flex items-center gap-1">
     <CiCalendar />
-    <p className="text-sm mt-1">{item.dueDate}</p> 
+    <p className="text-sm mt-1">{item?.dueDate === 'Invalid Date' ? 'No selected' : item?.dueDate}</p> 
     </div>
 </div>
     <div className="tooltip" data-tip="Due Time">
     <div className="flex items-center gap-1">
     <IoMdAlarm/>
-    <p className="text-sm mt-1">{!item?.dueDate? "No time selected" : item?.dueDate ===''? 'No time selected' : item?.dueTime}</p> 
+    <p className="text-sm mt-1">{item?.dueTime===''? 'No selected' : item?.dueTime}</p> 
     </div>
 </div>
+  <h1 className="text-sm mt-1">Priority: {item?.priority? item?.priority : 'Not Selected'}</h1>
 
     </div>
 </div>

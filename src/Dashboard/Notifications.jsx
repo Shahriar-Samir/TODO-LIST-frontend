@@ -82,7 +82,7 @@ const Notifications = () => {
                  <Helmet>
             <title>Notifications | Check It</title>
           </Helmet>
-               <div className="flex mt-5 border-b pb-3 border-black justify-end">
+               <div className="flex mt-5 border-b pb-3 border-white justify-end">
             <h1 className='text-3xl font-bold '>Notifications</h1>
             </div>
 

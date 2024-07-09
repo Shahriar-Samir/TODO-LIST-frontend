@@ -137,7 +137,7 @@ const Search = () => {
     </div>
     <p className="">{item.description}</p>
     
-    <div className="flex gap-4">
+    <div className="flex gap-4 items-center">
     <div className="tooltip" data-tip="Due date">
     <div className="flex items-center gap-1">
     <CiCalendar />
@@ -150,6 +150,7 @@ const Search = () => {
     <p className="text-sm mt-1">{item?.dueTime===''? 'No selected' : item?.dueTime}</p> 
     </div>
 </div>
+  <h1 className="text-sm mt-1">Priority: {item?.priority? item?.priority : 'Not Selected'}</h1>
 
     </div>
 </div>

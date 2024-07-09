@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { AuthContext } from './AuthProvider';
 import { Navigate } from 'react-router-dom';
-import Loading from '../Home/Loading';
+import Loading2 from '../Home/Loading2';
 
 const PrivateRoute = ({children}) => {
     const {loading,user} = useContext(AuthContext)
 
     if(loading){
-        return <Loading/>
+        return <Loading2/>
     }
     if(user){
         return children

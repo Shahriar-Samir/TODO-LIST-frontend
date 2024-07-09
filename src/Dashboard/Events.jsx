@@ -171,7 +171,7 @@ const Events = () => {
       return (
         <div className='w-10/12 mx-auto '>
           <ToastContainer/>
-               <div className="flex mt-5 border-b pb-3 border-black justify-between">
+               <div className="flex mt-5 border-b pb-3 border-white justify-between">
                {today && presentTime ?
              <div>
              <h1 className=''>{today}</h1>

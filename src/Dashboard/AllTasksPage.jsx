@@ -259,7 +259,9 @@ const AllTasksPage = () => {
 </div>
 <div className="w-full" role="button">
     <div className="flex justify-between items-center">
-    <h1 className="font-bold">{item.name}</h1>
+  <div className="flex flex-col gap-2">
+  <h1 className="font-bold">{item.name}</h1>
+  </div>
     <div className="flex gap-4 items-center text-2xl pe-5">
     <div className="tooltip" data-tip="Edit Task" onClick={()=>{
           document.getElementById(item._id)?.showModal()
@@ -288,7 +290,7 @@ const AllTasksPage = () => {
     </div>
     <p className="">{item.description}</p>
     
-    <div className="flex gap-4">
+    <div className="flex gap-4 items-center">
     <div className="tooltip" data-tip="Due date">
     <div className="flex items-center gap-1">
     <CiCalendar />
@@ -301,6 +303,7 @@ const AllTasksPage = () => {
     <p className="text-sm mt-1">{item?.dueTime===''? 'No selected' : item?.dueTime}</p> 
     </div>
 </div>
+  <h1 className="text-sm mt-1">Priority: {item?.priority? item?.priority : 'Not Selected'}</h1>
 
     </div>
 </div>

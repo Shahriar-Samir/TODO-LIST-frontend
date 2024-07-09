@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import Select from 'react-select';
 import useAxios from '../hooks/useAxios';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import Loading from '../Home/Loading';
+import Loading2 from '../Home/Loading2';
 import Footer from '../Components/Footer';
 import io from 'socket.io-client';
 
@@ -170,7 +170,7 @@ useEffect(()=>{
     }
 
   if(isFetching || notiFetching){
-    return <Loading/>
+    return <Loading2/>
   }
 
   

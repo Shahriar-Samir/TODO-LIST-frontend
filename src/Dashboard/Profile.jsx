@@ -138,7 +138,7 @@ import { Helmet } from 'react-helmet-async';
             <title>{user?.displayName} | Check It</title>
           </Helmet>
         <ToastContainer/>
-          <div className="flex mt-5 border-b pb-3 border-black justify-end w-11/12 mx-auto" >
+          <div className="flex mt-5 border-b pb-3 border-white justify-end w-11/12 mx-auto" >
             <h1 className='text-3xl font-bold '>Profile</h1>
             </div>
                 <div className='mt-5 flex items-center justify-center flex-col w-10/12 max-w-[400px] mx-auto gap-5'>
