@@ -9,7 +9,7 @@
 - Every client side route has been secured with firebase authentication and server side route has been secured with JWT.
 
 # If you want to test it on your local machine
-- At first, you have to clone the server-side project repo, so you have to open a terminal in the directory where you want to clone the project.
+- At first, you have to clone the server-side project repo from here https://github.com/Shahriar-Samir/TODO-LIST-backend, so you have to open a terminal in the directory where you want to clone the project.
 - Give the command "git clone 'your repo clone link" in the terminal.
 - Then you have to clone the client-side repo of this project and just like before clone it in that directory where the client repo has been cloned.
 - After finishing all repos clone to the project directory, then open the terminal.
