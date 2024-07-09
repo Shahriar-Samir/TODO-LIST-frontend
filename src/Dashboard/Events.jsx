@@ -95,7 +95,7 @@ const Events = () => {
   const queryClient = useQueryClient()
 
   useEffect(()=>{ 
-    const socket = io('https://todo-list-backend-ku5w.onrender.com',{withCredentials:true, transports: ['websocket', 'polling']})
+    const socket = io('https://todo-list-backend-ku5w.onrender.com',{withCredentials:true,})
         socket.connect()
         socket.on('allEventTasks',(newData)=>{
              queryClient.setQueryData(['allTasks'],(oldData)=>{
