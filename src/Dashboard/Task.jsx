@@ -61,8 +61,6 @@ const Task = ({id,task,getUpdated}) => {
     }
 
 
-
-
    
     const updateTask = ()=>{
       const nameValue = nameRef.current.textContent
@@ -75,11 +73,19 @@ const Task = ({id,task,getUpdated}) => {
       const task = {uid:user?.uid,name:nameValue,description:descriptionValue ,dueDate:dueDateValue,dueTime:dueTimeValue,priority:priorityValue,reminderTime:reminderTimeValue}
        axiosSecure.patch(`/updateUserTask/${_id}`, task)
       .then(()=>{
-        getUpdated(nameValue+descriptionValue+dueDateValue+dueTimeValue+reminderTimeValue+priorityValue)
-        toast.success('Updated Task')
-        hideButtons()
+        if(location.pathname === '/app/today' || location.pathname === '/app/allTasks'){
+          toast.success('Updated Task')
+          hideButtons()
+        }
+        else{
+          getUpdated(nameValue+descriptionValue+dueDateValue+dueTimeValue+reminderTimeValue+priorityValue)
+          toast.success('Updated Task')
+          hideButtons()
+        }
+       
       })
-      .catch(()=>{
+      .catch((err)=>{
+        console.log(err)
         toast.error('Something went wrong')
       })
       
