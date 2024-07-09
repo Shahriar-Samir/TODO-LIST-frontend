@@ -13,7 +13,7 @@ const HideRoute = ({children}) => {
     }
 
     if(user){
-        if(location.pathname === '/'){
+        if(location.pathname === '/' || location.pathname === '/signup'){
                 return <Navigate to='/app/today'></Navigate>
         }
     }

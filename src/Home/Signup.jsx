@@ -89,7 +89,7 @@ const Signup = () => {
   const submit = (e)=>{
     e.preventDefault()
       const form = e.target
-      const axiosSecure = useAxios()
+
       const userName = form.userName.value
       const email = form.email.value
       const password = form.password.value
