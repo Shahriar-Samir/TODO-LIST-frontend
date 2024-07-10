@@ -67,7 +67,6 @@ const Notifications = () => {
     axiosSecure.patch(`/markAsRead/${id}`)
       }
       if(number ===2){
-        document.getElementById(id+'2').showModal()
     axiosSecure.patch(`/markAsRead/${id}`)
       }
   }
@@ -135,7 +134,7 @@ const Notifications = () => {
                 if(item.readStatus === false){
                   return <div key={item._id}>
                   {/* Open the modal using document.getElementById('ID').showModal() method */}
-        <div className='p-3 border-y' role='button' onClick={()=> markAsRead(item._id,2)}>
+        <div className='p-3 border-y' role='button' onClick={()=>         document.getElementById(item._id+'2').showModal()}>
           <div className='flex justify-between'>
           <div className='flex gap-4 items-center'>
               <BsBellFill/>
@@ -147,13 +146,13 @@ const Notifications = () => {
           </div>
         </div>
 <dialog id={item._id+'2'} className="modal modal-bottom sm:modal-middle">
-<div className="modal-box">
+<div className="modal-box bg-gradient-to-r from-indigo-400 to-cyan-400 ">
   <h3 className="font-bold text-lg">{item.title}</h3>
   <p className="py-4">{item.description}</p>
   <div className="modal-action">
     <form method="dialog">
       {/* if there is a button in form, it will close the modal */}
-      <button className="btn">Close</button>
+      <button className="btn" onClick={()=> markAsRead(item._id,2)}>Close</button>
     </form>
   </div>
 </div>

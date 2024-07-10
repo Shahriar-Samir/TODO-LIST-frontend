@@ -83,19 +83,25 @@ const AllTasksPage = () => {
           closeAddTask()
           const name = nameRef.current.textContent
           const description = descriptionRef.current.textContent
-          const convertedDueDate = new Date(dateRef.current.value)
-          const dueDate = convertedDueDate.toDateString()
           const dueTime = timeRef.current.value
           const reminderTime = reminderRef.current.value
+          const convertedDueDateTime = new Date(`${dateRef.current.value}T${dueTime}`)
+          const dueDateTime = convertedDueDateTime.toUTCString()
+          const convertedDueDate = new Date(dateRef.current.value)
+          const dueDate = convertedDueDate.toDateString()
           const priority = priorityRef?.current?.props?.value?.value
+          const reminderDateTimeConvert = new Date(`${dateRef.current.value}T${reminderTime}`)
+          const reminderDateTime = reminderDateTimeConvert.toUTCString()
           const status = 'upcoming'
-          const task = {uid:user?.uid,name,description,dueDate,dueTime,priority,reminderTime,status}
+          const task = {uid:user?.uid,name,description,dueDateTime,dueDate,dueTime,priority,reminderDateTime,status}
           if(!name){
             toast.error('Task name required')
           }
           else{
            axiosSecure.post('/addUserTask', task)
           .then(()=>{
+            nameRef.current.textContent = 'Task name'
+            descriptionRef.current.textContent = 'Description'
             toast.success('New Task Added')
           })
           .catch(()=>{

@@ -68,9 +68,13 @@ const Task = ({id,task,getUpdated}) => {
       const convertedDueDate =location.pathname==='/app/allTasks'?  new Date(dateRef.current.value) : ''
       const dueDateValue =location.pathname==='/app/allTasks'? convertedDueDate?.toDateString() : dueDate
       const dueTimeValue = timeRef.current.value
+      const convertedDueDateTime = location.pathname==='/app/allTasks'? new Date(`${dateRef.current.value}T${dueTimeValue}`) :  new Date(`${dueDate} ${dueTimeValue}`)
+      const dueDateTime = convertedDueDateTime.toUTCString()
       const reminderTimeValue = reminderRef.current.value
+      const reminderDateTimeConvert = location.pathname==='/app/allTasks'? new Date(`${dateRef.current.value}T${reminderTimeValue}`) :  new Date(`${dueDate} ${reminderTimeValue}`)
+      const reminderDateTime = reminderDateTimeConvert.toUTCString()
       const priorityValue = priorityRef?.current?.props?.value?.value
-      const task = {uid:user?.uid,name:nameValue,description:descriptionValue ,dueDate:dueDateValue,dueTime:dueTimeValue,priority:priorityValue,reminderTime:reminderTimeValue}
+      const task = {uid:user?.uid,name:nameValue,description:descriptionValue,dueDateTime, reminderDateTime ,dueDate:dueDateValue,dueTime:dueTimeValue,priority:priorityValue,reminderTime:reminderTimeValue}
        axiosSecure.patch(`/updateUserTask/${_id}`, task)
       .then(()=>{
         if(location.pathname === '/app/today' || location.pathname === '/app/allTasks'){
@@ -85,7 +89,6 @@ const Task = ({id,task,getUpdated}) => {
        
       })
       .catch((err)=>{
-        console.log(err)
         toast.error('Something went wrong')
       })
       

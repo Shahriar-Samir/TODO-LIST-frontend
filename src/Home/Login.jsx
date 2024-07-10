@@ -58,7 +58,6 @@ const Login = () => {
 
     })
     .catch((err)=>{
-      console.log(err)
       setLoading(false)
         toast.error('Something went wrong')
     })
@@ -81,7 +80,6 @@ const Login = () => {
 
     })
     .catch((err)=>{
-      console.log(err)
       setLoading(false)
         toast.error('Something went wrong')
     })

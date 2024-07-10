@@ -270,16 +270,23 @@ const addTask = ()=>{
   const description = descriptionRef.current.textContent
   const dueDate = dateRef.current.textContent
   const dueTime = timeRef.current.value
+  const convertedDueDateTime = new Date(`${dueDate} ${dueTime}`)
+  const dueDateTime = convertedDueDateTime.toUTCString()
   const reminderTime = reminderRef.current.value
   const priority = priorityRef?.current?.props?.value?.value
+  const reminderDateTimeConvert = new Date(`${dueDate} ${reminderTime}`)
+  const reminderDateTime = reminderDateTimeConvert.toUTCString()
   const status = 'upcoming'
-  const task = {uid:user?.uid,name,description,dueDate,dueTime,priority,reminderTime,status}
+
+  const task = {uid:user?.uid,name,description,dueDateTime,reminderDateTime,dueDate,dueTime,priority,reminderTime,status}
   if(!name){
     toast.error('Task name required')
   }
   else{
    axiosSecure.post('/addUserTask', task)
   .then(()=>{
+           nameRef.current.textContent = 'Task name'
+            descriptionRef.current.textContent = 'Description'
     toast.success('New Task Added')
   })
   .catch(()=>{
@@ -325,7 +332,7 @@ const addTask = ()=>{
   </div>
  <div className="mt-2">
     <label>Time</label> <br />
- <input type="time" ref={timeRef} className="w-full border p-2 outline-none focus-within:outline-none"/>
+ <input type="time" ref={timeRef} className="w-full text-black border p-2 outline-none focus-within:outline-none"/>
  </div>
   </ul>
 </div>
