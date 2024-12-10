@@ -31,7 +31,7 @@ const Notifications = () => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const socket = io("https://todo-list-backend-seven.vercel.app", {
+    const socket = io("https://todo-list-backend-ku5w.onrender.com", {
       withCredentials: true,
     });
     socket.connect();

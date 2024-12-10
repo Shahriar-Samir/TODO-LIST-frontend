@@ -31,7 +31,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const socket = io("https://todo-list-backend-seven.vercel.app", {
+    const socket = io("https://todo-list-backend-ku5w.onrender.com", {
       withCredentials: true,
     });
     socket.connect();
@@ -57,7 +57,7 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
-    const socket = io("https://todo-list-backend-seven.vercel.app", {
+    const socket = io("https://todo-list-backend-ku5w.onrender.com", {
       withCredentials: true,
     });
     socket.connect();
