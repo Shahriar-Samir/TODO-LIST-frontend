@@ -25,6 +25,7 @@
     "date-fns": "^2.25.0",
     "firebase": "^10.12.2",
     "framer-motion": "^11.2.12",
+    "frontend": "file:../client",
     "lottie-react": "^2.4.0",
     "moment": "^2.30.1",
     "react": "^18.3.1",
